@@ -27,7 +27,7 @@ public class FuzzySet {
         this.universeOfDiscourse = universeOfDiscourse;
     }
 
-    private void setUpElements() {
+    protected void setUpElements() {
         elements = universeOfDiscourse.getElements().stream()
                 .map(u -> new FuzzySetElement(u.getValue(), characteristicFunction.calculate(u.getValue())))
                 .collect(Collectors.toList());
@@ -37,7 +37,7 @@ public class FuzzySet {
         return this.elements.size();
     }
 
-    boolean setsAreEquals(FuzzySet object) {
+    public boolean setsAreEquals(FuzzySet object) {
         List<FuzzySetElement> objectElements = object.getElements();
         if (this.elements.size() != object.getElements().size()) {
             return false;
@@ -51,11 +51,11 @@ public class FuzzySet {
         return true;
     }
 
-    void getCylyndricExtension() {
+    public void getCylyndricExtension() {
         //TODO
     }
 
-    FuzzySet getComplement() {
+    public FuzzySet getComplement() {
         List<FuzzySetElement> complementElements;
 
         complementElements = this.elements.stream()
@@ -65,7 +65,7 @@ public class FuzzySet {
         return new FuzzySet(complementElements, this.universeOfDiscourse);
     }
 
-    ClassicSet getAlphaCut(double alpha) {
+    public ClassicSet getAlphaCut(double alpha) {
         if (alpha > 1 || alpha < 0) {
             return null;
         }
@@ -77,7 +77,7 @@ public class FuzzySet {
         return new ClassicSet(alphaCutElements);
     }
 
-    ClassicSet getStrongAlphaCut(double alpha) {
+    public ClassicSet getStrongAlphaCut(double alpha) {
         if (alpha > 1 || alpha < 0) {
             return null;
         }
@@ -90,25 +90,25 @@ public class FuzzySet {
         return new ClassicSet(alphaCutElements);
     }
 
-    ClassicSet getSupport() {
+    public ClassicSet getSupport() {
         return getStrongAlphaCut(0);
     }
 
-    ClassicSet getCore() {
-        return getStrongAlphaCut(1);
+    public ClassicSet getCore() {
+        return getAlphaCut(1);
     }
 
-    double getCardinality() {
+    public double getCardinality() {
         return elements.stream().
                 mapToDouble(e -> e.getMembershipDegree())
                 .sum();
     }
 
-    double getDegreeOfFuziness() {
-        return this.getSize() / this.universeOfDiscourse.getSize();
+    public double getDegreeOfFuziness() {
+        return Double.valueOf(this.getSupport().getSize())/ Double.valueOf(this.universeOfDiscourse.getSize());
     }
 
-    boolean isEmpty() {
+    public boolean isEmpty() {
         if (this.elements.isEmpty())
             return true;
         else if (getCardinality() == 0)
@@ -117,7 +117,7 @@ public class FuzzySet {
             return false;
     }
 
-    double getCentroid() {
+    public double getCentroid() {
         double numerator = this.elements.stream().
                 mapToDouble(e -> e.getMembershipDegree() * e.getValue())
                 .sum();
@@ -127,27 +127,27 @@ public class FuzzySet {
         return numerator / denominator;
     }
 
-    double getHeight() {
+    public double getHeight() {
         return this.elements.stream().
                 mapToDouble(e -> e.getMembershipDegree())
                 .max()
                 .getAsDouble();
     }
 
-    boolean isNormal() {
+    public boolean isNormal() {
         return getHeight() == 1;
     }
 
-    double getCardinalityRatio() {
+    public double getCardinalityRatio() {
         return getCardinality() / universeOfDiscourse.getSize();
     }
 
-    boolean isConvex() {
+    public boolean isConvex() {
         //TODO
         return false;
     }
 
-    boolean isConcave() {
+    public boolean isConcave() {
         return !isConvex();
     }
 
@@ -157,6 +157,7 @@ public class FuzzySet {
         builder.append("{ ");
         this.elements.stream().
                 forEach(e -> builder.append(" <" + e.getValue() + " , " + e.getMembershipDegree() + "> "));
+        builder.append(" }");
         return builder.toString();
     }
 }

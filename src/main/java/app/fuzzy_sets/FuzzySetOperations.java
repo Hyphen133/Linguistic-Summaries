@@ -10,16 +10,15 @@ public class FuzzySetOperations {
         UNION
     }
 
-    FuzzySet getIntersection(FuzzySet fuzzySetA, FuzzySet fuzzySetB) {
+    public static FuzzySet getIntersection(FuzzySet fuzzySetA, FuzzySet fuzzySetB) {
         return getOperation(fuzzySetA, fuzzySetB, Operation.INTERSECTION);
-
     }
 
-    FuzzySet getUnion(FuzzySet fuzzySetA, FuzzySet fuzzySetB) {
+    public static FuzzySet getUnion(FuzzySet fuzzySetA, FuzzySet fuzzySetB) {
         return getOperation(fuzzySetA, fuzzySetB, Operation.UNION);
     }
 
-    private FuzzySet getOperation(FuzzySet fuzzySetA, FuzzySet fuzzySetB, Operation operation) {
+    private static FuzzySet getOperation(FuzzySet fuzzySetA, FuzzySet fuzzySetB, Operation operation) {
         List<FuzzySetElement> fuzzySetAElements = fuzzySetB.getElements();
         List<FuzzySetElement> fuzzySetBElements = fuzzySetB.getElements();
         List<FuzzySetElement> operationElements = new ArrayList<>();

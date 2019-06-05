@@ -9,7 +9,7 @@ public class TriangularFunction implements CharacteristicFunction {
     public double calculate(double x) {
         if (x <= a)
             return 0;
-        else if (a < x && x < b)
+        else if (a < x && x <= b)
             return (x - a) / (b - a);
         else if (b < x && x <= c)
             return (c - x) / (c - b);
