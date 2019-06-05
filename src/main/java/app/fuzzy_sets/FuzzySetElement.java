@@ -1,6 +1,11 @@
 package app.fuzzy_sets;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public class FuzzySetElement {
-    double value;
-    double membership;
+    private double value;
+    private double membershipDegree;
 }
