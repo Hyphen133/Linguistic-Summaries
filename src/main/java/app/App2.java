@@ -20,13 +20,13 @@ public class App2 {
                 Double.valueOf(8), Double.valueOf(9), Double.valueOf(10)));
         ClassicSet X = new ClassicSet(xValues, new ClassicFunction());
 
-        TriangularFunction aFunction = new TriangularFunction(1, 5,9);
+        TriangularFunction aFunction = new TriangularFunction(1, 5, 9);
 
         FuzzySet A = new FuzzySet(aFunction, X);
 
         System.out.println(A.toString());
 
-        FuzzySet complement= A.getComplement();
+        FuzzySet complement = A.getComplement();
         System.out.println(complement.toString());
 
         ClassicSet support = A.getSupport();
