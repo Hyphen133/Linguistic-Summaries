@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor
@@ -27,23 +28,21 @@ public class FuzzySet {
     }
 
     private void setUpElements() {
-        this.elements = new ArrayList<>();
-        for (FuzzySetElement element : universeOfDiscourse.getElements()) {
-            this.elements.add(
-                    new FuzzySetElement(
-                            element.getValue(), characteristicFunction.calculate(element.getValue())));
-        }
+        elements = universeOfDiscourse.getElements().stream()
+                .map(u -> new FuzzySetElement(u.getValue(), characteristicFunction.calculate(u.getValue())))
+                .collect(Collectors.toList());
     }
 
     public int getSize() {
         return this.elements.size();
     }
 
-    boolean setsEquals(FuzzySet object) {
+    boolean setsAreEquals(FuzzySet object) {
         List<FuzzySetElement> objectElements = object.getElements();
         if (this.elements.size() != object.getElements().size()) {
             return false;
         }
+
         for (int i = 0; i < elements.size(); i++) {
             if (this.elements.get(i).getMembershipDegree() != objectElements.get(i).getMembershipDegree()) {
                 return false;
@@ -52,18 +51,16 @@ public class FuzzySet {
         return true;
     }
 
-    void getCylyndricExtension(){
+    void getCylyndricExtension() {
         //TODO
     }
 
     FuzzySet getComplement() {
-        List<FuzzySetElement> complementElements = new ArrayList<>();
+        List<FuzzySetElement> complementElements;
 
-        for (FuzzySetElement element : this.elements) {
-            complementElements.add(
-                    new FuzzySetElement(
-                            element.getValue(), 1 - element.getMembershipDegree()));
-        }
+        complementElements = this.elements.stream()
+                .map(e -> new FuzzySetElement(e.getValue(), 1 - e.getMembershipDegree()))
+                .collect(Collectors.toList());
 
         return new FuzzySet(complementElements, this.universeOfDiscourse);
     }
@@ -72,13 +69,11 @@ public class FuzzySet {
         if (alpha > 1 || alpha < 0) {
             return null;
         }
-        List<FuzzySetElement> alphaCutElements = new ArrayList<>();
-        for (FuzzySetElement element : this.elements
-        ) {
-            if (element.getMembershipDegree() >= alpha) {
-                alphaCutElements.add(new FuzzySetElement(element.getValue(), 1));
-            }
-        }
+        List<FuzzySetElement> alphaCutElements;
+        alphaCutElements = this.elements.stream()
+                .filter(e -> e.getMembershipDegree() >= alpha)
+                .map(e -> new FuzzySetElement(e.getValue(), 1))
+                .collect(Collectors.toList());
         return new ClassicSet(alphaCutElements);
     }
 
@@ -86,12 +81,12 @@ public class FuzzySet {
         if (alpha > 1 || alpha < 0) {
             return null;
         }
-        List<FuzzySetElement> alphaCutElements = new ArrayList<>();
-        for (FuzzySetElement element : this.elements) {
-            if (element.getMembershipDegree() > alpha) {
-                alphaCutElements.add(new FuzzySetElement(element.getValue(), 1));
-            }
-        }
+        List<FuzzySetElement> alphaCutElements;
+        alphaCutElements = this.elements.stream()
+                .filter(e -> e.getMembershipDegree() > alpha)
+                .map(e -> new FuzzySetElement(e.getValue(), 1))
+                .collect(Collectors.toList());
+
         return new ClassicSet(alphaCutElements);
     }
 
@@ -104,11 +99,9 @@ public class FuzzySet {
     }
 
     double getCardinality() {
-        double cardinality = 0;
-        for (FuzzySetElement element : this.elements) {
-            cardinality += element.getMembershipDegree();
-        }
-        return cardinality;
+        return elements.stream().
+                mapToDouble(e -> e.getMembershipDegree())
+                .sum();
     }
 
     double getDegreeOfFuziness() {
@@ -125,22 +118,20 @@ public class FuzzySet {
     }
 
     double getCentroid() {
-        double numerator = 0;
-        double denominator = 0;
-        for (FuzzySetElement element : this.elements) {
-            numerator += element.getValue() * element.getMembershipDegree();
-            denominator += element.getMembershipDegree();
-        }
+        double numerator = this.elements.stream().
+                mapToDouble(e -> e.getMembershipDegree() * e.getValue())
+                .sum();
+        double denominator = this.elements.stream().
+                mapToDouble(e -> e.getValue())
+                .sum();
         return numerator / denominator;
     }
 
     double getHeight() {
-        double height = 0;
-        for (FuzzySetElement element : this.elements) {
-            if (element.getMembershipDegree() > height)
-                height = element.getMembershipDegree();
-        }
-        return height;
+        return this.elements.stream().
+                mapToDouble(e -> e.getMembershipDegree())
+                .max()
+                .getAsDouble();
     }
 
     boolean isNormal() {
@@ -158,5 +149,14 @@ public class FuzzySet {
 
     boolean isConcave() {
         return !isConvex();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("{ ");
+        this.elements.stream().
+                forEach(e -> builder.append(" <" + e.getValue() + " , " + e.getMembershipDegree() + "> "));
+        return builder.toString();
     }
 }
