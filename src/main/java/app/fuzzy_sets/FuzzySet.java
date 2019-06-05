@@ -1,22 +1,19 @@
 package app.fuzzy_sets;
 
+import app.fuzzy_sets.characterictic_functions.CharacteristicFunction;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Getter
+@NoArgsConstructor
 public class FuzzySet {
 
-    enum Operation {
-        INTERSECTION,
-        UNION
-    }
-
-    private List<FuzzySetElement> elements; //A
-    private CharacteristicFunction characteristicFunction; //u
-    private ClassicSet universeOfDiscourse; //X
+    protected List<FuzzySetElement> elements; //A
+    protected CharacteristicFunction characteristicFunction; //u
+    protected ClassicSet universeOfDiscourse; //X -> do not keep?
 
     public FuzzySet(CharacteristicFunction characteristicFunction, ClassicSet universeOfDiscourse) {
         this.characteristicFunction = characteristicFunction;
@@ -38,6 +35,10 @@ public class FuzzySet {
         }
     }
 
+    public int getSize() {
+        return this.elements.size();
+    }
+
     boolean setsEquals(FuzzySet object) {
         List<FuzzySetElement> objectElements = object.getElements();
         if (this.elements.size() != object.getElements().size()) {
@@ -51,7 +52,9 @@ public class FuzzySet {
         return true;
     }
 
-    //cylindric extwnsion
+    void getCylyndricExtension(){
+        //TODO
+    }
 
     FuzzySet getComplement() {
         List<FuzzySetElement> complementElements = new ArrayList<>();
@@ -65,35 +68,6 @@ public class FuzzySet {
         return new FuzzySet(complementElements, this.universeOfDiscourse);
     }
 
-    FuzzySet getIntersection(FuzzySet fuzzySetB) {
-        return getOperation(fuzzySetB, Operation.INTERSECTION);
-
-    }
-
-    FuzzySet getUnion(FuzzySet fuzzySetB) {
-        return getOperation(fuzzySetB, Operation.UNION);
-    }
-
-    private FuzzySet getOperation(FuzzySet fuzzySetB, Operation operation) {
-        List<FuzzySetElement> fuzzySetBElements = fuzzySetB.getElements();
-        List<FuzzySetElement> intersectionElements = new ArrayList<>();
-
-        double membershipDegree;
-
-        for (int i = 0; i < elements.size(); i++) {
-            if (Operation.UNION.equals(operation)) {
-                membershipDegree = elements.get(i).getMembershipDegree() > fuzzySetBElements.get(i).getMembershipDegree() ?
-                        elements.get(i).getMembershipDegree() : fuzzySetBElements.get(i).getMembershipDegree();
-            } else {
-                membershipDegree = elements.get(i).getMembershipDegree() > fuzzySetBElements.get(i).getMembershipDegree() ?
-                        fuzzySetBElements.get(i).getMembershipDegree() : elements.get(i).getMembershipDegree();
-            }
-
-            intersectionElements.add(new FuzzySetElement(elements.get(i).getValue(), membershipDegree));
-        }
-        return new FuzzySet(intersectionElements, this.universeOfDiscourse);
-    }
-
     ClassicSet getAlphaCut(double alpha) {
         if (alpha > 1 || alpha < 0) {
             return null;
@@ -105,7 +79,7 @@ public class FuzzySet {
                 alphaCutElements.add(new FuzzySetElement(element.getValue(), 1));
             }
         }
-        return new ClassicSet(alphaCutElements, this.universeOfDiscourse);
+        return new ClassicSet(alphaCutElements);
     }
 
     ClassicSet getStrongAlphaCut(double alpha) {
@@ -113,21 +87,76 @@ public class FuzzySet {
             return null;
         }
         List<FuzzySetElement> alphaCutElements = new ArrayList<>();
-        for (FuzzySetElement element : this.elements
-        ) {
+        for (FuzzySetElement element : this.elements) {
             if (element.getMembershipDegree() > alpha) {
                 alphaCutElements.add(new FuzzySetElement(element.getValue(), 1));
             }
         }
-        return new ClassicSet(alphaCutElements, this.universeOfDiscourse);
+        return new ClassicSet(alphaCutElements);
     }
 
     ClassicSet getSupport() {
         return getStrongAlphaCut(0);
     }
 
+    ClassicSet getCore() {
+        return getStrongAlphaCut(1);
+    }
 
+    double getCardinality() {
+        double cardinality = 0;
+        for (FuzzySetElement element : this.elements) {
+            cardinality += element.getMembershipDegree();
+        }
+        return cardinality;
+    }
 
+    double getDegreeOfFuziness() {
+        return this.getSize() / this.universeOfDiscourse.getSize();
+    }
 
+    boolean isEmpty() {
+        if (this.elements.isEmpty())
+            return true;
+        else if (getCardinality() == 0)
+            return true;
+        else
+            return false;
+    }
 
+    double getCentroid() {
+        double numerator = 0;
+        double denominator = 0;
+        for (FuzzySetElement element : this.elements) {
+            numerator += element.getValue() * element.getMembershipDegree();
+            denominator += element.getMembershipDegree();
+        }
+        return numerator / denominator;
+    }
+
+    double getHeight() {
+        double height = 0;
+        for (FuzzySetElement element : this.elements) {
+            if (element.getMembershipDegree() > height)
+                height = element.getMembershipDegree();
+        }
+        return height;
+    }
+
+    boolean isNormal() {
+        return getHeight() == 1;
+    }
+
+    double getCardinalityRatio() {
+        return getCardinality() / universeOfDiscourse.getSize();
+    }
+
+    boolean isConvex() {
+        //TODO
+        return false;
+    }
+
+    boolean isConcave() {
+        return !isConvex();
+    }
 }

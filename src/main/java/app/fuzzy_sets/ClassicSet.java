@@ -4,7 +4,8 @@ import java.util.List;
 
 public class ClassicSet extends FuzzySet {
 
-    public ClassicSet(List<FuzzySetElement> elements, ClassicSet universeOfDiscourse) {
-        super(elements, universeOfDiscourse);
+    public ClassicSet(List<FuzzySetElement> elements) {
+            this.elements = elements;
     }
+
 }
