@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class FuzzySet {
 
     protected List<FuzzySetElement> elements; //A
-    protected ClassicSet universeOfDiscourse; //X -> do not keep?
+    protected ClassicSet universeOfDiscourse; //X
 
     public FuzzySet(CharacteristicFunction characteristicFunction, ClassicSet universeOfDiscourse) {
         this.universeOfDiscourse = universeOfDiscourse;
@@ -103,7 +103,7 @@ public class FuzzySet {
     }
 
     public double getDegreeOfFuziness() {
-        return Double.valueOf(this.getSupport().getSize())/ Double.valueOf(this.universeOfDiscourse.getSize());
+        return Double.valueOf(this.getSupport().getSize()) / Double.valueOf(this.universeOfDiscourse.getSize());
     }
 
     public boolean isEmpty() {

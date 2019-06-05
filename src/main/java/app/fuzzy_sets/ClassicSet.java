@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 public class ClassicSet extends FuzzySet {
 
     public ClassicSet(List<FuzzySetElement> elements) {
-            this.elements = elements;
+        this.elements = elements;
     }
 
     public ClassicSet(List<Double> elements, CharacteristicFunction characteristicFunction) {

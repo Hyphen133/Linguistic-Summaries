@@ -31,42 +31,42 @@ public class TennisCsvLoader {
                     String[] values = line.split(",");
 
                     //Filter bad values
-                    if(values.length > 54){
+                    if (values.length > 54) {
                         continue;
                     }
 
 
-                    try{
+                    try {
 
                         boolean isDouble = processBoolean(values[50]);
 
                         //Filter missing values
-                        if(processInt(values[23]) == 0){
+                        if (processInt(values[23]) == 0) {
                             continue;
                         }
 
 
                         //Is doubles have long name or difficult name then values[13] will turn into string -> parsing int expection
-                        if (processInt(values[13])!=0 && !isDouble) {       //check if sets are recorded
+                        if (processInt(values[13]) != 0 && !isDouble) {       //check if sets are recorded
 
                             TennisMatch tennisMatch = TennisMatch.builder()
                                     .playerName(processName(values[7], "-"))
-                                    .opponentName(processName(values[9],"-"))
+                                    .opponentName(processName(values[9], "-"))
                                     .courtSurface(values[3])
                                     .tournamentName(values[11])
                                     .round(values[12])
                                     .location(values[2])
                                     //fuzzy
                                     .winner(processBoolean(values[46]))
-                                    .gamesDifference(Math.abs(processInt(values[15])-processInt(values[16])))
+                                    .gamesDifference(Math.abs(processInt(values[15]) - processInt(values[16])))
                                     .aces(processInt(values[20]))
                                     .doubleFaults(processInt(values[21]))
-                                    .averageSetDurationInMinutes( processTimeToMinutes(values[45])/processInt(values[13]))
-                                    .successfulBreakPointsPercentage(calculatePercentage(values[28],String.valueOf(processInt(values[28])+processInt(values[29]))))
+                                    .averageSetDurationInMinutes(processTimeToMinutes(values[45]) / processInt(values[13]))
+                                    .successfulBreakPointsPercentage(calculatePercentage(values[28], String.valueOf(processInt(values[28]) + processInt(values[29]))))
                                     .firstServeWonPointsPercentage(calculatePercentage(values[24], values[25]))
-                                    .secondServeWonPointsPercentage(calculatePercentage(values[26],values[27]))
-                                    .returnWonPointsPercentage(calculatePercentage(values[41],values[42]))
-                                    .firstServicePercentage(calculatePercentage(values[22],values[23]))
+                                    .secondServeWonPointsPercentage(calculatePercentage(values[26], values[27]))
+                                    .returnWonPointsPercentage(calculatePercentage(values[41], values[42]))
+                                    .firstServicePercentage(calculatePercentage(values[22], values[23]))
                                     .tieBreaksWon(processInt(values[17]))
                                     .isFirstSetWon(processBoolean(values[49]))
                                     .build();
@@ -74,10 +74,9 @@ public class TennisCsvLoader {
                             tennisMatches.add(tennisMatch);
 
                         }
-                    }catch (IllegalArgumentException e){
+                    } catch (IllegalArgumentException e) {
                         System.out.println("Exception: " + i);
                     }
-
 
 
                 }
@@ -108,10 +107,10 @@ public class TennisCsvLoader {
         int v1 = processInt(value1);
         int v2 = processInt(value2);
 
-        if(v2 == 0){
+        if (v2 == 0) {
             return 0.0;
-        }else{
-            return Utils.round(((double)v1)/v2,2);
+        } else {
+            return Utils.round(((double) v1) / v2, 2);
         }
     }
 
@@ -123,29 +122,29 @@ public class TennisCsvLoader {
                 parts.add(Character.toUpperCase(namePart.charAt(0)) + namePart.substring(1));
             }
         }
-        return  StringUtils.join(parts.toArray(new String[0]), " ");
+        return StringUtils.join(parts.toArray(new String[0]), " ");
     }
 
     private static boolean processBoolean(String truthString) throws IllegalArgumentException {
-        if (truthString.length()!=1){
+        if (truthString.length() != 1) {
             throw new IllegalArgumentException("Bad truth string!!");
         }
         return truthString.equals("t");
     }
 
-    private static int processInt(String intString){
-        if(intString.equals("")){
+    private static int processInt(String intString) {
+        if (intString.equals("")) {
             return 0;
         }
         return Integer.parseInt(intString);
     }
 
-    private static int processTimeToMinutes(String time){
-        if(time.length()!=8){
+    private static int processTimeToMinutes(String time) {
+        if (time.length() != 8) {
             return 0;
         }
         String[] timeParts = time.split(":");
-        return 60*processInt(timeParts[0])+processInt(timeParts[1]);
+        return 60 * processInt(timeParts[0]) + processInt(timeParts[1]);
 
     }
 }

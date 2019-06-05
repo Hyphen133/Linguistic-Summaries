@@ -26,7 +26,7 @@ public class App implements CommandLineRunner {
         List<TennisMatch> tennisMatches = TennisCsvLoader.load();
         System.out.println("Expected size: " + tennisMatches.size());
         long start = System.currentTimeMillis();
-        if(tennisMatchRepository.count() == 0){
+        if (tennisMatchRepository.count() == 0) {
 //            tennisMatchRepository.save(tennisMatches.subList(0,recordsCount));
             tennisMatchRepository.save(tennisMatches);
         }
