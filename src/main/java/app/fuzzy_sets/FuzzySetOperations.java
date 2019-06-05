@@ -25,7 +25,7 @@ public class FuzzySetOperations {
         List<FuzzySetElement> operationElements = new ArrayList<>();
 
         double membershipDegree;
-        
+
         for (int i = 0; i < fuzzySetAElements.size(); i++) {
             if (Operation.UNION.equals(operation)) {
                 membershipDegree = fuzzySetAElements.get(i).getMembershipDegree() > fuzzySetBElements.get(i).getMembershipDegree() ?
