@@ -38,5 +38,8 @@ public class App2 {
         FuzzySet intersetion = FuzzySetOperations.getIntersection(A, complement);
         System.out.println(intersetion.toString());
 
+        FuzzySet union = FuzzySetOperations.getUnion(A, complement);
+        System.out.println(union.toString());
+
     }
 }

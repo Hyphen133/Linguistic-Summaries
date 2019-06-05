@@ -13,13 +13,11 @@ import java.util.stream.Collectors;
 public class FuzzySet {
 
     protected List<FuzzySetElement> elements; //A
-    protected CharacteristicFunction characteristicFunction; //u
     protected ClassicSet universeOfDiscourse; //X -> do not keep?
 
     public FuzzySet(CharacteristicFunction characteristicFunction, ClassicSet universeOfDiscourse) {
-        this.characteristicFunction = characteristicFunction;
         this.universeOfDiscourse = universeOfDiscourse;
-        setUpElements();
+        setUpElements(characteristicFunction);
     }
 
     public FuzzySet(List<FuzzySetElement> elements, ClassicSet universeOfDiscourse) {
@@ -27,7 +25,7 @@ public class FuzzySet {
         this.universeOfDiscourse = universeOfDiscourse;
     }
 
-    protected void setUpElements() {
+    protected void setUpElements(CharacteristicFunction characteristicFunction) {
         elements = universeOfDiscourse.getElements().stream()
                 .map(u -> new FuzzySetElement(u.getValue(), characteristicFunction.calculate(u.getValue())))
                 .collect(Collectors.toList());

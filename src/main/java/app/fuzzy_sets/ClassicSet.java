@@ -11,12 +11,11 @@ public class ClassicSet extends FuzzySet {
             this.elements = elements;
     }
 
-    public ClassicSet(List<Double> elements, CharacteristicFunction function) {
-        this.characteristicFunction = function;
-        setUpElements(elements);
+    public ClassicSet(List<Double> elements, CharacteristicFunction characteristicFunction) {
+        setUpElements(characteristicFunction, elements);
     }
 
-    protected void setUpElements(List<Double> elements) {
+    protected void setUpElements(CharacteristicFunction characteristicFunction, List<Double> elements) {
         this.elements = elements.stream()
                 .map(u -> new FuzzySetElement(u, characteristicFunction.calculate(u)))
                 .collect(Collectors.toList());

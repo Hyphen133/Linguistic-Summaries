@@ -19,7 +19,7 @@ public class FuzzySetOperations {
     }
 
     private static FuzzySet getOperation(FuzzySet fuzzySetA, FuzzySet fuzzySetB, Operation operation) {
-        List<FuzzySetElement> fuzzySetAElements = fuzzySetB.getElements();
+        List<FuzzySetElement> fuzzySetAElements = fuzzySetA.getElements();
         List<FuzzySetElement> fuzzySetBElements = fuzzySetB.getElements();
         List<FuzzySetElement> operationElements = new ArrayList<>();
 
