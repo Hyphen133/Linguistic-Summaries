@@ -10,13 +10,13 @@ public class TypeTwoSummarization implements Summarization{
     private LinguisticVariable summarizer2;
     private String summarizerTag1;
     private String summarizerTag2;
-    private LinguisticQuantifier quantifier;
+    private Quantifier quantifier;
     private ClassicSet attributeSet1;
     private ClassicSet attributeSet2;
     // Q - kwantyfikator (np. ok polowa) P - podmiot (krotki w bazie -> mecz) List <FuzzySet>W (ktore mialy malo asów i ...)  List<FuzzySet>S(duzą roznice w gemach ...)  T (50%)
 
 
-    public TypeTwoSummarization(String subject, LinguisticVariable summarizer1, LinguisticVariable summarizer2, String summarizerTag1, String summarizerTag2, LinguisticQuantifier quantifier, ClassicSet attributeSet1, ClassicSet attributeSet2) {
+    public TypeTwoSummarization(String subject, LinguisticVariable summarizer1, LinguisticVariable summarizer2, String summarizerTag1, String summarizerTag2, Quantifier quantifier, ClassicSet attributeSet1, ClassicSet attributeSet2) {
         this.subject = subject;
         this.summarizer1 = summarizer1;
         this.summarizer2 = summarizer2;
@@ -34,8 +34,8 @@ public class TypeTwoSummarization implements Summarization{
 
     @Override
     public double measureDegreeOfTruth() {
-        FuzzySet fuzzySetS = summarizer1.getFuzzySet(attributeSet1, summarizerTag1);
-        FuzzySet fuzzySetW = summarizer2.getFuzzySet(attributeSet2, summarizerTag2);
+        FuzzySet fuzzySetS = summarizer1.getFuzzySetForTag(attributeSet1, summarizerTag1);
+        FuzzySet fuzzySetW = summarizer2.getFuzzySetForTag(attributeSet2, summarizerTag2);
         return quantifier.getValue(FuzzySetOperations.getIntersection(fuzzySetS,fuzzySetW).getCardinality() /fuzzySetW.getCardinality());
     }
 

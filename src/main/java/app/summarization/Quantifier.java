@@ -10,13 +10,19 @@ import java.util.HashMap;
 // Defines set of quantifiers accessed by tag
 // size in case of quantifier
 //about 100 -> function
-public class LinguisticQuantifier {
+public class Quantifier {
+    enum QuantifierType{
+        ABSOLUTE, RELATIVE
+    }
+
     private String name;
     private CharacteristicFunction characteristicFunction;
+    private QuantifierType quantifierType;
 
-    public LinguisticQuantifier(String name, CharacteristicFunction characteristicFunction) {
+    public Quantifier(String name, CharacteristicFunction characteristicFunction, QuantifierType quantifierType) {
         this.name = name;
         this.characteristicFunction = characteristicFunction;
+        this.quantifierType = quantifierType;
     }
 
     public double getValue(double x){

@@ -5,7 +5,7 @@ import java.util.List;
 
 public class FuzzySetOperations {
 
-    enum Operation {
+    public enum Operation {
         INTERSECTION,
         UNION
     }
@@ -18,7 +18,7 @@ public class FuzzySetOperations {
         return getOperation(fuzzySetA, fuzzySetB, Operation.UNION);
     }
 
-    private static FuzzySet getOperation(FuzzySet fuzzySetA, FuzzySet fuzzySetB, Operation operation) {
+    public static FuzzySet getOperation(FuzzySet fuzzySetA, FuzzySet fuzzySetB, Operation operation) {
         List<FuzzySetElement> fuzzySetAElements = fuzzySetA.getElements();
         List<FuzzySetElement> fuzzySetBElements = fuzzySetB.getElements();
         List<FuzzySetElement> operationElements = new ArrayList<>();

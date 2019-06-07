@@ -20,7 +20,7 @@ public class LinguisticVariable {
         this.tagCharacteristicFunctionMap = tagCharacteristicFunctionMap;
     }
 
-    public FuzzySet getFuzzySet(ClassicSet universeOfDiscourse, String tag) {
+    public FuzzySet getFuzzySetForTag(ClassicSet universeOfDiscourse, String tag) {
         return new FuzzySet(tagCharacteristicFunctionMap.get(tag), universeOfDiscourse);
     }
 
