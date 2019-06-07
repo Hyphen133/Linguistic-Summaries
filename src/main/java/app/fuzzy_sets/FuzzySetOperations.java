@@ -5,20 +5,21 @@ import java.util.List;
 
 public class FuzzySetOperations {
 
-    public enum Operation {
-        INTERSECTION,
-        UNION
+
+
+    public static FuzzySet getNegation(FuzzySet fuzzySetA) {
+        return fuzzySetA.getComplement();
     }
 
     public static FuzzySet getIntersection(FuzzySet fuzzySetA, FuzzySet fuzzySetB) {
-        return getOperation(fuzzySetA, fuzzySetB, Operation.INTERSECTION);
+        return getOperation(fuzzySetA, fuzzySetB, OperationType.INTERSECTION);
     }
 
     public static FuzzySet getUnion(FuzzySet fuzzySetA, FuzzySet fuzzySetB) {
-        return getOperation(fuzzySetA, fuzzySetB, Operation.UNION);
+        return getOperation(fuzzySetA, fuzzySetB, OperationType.UNION);
     }
 
-    public static FuzzySet getOperation(FuzzySet fuzzySetA, FuzzySet fuzzySetB, Operation operation) {
+    public static FuzzySet getOperation(FuzzySet fuzzySetA, FuzzySet fuzzySetB, OperationType operation) {
         List<FuzzySetElement> fuzzySetAElements = fuzzySetA.getElements();
         List<FuzzySetElement> fuzzySetBElements = fuzzySetB.getElements();
         List<FuzzySetElement> operationElements = new ArrayList<>();
@@ -26,7 +27,7 @@ public class FuzzySetOperations {
         double membershipDegree;
 
         for (int i = 0; i < fuzzySetAElements.size(); i++) {
-            if (Operation.UNION.equals(operation)) {
+            if (OperationType.UNION.equals(operation)) {
                 membershipDegree = fuzzySetAElements.get(i).getMembershipDegree() > fuzzySetBElements.get(i).getMembershipDegree() ?
                         fuzzySetAElements.get(i).getMembershipDegree() : fuzzySetBElements.get(i).getMembershipDegree();
             } else {

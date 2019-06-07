@@ -23,4 +23,8 @@ public class Quantifier {
     public String getName() {
         return name;
     }
+
+    public QuantifierType getQuantifierType() {
+        return quantifierType;
+    }
 }

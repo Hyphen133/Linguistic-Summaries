@@ -11,6 +11,12 @@ import java.util.List;
  */
 public class DegreeOfImprecision implements QualityMeasure {
     public static double getValue(Summary summary) {
-        return 0.0;
+        double operationResult = 1;
+        List<FuzzySet> summarizers =  summary.getSummarizerSets();
+        for (FuzzySet summarizer: summarizers
+             ) {
+            operationResult*=summarizer.getDegreeOfFuziness();
+        }
+        return 1 - Math.pow(operationResult,(1/summarizers.size()));
     }
 }
