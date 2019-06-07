@@ -7,24 +7,29 @@ import app.fuzzy_sets.characterictic_functions.CharacteristicFunction;
 import java.util.HashMap;
 import java.util.List;
 
+/*
+ * L - the name of variable
+ * H - set of labels
+ * X - universe of discourse
+ * G - syntactic rule
+ * K - semantic rule
+ */
 public class LinguisticVariable {
     private String name;
 
-    // age
-    // f.ex young -> function1 ; old -> function2 ...
-    // in case of quantifiers
-    private HashMap<String, CharacteristicFunction> tagCharacteristicFunctionMap;
+    // mapping label to function
+    private HashMap<String, CharacteristicFunction> labelCharacteristicFunctionMap;
 
-    public LinguisticVariable(String name, HashMap<String, CharacteristicFunction> tagCharacteristicFunctionMap) {
+    public LinguisticVariable(String name, HashMap<String, CharacteristicFunction> labelCharacteristicFunctionMap) {
         this.name = name;
-        this.tagCharacteristicFunctionMap = tagCharacteristicFunctionMap;
+        this.labelCharacteristicFunctionMap = labelCharacteristicFunctionMap;
     }
 
-    public FuzzySet getFuzzySetForTag(ClassicSet universeOfDiscourse, String tag) {
-        return new FuzzySet(tagCharacteristicFunctionMap.get(tag), universeOfDiscourse);
+    public FuzzySet getFuzzySetForLabel(ClassicSet universeOfDiscourse, String label) {
+        return new FuzzySet(labelCharacteristicFunctionMap.get(label), universeOfDiscourse);
     }
 
-    public String print(String tag){
+    public String print(String tag) {
         return tag + " " + name;
     }
 
