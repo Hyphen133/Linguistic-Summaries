@@ -12,9 +12,6 @@ import java.util.List;
  */
 public class LengthOfSummary implements QualityMeasure {
     public static double getValue(Summary summary) {
-        //will be taken from suumary
-        List<FuzzySet> summarizator = new ArrayList<>();
-
-        return 2 * Math.pow(0.5, summarizator.size());
+        return 2 * Math.pow(0.5, summary.getSummarizerCount());
     }
 }

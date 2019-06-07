@@ -49,6 +49,11 @@ public class TypeOneSummary implements Summary {
     }
 
     @Override
+    public int getSummarizerCount() {
+        return summarizerLabels.size();
+    }
+
+    @Override
     public QuantifierType getQuantifierType() {
         return quantifier.getQuantifierType();
     }

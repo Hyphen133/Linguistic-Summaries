@@ -69,6 +69,13 @@ public class TypeTwoSummary implements Summary {
     }
 
     @Override
+    public int getSummarizerCount() {
+        //TODO
+        //   return summarizerLabels.size();
+        return 1;
+    }
+
+    @Override
     public Quantifier getQuantifier() {
         return quantifier;
     }
