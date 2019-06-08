@@ -22,7 +22,7 @@ public class TypeTwoSummary extends TypeOneSummary{
         this.qualifierLabels = qualifierLabels;
     }
 
-    public List<FuzzySet> getClassifiersSets() {
+    public List<FuzzySet> getQualifiersSets() {
         List<FuzzySet> summarizersSet = new ArrayList<>();
         for (int i = 0; i < qualifier.size(); i++) {
             summarizersSet.add(qualifier.get(i).getFuzzySetForLabel(qualifier.get(i).getUniverseOfDisclouse(), qualifierLabels.get(i)));
