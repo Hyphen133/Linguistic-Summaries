@@ -20,9 +20,12 @@ public class LinguisticVariable {
     // mapping label to function
     private HashMap<String, CharacteristicFunction> labelCharacteristicFunctionMap;
 
-    public LinguisticVariable(String name, HashMap<String, CharacteristicFunction> labelCharacteristicFunctionMap) {
+    private ClassicSet universeOfDisclouse;
+
+    public LinguisticVariable(String name, HashMap<String, CharacteristicFunction> labelCharacteristicFunctionMap, ClassicSet universeOfDisclouse) {
         this.name = name;
         this.labelCharacteristicFunctionMap = labelCharacteristicFunctionMap;
+        this.universeOfDisclouse = universeOfDisclouse;
     }
 
     public FuzzySet getFuzzySetForLabel(ClassicSet universeOfDiscourse, String label) {
@@ -33,4 +36,7 @@ public class LinguisticVariable {
         return tag + " " + name;
     }
 
+    public ClassicSet getUniverseOfDisclouse() {
+        return universeOfDisclouse;
+    }
 }

@@ -18,32 +18,30 @@ public class TypeOneSummary implements Summary {
     private List<LinguisticVariable> summarizers;
     private List<String> summarizerLabels;
     private Quantifier quantifier;
-    private List<ClassicSet> attributeSets;
     private OperationType summarizerOperation;
 
-    public TypeOneSummary(String subject, List<LinguisticVariable> summarizers,
-                          List<String> summarizerLabels, Quantifier quantifier, List<ClassicSet> attributeSets) {
+    public TypeOneSummary(String subject, List<LinguisticVariable> summarizers, List<String> summarizerLabels, Quantifier quantifier) {
         this.subject = subject;
         this.summarizers = summarizers;
         this.summarizerLabels = summarizerLabels;
         this.quantifier = quantifier;
-        this.attributeSets = attributeSets;
+        this.summarizers = null;
     }
 
-    public double getMembershipDegree() {
-        FuzzySet operationResult = summarizers.get(0).getFuzzySetForLabel(attributeSets.get(0), summarizerLabels.get(0));
-        for (int i = 1; i < summarizers.size(); i++) {
-            operationResult = FuzzySetOperations.getOperation(operationResult,
-                    summarizers.get(i).getFuzzySetForLabel(attributeSets.get(i), summarizerLabels.get(i)), summarizerOperation);
-        }
-        return operationResult.getCardinality();
-    }
+//    public double getMembershipDegree() {
+//        FuzzySet operationResult = summarizers.get(0).getFuzzySetForLabel(attributeSets.get(0), summarizerLabels.get(0));
+//        for (int i = 1; i < summarizers.size(); i++) {
+//            operationResult = FuzzySetOperations.getOperation(operationResult,
+//                    summarizers.get(i).getFuzzySetForLabel(attributeSets.get(i), summarizerLabels.get(i)), summarizerOperation);
+//        }
+//        return operationResult.getCardinality();
+//    }
 
     @Override
     public List<FuzzySet> getSummarizerSets() {
         List<FuzzySet> summarizersSet = new ArrayList<>();
         for (int i = 0; i < summarizers.size(); i++) {
-            summarizersSet.add(summarizers.get(i).getFuzzySetForLabel(attributeSets.get(i), summarizerLabels.get(i)));
+            summarizersSet.add(summarizers.get(i).getFuzzySetForLabel(summarizers.get(i).getUniverseOfDisclouse(), summarizerLabels.get(i)));
         }
         return summarizersSet;
     }
