@@ -73,7 +73,6 @@ public class TypeOneSummary implements Summary {
     @Override
     public String getSummary() {
         String qunatifierString = Character.toUpperCase(quantifier.getName().charAt(0)) + quantifier.getName().substring(1);
-        //TODO prittify, include operation (given in enum) , last without comma
         StringBuilder summarizerStringBuilder = new StringBuilder();
 
         for (int i = 0; i < summarizers.size() - 1; i++) {
