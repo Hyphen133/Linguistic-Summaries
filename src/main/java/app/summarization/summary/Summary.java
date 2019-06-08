@@ -1,6 +1,7 @@
 package app.summarization.summary;
 
 import app.fuzzy_sets.FuzzySet;
+import app.fuzzy_sets.OperationType;
 
 import java.util.List;
 
@@ -14,6 +15,8 @@ public interface Summary {
     Quantifier getQuantifier();
 
     List<FuzzySet> getSummarizerSets();
+
+    FuzzySet getSummarizer();
 
     int getSummarizerCount();
 }

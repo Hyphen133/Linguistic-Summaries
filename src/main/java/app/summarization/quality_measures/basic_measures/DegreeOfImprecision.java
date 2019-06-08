@@ -15,7 +15,7 @@ public class DegreeOfImprecision implements QualityMeasure {
         List<FuzzySet> summarizers = summary.getSummarizerSets();
         for (FuzzySet summarizer : summarizers
         ) {
-            operationResult *= summarizer.getDegreeOfFuziness();
+            operationResult *= summarizer.getDegreeOfFuzziness();
         }
         return 1 - Math.pow(operationResult, (1 / summarizers.size()));
     }

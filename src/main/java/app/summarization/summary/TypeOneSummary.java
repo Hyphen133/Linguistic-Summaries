@@ -1,6 +1,5 @@
 package app.summarization.summary;
 
-import app.fuzzy_sets.ClassicSet;
 import app.fuzzy_sets.FuzzySet;
 import app.fuzzy_sets.FuzzySetOperations;
 import app.fuzzy_sets.OperationType;
@@ -20,6 +19,8 @@ public class TypeOneSummary implements Summary {
     private Quantifier quantifier;
     private OperationType summarizerOperation;
 
+    private List<FuzzySet> summarizerSets;
+
 
     public TypeOneSummary(String subject, List<LinguisticVariable> summarizers, List<String> summarizerLabels, Quantifier quantifier) {
         this.subject = subject;
@@ -28,27 +29,32 @@ public class TypeOneSummary implements Summary {
         this.quantifier = quantifier;
     }
 
-//    public double getMembershipDegree() {
-//        FuzzySet operationResult = summarizers.get(0).getFuzzySetForLabel(attributeSets.get(0), summarizerLabels.get(0));
-//        for (int i = 1; i < summarizers.size(); i++) {
-//            operationResult = FuzzySetOperations.getOperation(operationResult,
-//                    summarizers.get(i).getFuzzySetForLabel(attributeSets.get(i), summarizerLabels.get(i)), summarizerOperation);
-//        }
-//        return operationResult.getCardinality();
-//    }
-
     @Override
     public List<FuzzySet> getSummarizerSets() {
-        List<FuzzySet> summarizersSet = new ArrayList<>();
-        for (int i = 0; i < summarizers.size(); i++) {
-            summarizersSet.add(summarizers.get(i).getFuzzySetForLabel(summarizers.get(i).getUniverseOfDisclouse(), summarizerLabels.get(i)));
+        if (summarizerSets == null) {
+            summarizerSets = new ArrayList<>();
+            for (int i = 0; i < summarizers.size(); i++) {
+                summarizerSets.add(summarizers.get(i).getFuzzySetForLabel(
+                        summarizers.get(i).getUniverseOfDiscourse(), summarizerLabels.get(i)));
+            }
         }
-        return summarizersSet;
+        return summarizerSets;
+    }
+
+    @Override
+    public FuzzySet getSummarizer() {
+        List<FuzzySet> summarizers = getSummarizerSets();
+        FuzzySet summarizer = summarizers.get(0);
+        for (int i = 1; i < summarizers.size(); i++) {
+            summarizer = FuzzySetOperations.getOperation(
+                    summarizer, summarizers.get(i), summarizerOperation);
+        }
+        return summarizer;
     }
 
     @Override
     public int getSummarizerCount() {
-        return summarizerLabels.size();
+        return summarizers.size();
     }
 
     @Override
@@ -56,14 +62,9 @@ public class TypeOneSummary implements Summary {
         return quantifier.getQuantifierType();
     }
 
-    public OperationType getSummarizerOperation() {
-        return summarizerOperation;
-    }
-
     @Override
     public int getSubjectAmount() {
-        //TODO
-        return 0;
+        return summarizers.get(0).getUniverseOfDiscourse().getSize();
     }
 
     @Override
@@ -77,7 +78,7 @@ public class TypeOneSummary implements Summary {
 
     @Override
     public String getSummary() {
-        String qunatifierString = Character.toUpperCase(quantifier.getName().charAt(0)) + quantifier.getName().substring(1);
+        String quantifierString = Character.toUpperCase(quantifier.getName().charAt(0)) + quantifier.getName().substring(1);
         StringBuilder summarizerStringBuilder = new StringBuilder();
 
         for (int i = 0; i < summarizers.size() - 1; i++) {
@@ -87,6 +88,6 @@ public class TypeOneSummary implements Summary {
         summarizerStringBuilder.append(summarizers.get(lastIndex).print(summarizerLabels.get(lastIndex)));
 
 
-        return qunatifierString + " " + subject + " have " + summarizerStringBuilder.toString();
+        return quantifierString + " " + subject + " have " + summarizerStringBuilder.toString();
     }
 }

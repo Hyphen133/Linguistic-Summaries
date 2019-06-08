@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /*
- * T4
+ * T5
  */
 public class LengthOfSummary implements QualityMeasure {
     public static double getValue(Summary summary) {

@@ -1,6 +1,7 @@
 package app.summarization.summary;
 
 import app.fuzzy_sets.FuzzySet;
+import app.fuzzy_sets.FuzzySetOperations;
 import app.fuzzy_sets.OperationType;
 import app.summarization.LinguisticVariable;
 
@@ -9,33 +10,46 @@ import java.util.List;
 
 /* Q - quantifier (around 1/4)
  * P - subject of summary (of matches -> entities)
- * W - qualifier of summary
+ * W - qualifiers of summary
  * S - summarizers
  */
-public class TypeTwoSummary extends TypeOneSummary{
-    private List<LinguisticVariable> qualifier;
+public class TypeTwoSummary extends TypeOneSummary {
+    private List<LinguisticVariable> qualifiers;
     private List<String> qualifierLabels;
+    private OperationType qualifierOperation;
 
-    private OperationType quantifierOperation;
-    // Q - kwantyfikator (np. ok polowa) P - podmiot (krotki w bazie -> mecz) List <FuzzySet>W (ktore mialy malo asów i ...)  List<FuzzySet>S(duzą roznice w gemach ...)  T (50%)
+    private List<FuzzySet> qualifierSets;
 
     public TypeTwoSummary(String subject, List<LinguisticVariable> summarizers, List<String> summarizerLabels, List<LinguisticVariable> qualifier, List<String> qualifierLabels, Quantifier quantifier, OperationType quantifierOperation) {
         super(subject, summarizers, summarizerLabels, quantifier);
-        this.qualifier = qualifier;
+        this.qualifiers = qualifier;
         this.qualifierLabels = qualifierLabels;
-        this.quantifierOperation = quantifierOperation;
+        this.qualifierOperation = quantifierOperation;
     }
 
     public List<FuzzySet> getQualifierSets() {
-        List<FuzzySet> summarizersSet = new ArrayList<>();
-        for (int i = 0; i < qualifier.size(); i++) {
-            summarizersSet.add(qualifier.get(i).getFuzzySetForLabel(qualifier.get(i).getUniverseOfDisclouse(), qualifierLabels.get(i)));
+        if (qualifierSets == null) {
+            qualifierSets = new ArrayList<>();
+            for (int i = 0; i < qualifiers.size(); i++) {
+                qualifierSets.add(qualifiers.get(i).getFuzzySetForLabel(
+                        qualifiers.get(i).getUniverseOfDiscourse(), qualifierLabels.get(i)));
+            }
         }
-        return summarizersSet;
+        return qualifierSets;
     }
 
-    public OperationType getQuantifierOperation() {
-        return quantifierOperation;
+    public FuzzySet getQualifier() {
+        List<FuzzySet> qualifiers = getQualifierSets();
+        FuzzySet qualifier = qualifiers.get(0);
+        for (int i = 1; i < qualifiers.size(); i++) {
+            qualifier = FuzzySetOperations.getOperation(
+                    qualifier, qualifiers.get(i), qualifierOperation);
+        }
+        return qualifier;
+    }
+
+    public OperationType getQualifierOperation() {
+        return qualifierOperation;
     }
 
     @Override
@@ -45,10 +59,10 @@ public class TypeTwoSummary extends TypeOneSummary{
 
         StringBuilder whichClause = new StringBuilder();
         whichClause.append(" which have");
-        whichClause.append(qualifier.get(0).print(qualifierLabels.get(0)));
+        whichClause.append(qualifiers.get(0).print(qualifierLabels.get(0)));
 
-        for (int i = 1  ; i <  qualifier.size(); i++) {
-            whichClause.append(" " + quantifierOperation + " " + qualifier.get(i).print(qualifierLabels.get(i)));
+        for (int i = 1; i < qualifiers.size(); i++) {
+            whichClause.append(" " + qualifierOperation + " " + qualifiers.get(i).print(qualifierLabels.get(i)));
         }
         whichClause.append(" ");
 
