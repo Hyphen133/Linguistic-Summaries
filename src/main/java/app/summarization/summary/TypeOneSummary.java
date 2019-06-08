@@ -25,7 +25,6 @@ public class TypeOneSummary implements Summary {
         this.summarizers = summarizers;
         this.summarizerLabels = summarizerLabels;
         this.quantifier = quantifier;
-        this.summarizers = null;
     }
 
 //    public double getMembershipDegree() {
