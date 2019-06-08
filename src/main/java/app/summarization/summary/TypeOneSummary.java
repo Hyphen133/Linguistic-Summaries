@@ -66,6 +66,9 @@ public class TypeOneSummary implements Summary {
         return quantifier;
     }
 
+    public String getSubject() {
+        return subject;
+    }
 
     @Override
     public String getSummary() {
