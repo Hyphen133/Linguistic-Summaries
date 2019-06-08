@@ -20,6 +20,7 @@ public class TypeOneSummary implements Summary {
     private Quantifier quantifier;
     private OperationType summarizerOperation;
 
+
     public TypeOneSummary(String subject, List<LinguisticVariable> summarizers, List<String> summarizerLabels, Quantifier quantifier) {
         this.subject = subject;
         this.summarizers = summarizers;
@@ -53,6 +54,10 @@ public class TypeOneSummary implements Summary {
     @Override
     public QuantifierType getQuantifierType() {
         return quantifier.getQuantifierType();
+    }
+
+    public OperationType getSummarizerOperation() {
+        return summarizerOperation;
     }
 
     @Override

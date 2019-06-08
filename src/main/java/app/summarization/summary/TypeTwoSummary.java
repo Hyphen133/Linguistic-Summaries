@@ -26,7 +26,7 @@ public class TypeTwoSummary extends TypeOneSummary{
         this.quantifierOperation = quantifierOperation;
     }
 
-    public List<FuzzySet> getQualifiersSets() {
+    public List<FuzzySet> getQualifierSets() {
         List<FuzzySet> summarizersSet = new ArrayList<>();
         for (int i = 0; i < qualifier.size(); i++) {
             summarizersSet.add(qualifier.get(i).getFuzzySetForLabel(qualifier.get(i).getUniverseOfDisclouse(), qualifierLabels.get(i)));
@@ -34,6 +34,9 @@ public class TypeTwoSummary extends TypeOneSummary{
         return summarizersSet;
     }
 
+    public OperationType getQuantifierOperation() {
+        return quantifierOperation;
+    }
 
     @Override
     public String getSummary() {
