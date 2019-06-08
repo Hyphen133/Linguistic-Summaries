@@ -6,7 +6,7 @@ import app.summarization.summary.Summary;
 /*
  * T4
  */
-public class DegreeOfAppropriatness implements QualityMeasure {
+public class DegreeOfAppropriateness implements QualityMeasure {
     public static double getValue(Summary summary) {
         return 0.0;
     }

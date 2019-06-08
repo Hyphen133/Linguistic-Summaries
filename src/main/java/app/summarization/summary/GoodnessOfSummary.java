@@ -1,44 +1,65 @@
 package app.summarization.summary;
 
-import app.summarization.quality_measures.basic_measures.*;
-import app.summarization.quality_measures.new_measures.*;
+import app.summarization.quality_measures.QualityMeasureEnum;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GoodnessOfSummary {
 
     public static double getGoodnessOfSummary(Summary summary) {
-        double weight = 0.2;
-        List<Double> measures= new ArrayList<>();
-        measures.addAll(Arrays.asList(DegreeOfTruth.getValue(summary),
-                DegreeOfImprecision.getValue(summary),
-                DegreeOfCoverage.getValue(summary),
-                DegreeOfAppropriatness.getValue(summary),
-                LengthOfSummary.getValue(summary)));
-        return getWeightedAverage(measures,weight);
+        GoodnessOfSummaryCounter counter = new GoodnessOfSummaryCounter(summary)
+                .addQualityMeasure(QualityMeasureEnum.T1)
+                .addQualityMeasure(QualityMeasureEnum.T2)
+                .addQualityMeasure(QualityMeasureEnum.T3)
+                .addQualityMeasure(QualityMeasureEnum.T4)
+                .addQualityMeasure(QualityMeasureEnum.T5);
+        return counter.count();
     }
 
     public static double getExtendedGoodnessOfSummary(Summary summary) {
-        double weight = 0.1;
-        List<Double> measures= new ArrayList<>();
-        measures.addAll(Arrays.asList(DegreeOfTruth.getValue(summary),
-                DegreeOfImprecision.getValue(summary),
-                DegreeOfCoverage.getValue(summary),
-                DegreeOfAppropriatness.getValue(summary),
-                LengthOfSummary.getValue(summary),
-                DegreeOfQuantifierImprecision.getValue(summary),
-                DegreeOfQuantifierCardinality.getValue(summary),
-                DegreeOfSummarizerCardinality.getValue(summary),
-                DegreeOfQualifierImprecision.getValue(summary),
-                DegreeOfQualifierCardinality.getValue(summary)));
-        return getWeightedAverage(measures,weight);
+        GoodnessOfSummaryCounter counter = new GoodnessOfSummaryCounter(summary)
+                .addQualityMeasure(QualityMeasureEnum.T1)
+                .addQualityMeasure(QualityMeasureEnum.T2)
+                .addQualityMeasure(QualityMeasureEnum.T3)
+                .addQualityMeasure(QualityMeasureEnum.T4)
+                .addQualityMeasure(QualityMeasureEnum.T5)
+                .addQualityMeasure(QualityMeasureEnum.T6)
+                .addQualityMeasure(QualityMeasureEnum.T7)
+                .addQualityMeasure(QualityMeasureEnum.T8)
+                .addQualityMeasure(QualityMeasureEnum.T9)
+                .addQualityMeasure(QualityMeasureEnum.T10);
+        return counter.count();
     }
 
-    private static double getWeightedAverage(List<Double> measures, double weight) {
-        return measures.stream()
-                .mapToDouble(m -> m * weight)
-                .sum();
+    static class GoodnessOfSummaryCounter {
+        Map<QualityMeasureEnum, Double> measures;
+        Summary summary;
+
+        public GoodnessOfSummaryCounter(Summary summary) {
+            this.summary = summary;
+            this.measures = new HashMap<>();
+        }
+
+        GoodnessOfSummaryCounter addQualityMeasure(QualityMeasureEnum name) {
+            if (!measures.containsKey(name))
+                measures.put(name, 0.0);
+            return this;
+        }
+
+        double count() {
+            for (Map.Entry<QualityMeasureEnum, Double> entry : measures.entrySet()) {
+                entry.setValue(QualityMeasureEnum.getValue(entry.getKey(), summary));
+            }
+            return getWeightedAverage();
+        }
+
+        private double getWeightedAverage() {
+            int weight = 1 / measures.size();
+            return measures.values()
+                    .stream()
+                    .mapToDouble(m -> m * weight)
+                    .sum();
+        }
     }
 }
