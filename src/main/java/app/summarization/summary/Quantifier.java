@@ -21,7 +21,7 @@ public class Quantifier extends FuzzySet {
         this.name = name;
         this.quantifierType = quantifierType;
     }
-    
+
     public double getValue(double x){
         return characteristicFunction.calculate(x);
     }

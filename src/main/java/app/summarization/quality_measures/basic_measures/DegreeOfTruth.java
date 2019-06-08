@@ -13,13 +13,14 @@ import app.summarization.summary.TypeOneSummary;
  */
 public class DegreeOfTruth implements QualityMeasure {
     public static double getValue(Summary summary) {
-        double operationResult = 0;
-        operationResult = ((TypeOneSummary) summary).getMembershipDegree();
-        if (QuantifierType.ABSOLUTE.equals(summary.getQuantifierType())) {
-            operationResult /= summary.getSubjectAmount();
-        }
-
-        //TODO drugiego typu
-        return summary.getQuantifier().getValue((operationResult));
+//        double operationResult = 0;
+//        operationResult = ((TypeOneSummary) summary).getMembershipDegree();
+//        if (QuantifierType.ABSOLUTE.equals(summary.getQuantifierType())) {
+//            operationResult /= summary.getSubjectAmount();
+//        }
+//
+//        //TODO drugiego typu
+//        return summary.getQuantifier().getValue((operationResult));
+        return 0.0;
     }
 }
