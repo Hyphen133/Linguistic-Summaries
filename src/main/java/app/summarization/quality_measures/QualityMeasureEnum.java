@@ -23,7 +23,7 @@ public enum QualityMeasureEnum {
 
     String name;
 
-    public static double getValue(QualityMeasureEnum qualityMeasure, Summary summary){
+    public static double getValue(QualityMeasureEnum qualityMeasure, Summary summary) {
         switch (qualityMeasure) {
             case T1:
                 return DegreeOfTruth.getValue(summary);

@@ -102,8 +102,8 @@ public class FuzzySet {
                 .sum();
     }
 
-    public double getDegreeOfFuziness() {
-        return Double.valueOf(this.getSupport().getSize()) / Double.valueOf(this.universeOfDiscourse.getSize());
+    public double getDegreeOfFuzziness() {
+        return (double) this.getSupport().getSize() / (double) this.universeOfDiscourse.getSize();
     }
 
     public boolean isEmpty() {

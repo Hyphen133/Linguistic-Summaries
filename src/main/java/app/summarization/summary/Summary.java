@@ -14,8 +14,6 @@ public interface Summary {
 
     Quantifier getQuantifier();
 
-    OperationType getSummarizerOperation();
-
     List<FuzzySet> getSummarizerSets();
 
     FuzzySet getSummarizer();

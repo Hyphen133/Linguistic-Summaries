@@ -27,7 +27,7 @@ public class TypeTwoSummary extends TypeOneSummary {
         this.qualifierOperation = quantifierOperation;
     }
 
-    private List<FuzzySet> getQualifierSets() {
+    public List<FuzzySet> getQualifierSets() {
         if (qualifierSets == null) {
             qualifierSets = new ArrayList<>();
             for (int i = 0; i < qualifiers.size(); i++) {

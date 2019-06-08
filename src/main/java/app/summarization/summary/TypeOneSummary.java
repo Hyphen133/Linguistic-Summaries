@@ -42,14 +42,14 @@ public class TypeOneSummary implements Summary {
     }
 
     @Override
-    public FuzzySet getSummarizer(){
+    public FuzzySet getSummarizer() {
         List<FuzzySet> summarizers = getSummarizerSets();
         FuzzySet summarizer = summarizers.get(0);
         for (int i = 1; i < summarizers.size(); i++) {
             summarizer = FuzzySetOperations.getOperation(
                     summarizer, summarizers.get(i), summarizerOperation);
         }
-        return  summarizer;
+        return summarizer;
     }
 
     @Override
@@ -60,11 +60,6 @@ public class TypeOneSummary implements Summary {
     @Override
     public QuantifierType getQuantifierType() {
         return quantifier.getQuantifierType();
-    }
-
-    @Override
-    public OperationType getSummarizerOperation() {
-        return summarizerOperation;
     }
 
     @Override

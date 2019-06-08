@@ -46,6 +46,6 @@ public class DegreeOfCoverage implements QualityMeasure {
     }
 
     private static double getHTypeTwo(Summary summary) {
-        return ((TypeTwoSummary)summary).getQualifier().getSupport().getSize();
+        return ((TypeTwoSummary) summary).getQualifier().getSupport().getSize();
     }
 }
