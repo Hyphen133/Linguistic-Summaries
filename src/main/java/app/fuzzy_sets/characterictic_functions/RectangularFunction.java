@@ -20,7 +20,7 @@ public class RectangularFunction implements CharacteristicFunction {
     }
 
     public double getArea() {
-        return a*b;
+        return a * b;
     }
 
 }

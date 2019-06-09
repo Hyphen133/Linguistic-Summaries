@@ -41,7 +41,7 @@ public class LinguisticVariable {
         return universeOfDiscourse;
     }
 
-    public List<String> getLabels(){
+    public List<String> getLabels() {
         return new ArrayList<>(labelCharacteristicFunctionMap.keySet());
     }
 }

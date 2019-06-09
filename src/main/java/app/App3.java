@@ -40,11 +40,11 @@ public class App3 implements CommandLineRunner {
         List<LinguisticVariable> linguisticVariables = new ArrayList<>(variables.values());
         List<LinguisticVariable> summarizers = new ArrayList<>();
         summarizers.add(linguisticVariables.get(0));
-        summarizers.add(linguisticVariables.get(1));
+//        summarizers.add(linguisticVariables.get(1));
 
         List<String> summarizersLabels = new ArrayList<>();
-        summarizersLabels.add(linguisticVariables.get(0).getLabels().get(0));
-        summarizersLabels.add(linguisticVariables.get(1).getLabels().get(0));
+        summarizersLabels.add(linguisticVariables.get(0).getLabels().get(2));
+//        summarizersLabels.add(linguisticVariables.get(1).getLabels().get(0));
 
         List<LinguisticVariable> qualifiers = new ArrayList<>();
         qualifiers.add(linguisticVariables.get(2));
@@ -54,11 +54,11 @@ public class App3 implements CommandLineRunner {
         qualifiersLabels.add(linguisticVariables.get(2).getLabels().get(2));
         qualifiersLabels.add(linguisticVariables.get(4).getLabels().get(1));
 
-        Quantifier quantifier = new Quantifier(QuantifierLabel.ABOUT_QUARTER);
+        Quantifier quantifier = new Quantifier(QuantifierLabel.SEVERAL);
 
         Summary summary = new TypeOneSummary("MATCHES-PLAYER", summarizers, summarizersLabels, quantifier, OperationType.INTERSECTION);
         GoodnessOfSummary counter = new GoodnessOfSummary(summary);
-        counter.getExtendedGoodnessOfSummary();
+        counter.getAll();
         System.out.println(counter.count());
         System.out.println(summary.getSummary());
         System.out.println(counter.toString());

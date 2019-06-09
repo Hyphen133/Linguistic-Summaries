@@ -4,7 +4,6 @@ import app.Utils;
 import app.fuzzy_sets.FuzzySet;
 import app.summarization.quality_measures.QualityMeasure;
 import app.summarization.summary.Summary;
-import app.summarization.summary.TypeOneSummary;
 import app.summarization.summary.TypeTwoSummary;
 
 import java.util.List;

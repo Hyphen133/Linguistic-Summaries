@@ -11,6 +11,7 @@ public class ClassicFunction implements CharacteristicFunction {
     public double getBase() {
         return 0.0;
     }
+
     public double getArea() {
         return 0.0;
     }

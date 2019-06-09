@@ -6,7 +6,6 @@ import app.data.TennisMatch;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,7 +14,7 @@ import java.util.List;
 public class TennisCsvLoader {
     private static String csvFilepath = "src/main/resources/all_matches.csv";
 
-    public static List<TennisMatch> load( int maxRecordCount) {
+    public static List<TennisMatch> load(int maxRecordCount) {
         List<TennisMatch> tennisMatches = new ArrayList<>();
 
         int i = 1;

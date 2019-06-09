@@ -1,11 +1,7 @@
 package app.summarization.quality_measures.basic_measures;
 
-import app.fuzzy_sets.FuzzySet;
 import app.summarization.quality_measures.QualityMeasure;
 import app.summarization.summary.Summary;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /*
  * T5

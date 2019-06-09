@@ -80,7 +80,7 @@ public class TypeOneSummary implements Summary {
 
     @Override
     public String getSummary() {
-        String quantifierString =quantifier.getName();// Character.toUpperCase(quantifier.getName().charAt(0)) + quantifier.getName().substring(1);
+        String quantifierString = quantifier.getName();// Character.toUpperCase(quantifier.getName().charAt(0)) + quantifier.getName().substring(1);
         StringBuilder summarizerStringBuilder = new StringBuilder();
 
         for (int i = 0; i < summarizers.size() - 1; i++) {

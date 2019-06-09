@@ -22,6 +22,6 @@ public class TriangularFunction implements CharacteristicFunction {
     }
 
     public double getArea() {
-        return 0.5*getBase();
+        return 0.5 * getBase();
     }
 }

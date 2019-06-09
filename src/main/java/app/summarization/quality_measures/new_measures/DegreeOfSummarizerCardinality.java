@@ -18,4 +18,5 @@ public class DegreeOfSummarizerCardinality implements QualityMeasure {
             operationResult *= summarizer.getCardinalityRatio();
         }
         return 1 - Utils.getRoot(operationResult, summarizers.size());
-    }}
+    }
+}

@@ -20,7 +20,7 @@ public class FallingFunction implements CharacteristicFunction {
     }
 
     public double getArea() {
-        return 0.5*(a+b);
+        return 0.5 * (a + b);
     }
 
 }

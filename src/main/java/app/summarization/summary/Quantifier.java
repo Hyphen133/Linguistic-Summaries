@@ -1,7 +1,5 @@
 package app.summarization.summary;
 
-import app.fuzzy_sets.FuzzySet;
-
 // Defines set of quantifiers accessed by label
 // size in case of quantifier
 //about 100 -> function

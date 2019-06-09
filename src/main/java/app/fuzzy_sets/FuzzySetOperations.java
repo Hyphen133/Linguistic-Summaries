@@ -6,7 +6,6 @@ import java.util.List;
 public class FuzzySetOperations {
 
 
-
     public static FuzzySet getNegation(FuzzySet fuzzySetA) {
         return fuzzySetA.getComplement();
     }
