@@ -8,6 +8,7 @@ import java.util.List;
 @Service
 public class SummarizationDataLoader {
 
+    private List<LinguisticVariable> linguisticVariableList;
 
 
     public SummarizationDataLoader() {
@@ -18,5 +19,4 @@ public class SummarizationDataLoader {
 
     }
 
-    public List<LinguisticVariable> linguisticVariableList;
 }

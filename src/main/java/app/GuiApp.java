@@ -31,8 +31,8 @@ public class GuiApp extends Application {
         fxmlLoader.setLocation(getClass().getResource("/views/sample.fxml"));
         rootNode = fxmlLoader.load();
 
-        primaryStage.setTitle("Hello World");
-        Scene scene = new Scene(rootNode, 800, 600);
+        primaryStage.setTitle("Linguistic Summaries");
+        Scene scene = new Scene(rootNode, 1200, 600);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
