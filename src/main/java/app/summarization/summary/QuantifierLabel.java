@@ -24,11 +24,11 @@ public enum QuantifierLabel {
     MANY("MANY", QuantifierType.RELATIVE, new TriangularFunction(0.80,0.9,0.95)),
     ALMOST_ALL("ALMOST ALL", QuantifierType.RELATIVE, new RisingFunction(0.92,0.98)),
 
-    ABOUT_0("MORE THEN HALF", QuantifierType.ABSOLUTE, new FallingFunction(500,800)),
-    ABOUT_2500("ABOUT 75%", QuantifierType.ABSOLUTE, new TriangularFunction(700,2500,3600)),
-    ABOUT_5000("MANY", QuantifierType.ABSOLUTE, new TriangularFunction(3400,5000,6600)),
-    ABOUT_7500("MANY", QuantifierType.ABSOLUTE, new TriangularFunction(6400,7500,8600)),
-    ABOUT_10000("ALMOST ALL", QuantifierType.ABSOLUTE, new RisingFunction(8400,9000));
+    ABOUT_0("ABOUT 0", QuantifierType.ABSOLUTE, new FallingFunction(500,800)),
+    ABOUT_2500("ABOUT 2500", QuantifierType.ABSOLUTE, new TriangularFunction(700,2500,3600)),
+    ABOUT_5000("ABOUT 5000", QuantifierType.ABSOLUTE, new TriangularFunction(3400,5000,6600)),
+    ABOUT_7500("ABOUT 7500", QuantifierType.ABSOLUTE, new TriangularFunction(6400,7500,8600)),
+    ABOUT_10000("ABOUT 10000", QuantifierType.ABSOLUTE, new RisingFunction(8400,9000));
 
 
     String name;

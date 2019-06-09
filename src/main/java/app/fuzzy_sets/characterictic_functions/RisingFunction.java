@@ -14,4 +14,12 @@ public class RisingFunction implements CharacteristicFunction {
         else
             return 1;
     }
+
+    public double getBase() {
+        return 1 - a;
+    }
+
+    public double getArea() {
+        return 0.5*(a+b);
+    }
 }

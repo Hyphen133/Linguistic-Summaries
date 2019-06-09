@@ -22,19 +22,19 @@ public class App implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        int recordsCount = 100_000;
-        List<TennisMatch> tennisMatches = TennisCsvLoader.load();
-        System.out.println("Expected size: " + tennisMatches.size());
-        long start = System.currentTimeMillis();
-        if (tennisMatchRepository.count() == 0) {
-//            tennisMatchRepository.save(tennisMatches.subList(0,recordsCount));
-            tennisMatchRepository.save(tennisMatches);
-        }
-        long end = System.currentTimeMillis();
-        //finding the time difference and converting it into seconds
-        float sec = (end - start) / 1000F;
-        System.out.println(sec + " seconds");
-
-        System.out.println("Total records: " + tennisMatchRepository.count());
+//        int recordsCount = 100;
+//        List<TennisMatch> tennisMatches = TennisCsvLoader.load();
+//        System.out.println("Expected size: " + tennisMatches.size());
+//        long start = System.currentTimeMillis();
+//        if (tennisMatchRepository.count() == 0) {
+////            tennisMatchRepository.save(tennisMatches.subList(0,recordsCount));
+//            tennisMatchRepository.save(tennisMatches);
+//        }
+//        long end = System.currentTimeMillis();
+//        //finding the time difference and converting it into seconds
+//        float sec = (end - start) / 1000F;
+//        System.out.println(sec + " seconds");
+//
+//        System.out.println("Total records: " + tennisMatchRepository.count());
     }
 }

@@ -9,7 +9,6 @@ public class Quantifier {
     QuantifierLabel quantifierLabel;
 
     public Quantifier(QuantifierLabel quantifierLabel) {
-        //super(quantifierLabel.getCharacteristicFunction(),);
         this.quantifierLabel = quantifierLabel;
     }
 
@@ -24,5 +23,19 @@ public class Quantifier {
 
     public QuantifierType getQuantifierType() {
         return quantifierLabel.getQuantifierType();
+    }
+
+    public double getDegreeOfFuzziness() {
+        if (quantifierLabel.getQuantifierType().equals(QuantifierType.RELATIVE)) {
+            return quantifierLabel.getCharacteristicFunction().getBase();
+        }
+        return quantifierLabel.getCharacteristicFunction().getBase() / 10000;
+    }
+
+    public double getCardinalityRatio() {
+        if (quantifierLabel.getQuantifierType().equals(QuantifierType.RELATIVE)) {
+            return quantifierLabel.getCharacteristicFunction().getArea();
+        }
+        return quantifierLabel.getCharacteristicFunction().getArea() / 10000;
     }
 }
