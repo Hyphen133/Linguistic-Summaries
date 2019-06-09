@@ -11,27 +11,23 @@ import java.util.List;
 // size in case of quantifier
 //about 100 -> function
 public class Quantifier extends FuzzySet {
-    private String name;
-    private QuantifierType quantifierType;
-    private CharacteristicFunction characteristicFunction;
+    QuantifierLabel quantifierLabel;
 
-    public Quantifier(CharacteristicFunction characteristicFunction, ClassicSet universeOfDiscourse, String name, QuantifierType quantifierType) {
-        super(characteristicFunction, universeOfDiscourse);
-        this.characteristicFunction = characteristicFunction;
-        this.name = name;
-        this.quantifierType = quantifierType;
+    public Quantifier(QuantifierLabel quantifierLabel) {
+        super(quantifierLabel.getCharacteristicFunction(), null);
+        this.quantifierLabel = quantifierLabel;
     }
 
     public double getValue(double x) {
-        return characteristicFunction.calculate(x);
+        return quantifierLabel.characteristicFunction.calculate(x);
     }
 
     public String getName() {
-        return name;
+        return quantifierLabel.getName();
     }
 
 
     public QuantifierType getQuantifierType() {
-        return quantifierType;
+        return quantifierLabel.getQuantifierType();
     }
 }
