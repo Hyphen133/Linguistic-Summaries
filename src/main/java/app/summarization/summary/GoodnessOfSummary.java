@@ -61,8 +61,8 @@ public class GoodnessOfSummary {
                 .addQualityMeasure(QualityMeasureEnum.T3)
                 .addQualityMeasure(QualityMeasureEnum.T4)
                 .addQualityMeasure(QualityMeasureEnum.T5)
-                //.addQualityMeasure(QualityMeasureEnum.T6)
-                // .addQualityMeasure(QualityMeasureEnum.T7)
+                .addQualityMeasure(QualityMeasureEnum.T6)
+                .addQualityMeasure(QualityMeasureEnum.T7)
                 .addQualityMeasure(QualityMeasureEnum.T8)
                 .addQualityMeasure(QualityMeasureEnum.T9)
                 .addQualityMeasure(QualityMeasureEnum.T10);

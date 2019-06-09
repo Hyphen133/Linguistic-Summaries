@@ -1,30 +1,21 @@
 //package app;
 //
 //import app.data.TennisMatch;
-//import app.fuzzy_sets.ClassicSet;
-//import app.fuzzy_sets.SetUtils;
-//import app.fuzzy_sets.characterictic_functions.CharacteristicFunction;
-//import app.fuzzy_sets.characterictic_functions.FallingFunction;
-//import app.fuzzy_sets.characterictic_functions.RisingFunction;
-//import app.fuzzy_sets.characterictic_functions.ClassicFunction;
+//import app.data.TennisMatchLabels;
+//import app.data.TennisMatchLinguisticVariables;
+//import app.fuzzy_sets.OperationType;
 //import app.loading.TennisCsvLoader;
 //import app.repositories.TennisMatchRepository;
 //import app.loading.TennisMatchDatabaseLoader;
 //import app.summarization.LinguisticVariable;
-//import app.summarization.summary.Quantifier;
-//import app.summarization.summary.QuantifierType;
-//import app.summarization.summary.TypeOneSummary;
-//import org.apache.commons.lang3.StringUtils;
+//import app.summarization.quality_measures.QualityMeasureEnum;
+//import app.summarization.summary.*;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.CommandLineRunner;
 //import org.springframework.boot.SpringApplication;
 //import org.springframework.boot.autoconfigure.SpringBootApplication;
 //
-//import java.util.Arrays;
-//import java.util.HashMap;
-//import java.util.List;
-//import java.util.Map;
-//import java.util.stream.Collectors;
+//import java.util.*;
 //
 //@SpringBootApplication
 //public class App3 implements CommandLineRunner {
@@ -41,44 +32,43 @@
 //
 //    @Override
 //    public void run(String... args) {
-//        int recordsCount = 1000;
-//        List<TennisMatch> tennisMatches = TennisCsvLoader.load();
-//        System.out.println("Expected size: " + tennisMatches.size());
-//        long start = System.currentTimeMillis();
-//        if (tennisMatchRepository.count() == 0) {
-//            tennisMatchRepository.save(tennisMatches.subList(0,recordsCount));
-////            tennisMatchRepository.save(tennisMatches);
-//        }
+//        int maxRecordsCount = 10002;
+//        List<TennisMatch> tennisMatches = TennisCsvLoader.load(maxRecordsCount);
 //
+//        Map<String, LinguisticVariable> variables = TennisMatchLinguisticVariables.getVariables(tennisMatches);
 //
-////        tennisMatchService.getObjectColumn("TENNIS_MATCH", "ACES");
+//        List<LinguisticVariable> linguisticVariables = new ArrayList<>(variables.values());
+//        List<LinguisticVariable> summarizers = new ArrayList<>();
+//        summarizers.add(linguisticVariables.get(0));
+//        summarizers.add(linguisticVariables.get(1));
 //
-//        List<Double> acesList = tennisMatchDatabaseLoader.getColumn("TENNIS_MATCH", "ACES", Integer.class).stream().map(x->(double)x).collect(Collectors.toList());
-//        List<Double> acesSubList = acesList.subList(0, 100);
-//        System.out.println(StringUtils.join(acesSubList, ", "));;
+//        List<String> summarizersLabels = new ArrayList<>();
+//        summarizersLabels.add(linguisticVariables.get(0).getLabels().get(0));
+//        summarizersLabels.add(linguisticVariables.get(1).getLabels().get(0));
 //
-////        ClassicSet universe = new ClassicSet();
-//        Map<String, CharacteristicFunction> tagCharacteristicFunctionMap = new HashMap<>();
-//        tagCharacteristicFunctionMap.put("little", new FallingFunction(2,5));
-//        tagCharacteristicFunctionMap.put("many" , new RisingFunction(5,8));
+//        List<LinguisticVariable> qualifiers = new ArrayList<>();
+//        qualifiers.add(linguisticVariables.get(2));
+//        qualifiers.add(linguisticVariables.get(3));
 //
-//        ClassicSet universe = new ClassicSet(acesSubList, new ClassicFunction() );
-//        LinguisticVariable acesVariable = new LinguisticVariable("aces", tagCharacteristicFunctionMap, universe);
+//        List<String> qualifiersLabels = new ArrayList<>();
+//        qualifiersLabels.add(linguisticVariables.get(2).getLabels().get(2));
+//        qualifiersLabels.add(linguisticVariables.get(4).getLabels().get(1));
 //
-//        ClassicSet qUniverse = SetUtils.minMaxIntegerSet(0, 1000);
-//        Quantifier quantifier = new Quantifier(new RisingFunction(50, 100),qUniverse,"many", QuantifierType.ABSOLUTE);
+//        Quantifier quantifier = new Quantifier(QuantifierLabel.ABOUT_QUARTER);
 //
-//        TypeOneSummary summary = new TypeOneSummary("tennis matches", Arrays.asList(acesVariable), Arrays.asList("little"),quantifier);
+//        Summary summary = new TypeOneSummary("MATCHES-PLAYER", summarizers, summarizersLabels, quantifier, OperationType.INTERSECTION);
+//        GoodnessOfSummary counter = new GoodnessOfSummary(summary);
+//        counter.getExtendedGoodnessOfSummary();
+//        System.out.println(counter.count());
 //        System.out.println(summary.getSummary());
+//        System.out.println(counter.toString());
 //
-//
-//
-//
-//        long end = System.currentTimeMillis();
-//        //finding the time difference and converting it into seconds
-//        float sec = (end - start) / 1000F;
-//        System.out.println(sec + " seconds");
-//
-//        System.out.println("Total records: " + tennisMatchRepository.count());
+////        Summary summary = new TypeTwoSummary("MATCHES", summarizers, summarizersLabels,
+////                qualifiers, qualifiersLabels, quantifier, OperationType.UNION, OperationType.INTERSECTION);
+////        GoodnessOfSummary counter = new GoodnessOfSummary(summary);
+////        counter.getExtendedGoodnessOfSummary();
+////        System.out.println(counter.count());
+////        System.out.println(summary.getSummary());
+////        System.out.println(counter.toString());
 //    }
 //}
