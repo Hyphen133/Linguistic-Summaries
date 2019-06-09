@@ -19,7 +19,7 @@ public enum QualityMeasureEnum {
     T8("T8: Degree of summarizer cardinality"),
     T9("T9: Degree of qualifier imprecision"),
     T10("T10: Degree of qualifier cardinality"),
-    T11("");
+    T11("T11: Length of qualifier");
 
     String name;
 
@@ -46,8 +46,7 @@ public enum QualityMeasureEnum {
             case T10:
                 return DegreeOfQualifierCardinality.getValue(summary);
             case T11:
-                //TODO
-                return 0;
+                return LengthOfQualifier.getValue(summary);
             default:
                 throw new IllegalStateException("Unexpected value: " + qualityMeasure);
         }

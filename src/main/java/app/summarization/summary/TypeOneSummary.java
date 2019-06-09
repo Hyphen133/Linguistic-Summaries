@@ -80,16 +80,17 @@ public class TypeOneSummary implements Summary {
 
     @Override
     public String getSummary() {
-        String quantifierString = Character.toUpperCase(quantifier.getName().charAt(0)) + quantifier.getName().substring(1);
+        String quantifierString ="QUANTIFIER";// Character.toUpperCase(quantifier.getName().charAt(0)) + quantifier.getName().substring(1);
         StringBuilder summarizerStringBuilder = new StringBuilder();
 
         for (int i = 0; i < summarizers.size() - 1; i++) {
-            summarizerStringBuilder.append(summarizers.get(i).print(summarizerLabels.get(i)) + " " + summarizerOperation + " ");
+            summarizerStringBuilder.append(summarizers.get(i).print(
+                    summarizerLabels.get(i)) + " " + summarizerOperation.getOperationName() + " ");
         }
         int lastIndex = summarizers.size() - 1;
         summarizerStringBuilder.append(summarizers.get(lastIndex).print(summarizerLabels.get(lastIndex)));
 
 
-        return quantifierString + " " + subject + " have " + summarizerStringBuilder.toString();
+        return quantifierString + " " + subject + " HAVE/ARE " + summarizerStringBuilder.toString();
     }
 }

@@ -3,8 +3,7 @@ package app;
 import app.fuzzy_sets.ClassicSet;
 import app.fuzzy_sets.FuzzySet;
 import app.fuzzy_sets.FuzzySetOperations;
-import app.fuzzy_sets.characterictic_functions.ClassicFunction;
-import app.fuzzy_sets.characterictic_functions.TriangularFunction;
+import app.fuzzy_sets.characterictic_functions.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,7 +19,7 @@ public class App2 {
                 Double.valueOf(8), Double.valueOf(9), Double.valueOf(10)));
         ClassicSet X = new ClassicSet(xValues, new ClassicFunction());
 
-        TriangularFunction aFunction = new TriangularFunction(1, 5, 9);
+        CharacteristicFunction aFunction = new FallingFunction(2, 5);
 
         FuzzySet A = new FuzzySet(aFunction, X);
 
