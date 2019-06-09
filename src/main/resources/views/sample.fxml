@@ -33,7 +33,7 @@
    <children>
       <TreeView fx:id="summarizerTreeView" prefHeight="268.0" prefWidth="300.0" GridPane.rowIndex="1" GridPane.rowSpan="2" />
       <Button mnemonicParsing="false" onAction="#generateSummaries" text="Generate Summaries" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-      <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="3" GridPane.rowIndex="4" GridPane.rowSpan="2">
+      <TableView fx:id="summaryTableView" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="3" GridPane.rowIndex="4" GridPane.rowSpan="2">
         <columns>
           <TableColumn prefWidth="75.0" text="C1" />
           <TableColumn minWidth="100.0" prefWidth="750.0" text="C2" />
@@ -57,7 +57,7 @@
          </children></VBox>
       <Label text="Measures" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
       <Label text="Qualifiers" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-      <ListView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.rowSpan="2" />
+      <ListView fx:id="quanfierListView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.rowSpan="2" />
       <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="3">
          <children>
             <RadioButton fx:id="summarizerAndOperation" mnemonicParsing="false" text="AND">
@@ -78,7 +78,7 @@
             <RadioButton fx:id="qualifierOrOperation" mnemonicParsing="false" text="OR" toggleGroup="$qualifierOperation" />
          </children>
       </VBox>
-      <TreeView fx:id="quantifierTreeView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="2" />
+      <TreeView fx:id="qualifierTreeView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="2" />
    </children>
    <padding>
       <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />

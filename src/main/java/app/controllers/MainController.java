@@ -6,6 +6,11 @@ import app.fuzzy_sets.OperationType;
 import app.loading.TennisCsvLoader;
 import app.summarization.LinguisticVariable;
 import app.summarization.quality_measures.QualityMeasureEnum;
+import app.summarization.summary.Quantifier;
+import app.summarization.summary.QuantifierLabel;
+import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,11 +27,24 @@ public class MainController implements Initializable {
     private static final String SEPARATOR = ":";
     private final int RECORDS_COUNT = 1500 ;
 
+
+
+    List<CheckBox> checkBoxes;
+    Map<String, LinguisticVariable> linguisticVariableMap;
+    HashMap<String, Quantifier> quantifierMap;
+
+
+    @FXML
+    TableView<ObservableList<StringProperty>> summaryTableView;
+
     @FXML
     TreeView<String> summarizerTreeView;
 
     @FXML
-    TreeView<String> quantifierTreeView;
+    TreeView<String> qualifierTreeView;
+
+    @FXML
+    ListView<String> quanfierListView;
 
     @FXML
     CheckBox t1CheckBox;
@@ -62,8 +80,6 @@ public class MainController implements Initializable {
 
 
 
-    List<CheckBox> checkBoxes;
-    Map<String, LinguisticVariable> linguisticVariableMap;
 
 
     @Override
@@ -135,11 +151,16 @@ public class MainController implements Initializable {
         }
 
 
+        qualifierTreeView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        qualifierTreeView.setRoot(new TreeItem<>(ROOT_NODE));
+        qualifierTreeView.setShowRoot(false);
+        qualifierTreeView.getRoot().getChildren().addAll(linguisticVariableTreeItems2);
 
-        quantifierTreeView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        quantifierTreeView.setRoot(new TreeItem<>(ROOT_NODE));
-        quantifierTreeView.setShowRoot(false);
-        quantifierTreeView.getRoot().getChildren().addAll(linguisticVariableTreeItems2);
+
+
+        quantifierMap = QuantifierLabel.getMap();
+        quanfierListView.setItems(FXCollections.observableArrayList(new ArrayList<>(quantifierMap.keySet())));
+        quanfierListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
 
@@ -198,7 +219,7 @@ public class MainController implements Initializable {
 
 
         //QUALIFIERS
-        List<String> selectedVariables1 = quantifierTreeView.getSelectionModel().getSelectedItems().stream().map(x -> x.getParent().getValue() + SEPARATOR + x.getValue()).collect(Collectors.toList());
+        List<String> selectedVariables1 = qualifierTreeView.getSelectionModel().getSelectedItems().stream().map(x -> x.getParent().getValue() + SEPARATOR + x.getValue()).collect(Collectors.toList());
         List<String> qualifierTags = new ArrayList<>();
         List<LinguisticVariable> qualifierVariables = new ArrayList<>();
         for (String selectedVariable : selectedVariables) {
@@ -209,6 +230,22 @@ public class MainController implements Initializable {
                 qualifierTags.add(splittedString[1]);
             }
         }
+
+
+        //QUANTIFIERS
+//        String selectedItem = quanfierListView.getSelectionModel().getSelectedItem();
+//        Quantifier quantifier = new Quantifier(QuantifierLabel.valueOf(selectedItem));
+//        System.out.println(selectedItem);
+
+
+
+        //GENERATING SUMMARIES
+        summaryTableView.getColumns().clear();
+        summaryTableView.getColumns().add(new TableColumn<>("Summary"));
+        for (QualityMeasureEnum chosenMeasure : chosenMeasures) {
+            summaryTableView.getColumns().add(new TableColumn<>(chosenMeasure.getName().split(SEPARATOR)[0]));
+        }
+        summaryTableView.refresh();
 
 
 
