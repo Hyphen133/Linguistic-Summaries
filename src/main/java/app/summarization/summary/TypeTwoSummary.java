@@ -20,8 +20,10 @@ public class TypeTwoSummary extends TypeOneSummary {
 
     private List<FuzzySet> qualifierSets;
 
-    public TypeTwoSummary(String subject, List<LinguisticVariable> summarizers, List<String> summarizerLabels, List<LinguisticVariable> qualifier, List<String> qualifierLabels, Quantifier quantifier, OperationType quantifierOperation) {
-        super(subject, summarizers, summarizerLabels, quantifier);
+    public TypeTwoSummary(String subject, List<LinguisticVariable> summarizers, List<String> summarizerLabels,
+                          List<LinguisticVariable> qualifier, List<String> qualifierLabels, Quantifier quantifier,
+                          OperationType quantifierOperation, OperationType summarizerOperation) {
+        super(subject, summarizers, summarizerLabels, quantifier, summarizerOperation);
         this.qualifiers = qualifier;
         this.qualifierLabels = qualifierLabels;
         this.qualifierOperation = quantifierOperation;
