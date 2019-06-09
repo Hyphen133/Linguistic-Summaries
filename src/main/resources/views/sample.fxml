@@ -31,16 +31,15 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <TreeView fx:id="treeView" prefHeight="268.0" prefWidth="300.0" GridPane.rowIndex="1" GridPane.rowSpan="2" />
-      <Button mnemonicParsing="false" onAction="#generateSummaries" onMouseClicked="#generateSummaries" text="Generate Summaries" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+      <TreeView fx:id="summarizerTreeView" prefHeight="268.0" prefWidth="300.0" GridPane.rowIndex="1" GridPane.rowSpan="2" />
+      <Button mnemonicParsing="false" onAction="#generateSummaries" text="Generate Summaries" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
       <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="3" GridPane.rowIndex="4" GridPane.rowSpan="2">
         <columns>
           <TableColumn prefWidth="75.0" text="C1" />
           <TableColumn minWidth="100.0" prefWidth="750.0" text="C2" />
         </columns>
       </TableView>
-      <ListView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="2" />
-      <Label text="Lingusitic Variables" GridPane.halignment="CENTER" />
+      <Label text="Summarizers" GridPane.halignment="CENTER" />
       <Label text="Quantifiers" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
       <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.rowSpan="2">
          <children>
@@ -54,6 +53,7 @@
             <CheckBox fx:id="t8CheckBox" mnemonicParsing="false" text="T8" />
             <CheckBox fx:id="t9CheckBox" mnemonicParsing="false" text="T9" />
             <CheckBox fx:id="t10CheckBox" mnemonicParsing="false" text="T10" />
+            <CheckBox fx:id="t11CheckBox" mnemonicParsing="false" text="T11" />
          </children></VBox>
       <Label text="Measures" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
       <Label text="Qualifiers" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
@@ -78,6 +78,7 @@
             <RadioButton fx:id="qualifierOrOperation" mnemonicParsing="false" text="OR" toggleGroup="$qualifierOperation" />
          </children>
       </VBox>
+      <TreeView fx:id="quantifierTreeView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="2" />
    </children>
    <padding>
       <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
