@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<GridPane hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" vgap="10.0" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.MainController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <TreeView fx:id="summarizerTreeView" prefHeight="268.0" prefWidth="300.0" GridPane.rowIndex="1" GridPane.rowSpan="2" />
+      <Button mnemonicParsing="false" onAction="#generateSummaries" text="Generate Summaries" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+      <TableView fx:id="summaryTableView" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="3" GridPane.rowIndex="4" GridPane.rowSpan="2">
+        <columns>
+          <TableColumn prefWidth="75.0" text="C1" />
+          <TableColumn minWidth="100.0" prefWidth="750.0" text="C2" />
+        </columns>
+      </TableView>
+      <Label text="Summarizers" GridPane.halignment="CENTER" />
+      <Label text="Quantifiers" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.rowSpan="2">
+         <children>
+            <CheckBox fx:id="t1CheckBox" mnemonicParsing="false" text="T1 " />
+            <CheckBox fx:id="t2CheckBox" mnemonicParsing="false" text="T2" />
+            <CheckBox fx:id="t3CheckBox" mnemonicParsing="false" text="T3" />
+            <CheckBox fx:id="t4CheckBox" mnemonicParsing="false" text="T4" />
+            <CheckBox fx:id="t5CheckBox" mnemonicParsing="false" text="T5" />
+            <CheckBox fx:id="t6CheckBox" mnemonicParsing="false" text="T6" />
+            <CheckBox fx:id="t7CheckBox" mnemonicParsing="false" text="T7" />
+            <CheckBox fx:id="t8CheckBox" mnemonicParsing="false" text="T8" />
+            <CheckBox fx:id="t9CheckBox" mnemonicParsing="false" text="T9" />
+            <CheckBox fx:id="t10CheckBox" mnemonicParsing="false" text="T10" />
+            <CheckBox fx:id="t11CheckBox" mnemonicParsing="false" text="T11" />
+         </children></VBox>
+      <Label text="Measures" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
+      <Label text="Qualifiers" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+      <ListView fx:id="quanfierListView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.rowSpan="2" />
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="3">
+         <children>
+            <RadioButton fx:id="summarizerAndOperation" mnemonicParsing="false" text="AND">
+               <toggleGroup>
+                  <ToggleGroup fx:id="summarizerOperation" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="summarizerOrOperation" mnemonicParsing="false" text="OR" toggleGroup="$summarizerOperation" />
+         </children>
+      </VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+         <children>
+            <RadioButton fx:id="qualifierAndOperation" mnemonicParsing="false" text="AND">
+               <toggleGroup>
+                  <ToggleGroup fx:id="qualifierOperation" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="qualifierOrOperation" mnemonicParsing="false" text="OR" toggleGroup="$qualifierOperation" />
+         </children>
+      </VBox>
+      <TreeView fx:id="qualifierTreeView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="2" />
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+   </padding>
+</GridPane>

@@ -36,10 +36,10 @@ public enum QuantifierLabel {
     CharacteristicFunction characteristicFunction;
 
 
-    public static HashMap<String, CharacteristicFunction> getMap() {
-        HashMap<String, CharacteristicFunction> result = new HashMap<>();
+    public static HashMap<String, Quantifier> getMap() {
+        HashMap<String, Quantifier> result = new HashMap<>();
         Arrays.stream(QuantifierLabel.values())
-                .forEach(g -> result.put(g.getName(), g.getCharacteristicFunction()));
+                .forEach(g -> result.put(g.getName(), new Quantifier(g)));
         return result;
     }
 }
