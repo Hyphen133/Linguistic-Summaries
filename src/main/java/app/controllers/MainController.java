@@ -6,8 +6,7 @@ import app.fuzzy_sets.OperationType;
 import app.loading.TennisCsvLoader;
 import app.summarization.LinguisticVariable;
 import app.summarization.quality_measures.QualityMeasureEnum;
-import app.summarization.summary.Quantifier;
-import app.summarization.summary.QuantifierLabel;
+import app.summarization.summary.*;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -233,9 +232,10 @@ public class MainController implements Initializable {
 
 
         //QUANTIFIERS
-//        String selectedItem = quanfierListView.getSelectionModel().getSelectedItem();
-//        Quantifier quantifier = new Quantifier(QuantifierLabel.valueOf(selectedItem));
-//        System.out.println(selectedItem);
+        String selectedItem = quanfierListView.getSelectionModel().getSelectedItem();
+        Quantifier quantifier = new Quantifier(QuantifierLabel.valueOf(selectedItem.replace(" ", "_")));
+        System.out.println(selectedItem);
+
 
 
 
@@ -245,6 +245,24 @@ public class MainController implements Initializable {
         for (QualityMeasureEnum chosenMeasure : chosenMeasures) {
             summaryTableView.getColumns().add(new TableColumn<>(chosenMeasure.getName().split(SEPARATOR)[0]));
         }
+
+
+        Summary summary = null;
+        if(qualifierVariables.size() == 0){
+            //Type 1 Summary
+            summary = new TypeOneSummary("Tennis match player", summarizerVariables,summarizerTags, quantifier, summarizerOperation);
+
+        }else{
+            //Type 2 Summary
+            summary = new TypeTwoSummary("Tennis match player", summarizerVariables, summarizerTags, qualifierVariables, qualifierTags, quantifier, qualifierOperation, summarizerOperation);
+        }
+
+
+
+
+
+
+
         summaryTableView.refresh();
 
 
