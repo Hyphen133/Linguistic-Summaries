@@ -21,10 +21,10 @@ public class DegreeOfTruth implements QualityMeasure {
     }
 
     private static double getR(Summary summary) {
-        if (summary instanceof TypeOneSummary) {
-            return getRTypeOne(summary);
-        } else {
+        if (summary instanceof TypeTwoSummary) {
             return getRTypeTwo(summary);
+        } else {
+            return getRTypeOne(summary);
         }
     }
 

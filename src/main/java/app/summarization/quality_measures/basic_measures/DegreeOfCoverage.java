@@ -16,10 +16,10 @@ public class DegreeOfCoverage implements QualityMeasure {
     }
 
     private static double getT(Summary summary) {
-        if (summary instanceof TypeOneSummary) {
-            return getTTypeOne(summary);
-        } else {
+        if (summary instanceof TypeTwoSummary) {
             return getTTypeTwo(summary);
+        } else {
+            return getTTypeOne(summary);
         }
     }
 
@@ -34,10 +34,10 @@ public class DegreeOfCoverage implements QualityMeasure {
     }
 
     private static double getH(Summary summary) {
-        if (summary instanceof TypeOneSummary) {
-            return getHTypeOne(summary);
-        } else {
+        if (summary instanceof TypeTwoSummary) {
             return getHTypeTwo(summary);
+        } else {
+            return getHTypeOne(summary);
         }
     }
 

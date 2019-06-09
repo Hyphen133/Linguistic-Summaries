@@ -1,5 +1,6 @@
 package app.summarization.quality_measures.basic_measures;
 
+import app.Utils;
 import app.fuzzy_sets.FuzzySet;
 import app.summarization.quality_measures.QualityMeasure;
 import app.summarization.summary.Summary;
@@ -17,6 +18,6 @@ public class DegreeOfImprecision implements QualityMeasure {
         ) {
             operationResult *= summarizer.getDegreeOfFuzziness();
         }
-        return 1 - Math.pow(operationResult, (1 / summarizers.size()));
+        return 1 - Utils.getRoot(operationResult, summarizers.size());
     }
 }

@@ -1,18 +1,13 @@
 package app.data;
 
 
-import app.fuzzy_sets.FuzzySetElement;
 import app.fuzzy_sets.characterictic_functions.CharacteristicFunction;
 import app.fuzzy_sets.characterictic_functions.FallingFunction;
 import app.fuzzy_sets.characterictic_functions.RisingFunction;
 import app.fuzzy_sets.characterictic_functions.TriangularFunction;
-import app.summarization.quality_measures.QualityMeasure;
 
-import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class TennisMatchLabels {
 

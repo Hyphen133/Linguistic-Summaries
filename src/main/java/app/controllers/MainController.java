@@ -124,17 +124,22 @@ public class MainController implements Initializable {
 
 
 
+        List<TreeItem<String>> linguisticVariableTreeItems2 = new ArrayList<>();
+
+        for (String key : linguisticVariableMap.keySet()) {
+            TreeItem<String> variableItem = new TreeItem<>(key);
+            for (String tag : linguisticVariableMap.get(key).getAllTags()) {
+                variableItem.getChildren().add(new TreeItem<>(tag));
+            }
+            linguisticVariableTreeItems.add(variableItem);
+        }
+
 
 
         quantifierTreeView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         quantifierTreeView.setRoot(new TreeItem<>(ROOT_NODE));
         quantifierTreeView.setShowRoot(false);
-        quantifierTreeView.getRoot().getChildren().addAll(linguisticVariableTreeItems);
-
-
-
-
-
+        quantifierTreeView.getRoot().getChildren().addAll(linguisticVariableTreeItems2);
     }
 
 
@@ -189,6 +194,20 @@ public class MainController implements Initializable {
                 summarizerTags.add(splittedString[1]);
             }
 
+        }
+
+
+        //QUALIFIERS
+        List<String> selectedVariables1 = quantifierTreeView.getSelectionModel().getSelectedItems().stream().map(x -> x.getParent().getValue() + SEPARATOR + x.getValue()).collect(Collectors.toList());
+        List<String> qualifierTags = new ArrayList<>();
+        List<LinguisticVariable> qualifierVariables = new ArrayList<>();
+        for (String selectedVariable : selectedVariables) {
+            System.out.println(selectedVariable);
+            String[] splittedString = selectedVariable.split(SEPARATOR);
+            if(splittedString[0] != ROOT_NODE){
+                qualifierVariables.add(linguisticVariableMap.get(splittedString[0]));
+                qualifierTags.add(splittedString[1]);
+            }
         }
 
 
