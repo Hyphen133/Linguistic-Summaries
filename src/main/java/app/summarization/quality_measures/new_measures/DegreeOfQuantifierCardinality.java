@@ -8,6 +8,7 @@ import app.summarization.summary.Summary;
  */
 public class DegreeOfQuantifierCardinality implements QualityMeasure {
     public static double getValue(Summary summary) {
-        return 1 - summary.getQuantifier().getCardinalityRatio();
+        //return 1 - summary.getQuantifier().getCardinalityRatio();
+        return 0;
     }
 }

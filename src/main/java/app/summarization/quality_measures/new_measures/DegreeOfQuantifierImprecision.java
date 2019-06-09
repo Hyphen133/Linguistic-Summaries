@@ -8,6 +8,7 @@ import app.summarization.summary.Summary;
  */
 public class DegreeOfQuantifierImprecision implements QualityMeasure {
     public static double getValue(Summary summary) {
-        return 1 - summary.getQuantifier().getDegreeOfFuzziness();
+        //return 1 - summary.getQuantifier().getDegreeOfFuzziness();
+        return 0;
     }
 }
