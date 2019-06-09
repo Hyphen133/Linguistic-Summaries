@@ -1,20 +1,15 @@
 package app.summarization.summary;
 
-import app.fuzzy_sets.ClassicSet;
 import app.fuzzy_sets.FuzzySet;
-import app.fuzzy_sets.FuzzySetElement;
-import app.fuzzy_sets.characterictic_functions.CharacteristicFunction;
-
-import java.util.List;
 
 // Defines set of quantifiers accessed by label
 // size in case of quantifier
 //about 100 -> function
-public class Quantifier extends FuzzySet {
+public class Quantifier {
     QuantifierLabel quantifierLabel;
 
     public Quantifier(QuantifierLabel quantifierLabel) {
-        super(quantifierLabel.getCharacteristicFunction(), null);
+        //super(quantifierLabel.getCharacteristicFunction(),);
         this.quantifierLabel = quantifierLabel;
     }
 
