@@ -2,6 +2,7 @@ package app.data;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,28 +12,29 @@ import javax.persistence.Table;
 @Data
 @Builder
 @Entity
+@Getter
 public class TennisMatch {
-    @Id @GeneratedValue
-    Long id;
+    @Id
+    @GeneratedValue
+    private Long id;
 
-    String playerName;
-    String opponentName;
-    String courtSurface;
-    String tournamentName;
-    String round;
-    String location;
+    private String playerName;
+    private String opponentName;
+    private String courtSurface;
+    private String tournamentName;
+    private String round;
+    private String location;
 
-    boolean winner;
-    int gamesDifference;
-    int aces;
-    int doubleFaults;
-    int averageSetDurationInMinutes;
-    double successfulBreakPointsPercentage;
-    double firstServeWonPointsPercentage;
-    double secondServeWonPointsPercentage;
-    double returnWonPointsPercentage;
-    double firstServicePercentage;
-    int tieBreaksWon;
-    boolean isFirstSetWon;
-
+    private boolean winner;
+    private int gamesDifference;
+    private int aces;
+    private int doubleFaults;
+    private int averageSetDurationInMinutes;
+    private double successfulBreakPointsPercentage;
+    private double firstServeWonPointsPercentage;
+    private double secondServeWonPointsPercentage;
+    private double returnWonPointsPercentage;
+    private double firstServicePercentage;
+    private int tieBreaksWon;
+    private boolean isFirstSetWon;
 }

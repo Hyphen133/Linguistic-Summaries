@@ -20,8 +20,10 @@ public class TypeTwoSummary extends TypeOneSummary {
 
     private List<FuzzySet> qualifierSets;
 
-    public TypeTwoSummary(String subject, List<LinguisticVariable> summarizers, List<String> summarizerLabels, List<LinguisticVariable> qualifier, List<String> qualifierLabels, Quantifier quantifier, OperationType quantifierOperation) {
-        super(subject, summarizers, summarizerLabels, quantifier);
+    public TypeTwoSummary(String subject, List<LinguisticVariable> summarizers, List<String> summarizerLabels,
+                          List<LinguisticVariable> qualifier, List<String> qualifierLabels, Quantifier quantifier,
+                          OperationType quantifierOperation, OperationType summarizerOperation) {
+        super(subject, summarizers, summarizerLabels, quantifier, summarizerOperation);
         this.qualifiers = qualifier;
         this.qualifierLabels = qualifierLabels;
         this.qualifierOperation = quantifierOperation;
@@ -52,17 +54,21 @@ public class TypeTwoSummary extends TypeOneSummary {
         return qualifierOperation;
     }
 
+    public int getQualifierCount() {
+        return qualifiers.size();
+    }
+
     @Override
     public String getSummary() {
         String typeOneSummary = super.getSummary();
         StringBuilder typeTwoBuilder = new StringBuilder(typeOneSummary);
 
         StringBuilder whichClause = new StringBuilder();
-        whichClause.append(" which have");
+        whichClause.append(" HAVING/BEING ");
         whichClause.append(qualifiers.get(0).print(qualifierLabels.get(0)));
 
         for (int i = 1; i < qualifiers.size(); i++) {
-            whichClause.append(" " + qualifierOperation + " " + qualifiers.get(i).print(qualifierLabels.get(i)));
+            whichClause.append(" " + qualifierOperation.getOperationName() + " " + qualifiers.get(i).print(qualifierLabels.get(i)));
         }
         whichClause.append(" ");
 

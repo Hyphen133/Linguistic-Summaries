@@ -4,6 +4,7 @@ import app.fuzzy_sets.ClassicSet;
 import app.fuzzy_sets.FuzzySet;
 import app.fuzzy_sets.characterictic_functions.CharacteristicFunction;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,21 +23,25 @@ public class LinguisticVariable {
 
     private ClassicSet universeOfDiscourse;
 
-    public LinguisticVariable(String name, HashMap<String, CharacteristicFunction> labelCharacteristicFunctionMap, ClassicSet universeOfDisclouse) {
+    public LinguisticVariable(String name, HashMap<String, CharacteristicFunction> labelCharacteristicFunctionMap, ClassicSet universeOfDiscourse) {
         this.name = name;
         this.labelCharacteristicFunctionMap = labelCharacteristicFunctionMap;
-        this.universeOfDiscourse = universeOfDisclouse;
+        this.universeOfDiscourse = universeOfDiscourse;
     }
 
     public FuzzySet getFuzzySetForLabel(ClassicSet universeOfDiscourse, String label) {
         return new FuzzySet(labelCharacteristicFunctionMap.get(label), universeOfDiscourse);
     }
 
-    public String print(String tag) {
-        return tag + " " + name;
+    public String print(String label) {
+        return label + " " + name;
     }
 
     public ClassicSet getUniverseOfDiscourse() {
         return universeOfDiscourse;
+    }
+
+    public List<String> getLabels(){
+        return new ArrayList<>(labelCharacteristicFunctionMap.keySet());
     }
 }

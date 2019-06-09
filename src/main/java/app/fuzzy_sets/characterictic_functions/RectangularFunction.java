@@ -14,4 +14,13 @@ public class RectangularFunction implements CharacteristicFunction {
         else
             return 0;
     }
+
+    public double getBase() {
+        return b - a;
+    }
+
+    public double getArea() {
+        return a*b;
+    }
+
 }

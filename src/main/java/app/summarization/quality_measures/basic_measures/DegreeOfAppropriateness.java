@@ -16,7 +16,7 @@ public class DegreeOfAppropriateness implements QualityMeasure {
         ) {
             r *= getR(summarizer, summary);
         }
-        return r - T3;
+        return Math.abs(r - T3);
     }
 
     private static double getR(FuzzySet summarizer, Summary summary) {
