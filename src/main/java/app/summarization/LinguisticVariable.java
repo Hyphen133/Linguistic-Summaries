@@ -6,7 +6,6 @@ import app.fuzzy_sets.characterictic_functions.CharacteristicFunction;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /*
  * L - the name of variable
@@ -19,14 +18,14 @@ public class LinguisticVariable {
     private String name;
 
     // mapping label to function
-    private Map<String, CharacteristicFunction> labelCharacteristicFunctionMap;
+    private HashMap<String, CharacteristicFunction> labelCharacteristicFunctionMap;
 
     private ClassicSet universeOfDiscourse;
 
-    public LinguisticVariable(String name, Map<String, CharacteristicFunction> labelCharacteristicFunctionMap, ClassicSet universeOfDisclouse) {
+    public LinguisticVariable(String name, HashMap<String, CharacteristicFunction> labelCharacteristicFunctionMap, ClassicSet universeOfDiscourse) {
         this.name = name;
         this.labelCharacteristicFunctionMap = labelCharacteristicFunctionMap;
-        this.universeOfDiscourse = universeOfDisclouse;
+        this.universeOfDiscourse = universeOfDiscourse;
     }
 
     public FuzzySet getFuzzySetForLabel(ClassicSet universeOfDiscourse, String label) {

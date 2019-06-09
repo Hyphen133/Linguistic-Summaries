@@ -20,7 +20,7 @@ public class DegreeOfTruth implements QualityMeasure {
         return summary.getQuantifier().getValue((operationResult));
     }
 
-    public static double getR(Summary summary) {
+    private static double getR(Summary summary) {
         if (summary instanceof TypeOneSummary) {
             return getRTypeOne(summary);
         } else {
@@ -28,11 +28,11 @@ public class DegreeOfTruth implements QualityMeasure {
         }
     }
 
-    public static double getRTypeOne(Summary summary) {
+    private static double getRTypeOne(Summary summary) {
         return summary.getSummarizer().getCardinality();
     }
 
-    public static double getRTypeTwo(Summary summary) {
+    private static double getRTypeTwo(Summary summary) {
         FuzzySet summarizer = summary.getSummarizer();
         FuzzySet qualifier = ((TypeTwoSummary) summary).getQualifier();
         return FuzzySetOperations.getIntersection(summarizer, qualifier).getCardinality() / qualifier.getCardinality();

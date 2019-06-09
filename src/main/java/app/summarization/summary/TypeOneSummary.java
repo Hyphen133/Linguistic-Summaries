@@ -22,11 +22,13 @@ public class TypeOneSummary implements Summary {
     private List<FuzzySet> summarizerSets;
 
 
-    public TypeOneSummary(String subject, List<LinguisticVariable> summarizers, List<String> summarizerLabels, Quantifier quantifier) {
+    public TypeOneSummary(String subject, List<LinguisticVariable> summarizers, List<String> summarizerLabels, Quantifier quantifier,
+                          OperationType summarizerOperation) {
         this.subject = subject;
         this.summarizers = summarizers;
         this.summarizerLabels = summarizerLabels;
         this.quantifier = quantifier;
+        this.summarizerOperation = summarizerOperation;
     }
 
     @Override

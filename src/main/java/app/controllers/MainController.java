@@ -100,7 +100,6 @@ public class MainController implements Initializable {
             }
         }
 
-
         OperationType summarizerOperation = null;
         if(summarizerAndOperation.isSelected()){
             summarizerOperation = OperationType.UNION;
