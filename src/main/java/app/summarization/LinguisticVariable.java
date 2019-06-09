@@ -7,6 +7,7 @@ import app.fuzzy_sets.characterictic_functions.CharacteristicFunction;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 /*
  * L - the name of variable
@@ -43,5 +44,9 @@ public class LinguisticVariable {
 
     public List<String> getLabels() {
         return new ArrayList<>(labelCharacteristicFunctionMap.keySet());
+    }
+
+    public Set<String> getAllTags() {
+        return labelCharacteristicFunctionMap.keySet();
     }
 }
