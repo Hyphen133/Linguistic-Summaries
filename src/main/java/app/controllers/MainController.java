@@ -131,7 +131,7 @@ public class MainController implements Initializable {
             for (String tag : linguisticVariableMap.get(key).getAllTags()) {
                 variableItem.getChildren().add(new TreeItem<>(tag));
             }
-            linguisticVariableTreeItems.add(variableItem);
+            linguisticVariableTreeItems2.add(variableItem);
         }
 
 
