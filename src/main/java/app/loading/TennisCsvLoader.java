@@ -15,7 +15,7 @@ import java.util.List;
 public class TennisCsvLoader {
     private static String csvFilepath = "src/main/resources/all_matches.csv";
 
-    public static List<TennisMatch> load() {
+    public static List<TennisMatch> load( int maxRecordCount) {
         List<TennisMatch> tennisMatches = new ArrayList<>();
 
         int i = 1;
@@ -24,7 +24,7 @@ public class TennisCsvLoader {
 
             boolean isFirstLine = true;
 
-            while ((line = br.readLine()) != null) {
+            while ((line = br.readLine()) != null && i < maxRecordCount) {
                 if (isFirstLine) {
                     isFirstLine = false;
                 } else {
@@ -35,16 +35,13 @@ public class TennisCsvLoader {
                         continue;
                     }
 
-
                     try {
-
                         boolean isDouble = processBoolean(values[50]);
 
                         //Filter missing values
                         if (processInt(values[23]) == 0) {
                             continue;
                         }
-
 
                         //Is doubles have long name or difficult name then values[13] will turn into string -> parsing int expection
                         if (processInt(values[13]) != 0 && !isDouble) {       //check if sets are recorded
@@ -72,21 +69,12 @@ public class TennisCsvLoader {
                                     .build();
 
                             tennisMatches.add(tennisMatch);
-
                         }
                     } catch (IllegalArgumentException e) {
                         System.out.println("Exception: " + i);
                     }
-
-
                 }
-
-                if (i % 1_000_000 == 0) {
-                    System.out.println(i);
-                }
-
                 i++;
-
             }
         }
 //        catch (NumberFormatException e){

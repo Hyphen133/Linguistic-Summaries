@@ -49,10 +49,6 @@ public class FuzzySet {
         return true;
     }
 
-    public void getCylyndricExtension() {
-        //TODO
-    }
-
     public FuzzySet getComplement() {
         List<FuzzySetElement> complementElements;
 

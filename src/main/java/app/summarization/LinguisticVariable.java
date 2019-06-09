@@ -22,10 +22,10 @@ public class LinguisticVariable {
 
     private ClassicSet universeOfDiscourse;
 
-    public LinguisticVariable(String name, HashMap<String, CharacteristicFunction> labelCharacteristicFunctionMap, ClassicSet universeOfDisclouse) {
+    public LinguisticVariable(String name, HashMap<String, CharacteristicFunction> labelCharacteristicFunctionMap, ClassicSet universeOfDiscourse) {
         this.name = name;
         this.labelCharacteristicFunctionMap = labelCharacteristicFunctionMap;
-        this.universeOfDiscourse = universeOfDisclouse;
+        this.universeOfDiscourse = universeOfDiscourse;
     }
 
     public FuzzySet getFuzzySetForLabel(ClassicSet universeOfDiscourse, String label) {
