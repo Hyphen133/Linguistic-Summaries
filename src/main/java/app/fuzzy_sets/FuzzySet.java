@@ -136,15 +136,6 @@ public class FuzzySet {
         return getCardinality() / universeOfDiscourse.getSize();
     }
 
-    public boolean isConvex() {
-        //TODO
-        return false;
-    }
-
-    public boolean isConcave() {
-        return !isConvex();
-    }
-
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

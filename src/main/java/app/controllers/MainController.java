@@ -1,5 +1,6 @@
 package app.controllers;
 
+import app.Utils;
 import app.data.TennisMatch;
 import app.data.TennisMatchLinguisticVariables;
 import app.fuzzy_sets.OperationType;
@@ -27,14 +28,16 @@ public class MainController implements Initializable {
     private static final String SEPARATOR = ":";
     private final int RECORDS_COUNT = 1500;
 
+    @FXML
+    Label summaryLabel;
+
+    @FXML
+    Label measuresLabel;
+
 
     List<CheckBox> checkBoxes;
     Map<String, LinguisticVariable> linguisticVariableMap;
     HashMap<String, Quantifier> quantifierMap;
-
-
-    @FXML
-    TableView<ObservableList<StringProperty>> summaryTableView;
 
     @FXML
     TreeView<String> summarizerTreeView;
@@ -155,7 +158,6 @@ public class MainController implements Initializable {
         quanfierListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
 
-        summaryTableView.setEditable(true);
     }
 
 
@@ -234,13 +236,6 @@ public class MainController implements Initializable {
 
 
         //GENERATING SUMMARIES
-        summaryTableView.getColumns().clear();
-        summaryTableView.getItems().clear();
-        summaryTableView.getColumns().add(new TableColumn<>("Summary"));
-        summaryTableView.getColumns().add(new TableColumn<>("Goodness"));
-        for (QualityMeasureEnum chosenMeasure : chosenMeasures) {
-            summaryTableView.getColumns().add(new TableColumn<>(chosenMeasure.getName().split(SEPARATOR)[0]));
-        }
 
 
         Summary summary = null;
@@ -261,26 +256,20 @@ public class MainController implements Initializable {
 
         double summaryGoodness = summaryMeasures.count();
 
-        ArrayList<StringProperty> rowValues = new ArrayList<>();
-        rowValues.add(new SimpleStringProperty(summary.getSummary()));
-        rowValues.add(new SimpleStringProperty(Double.toString(summaryGoodness)));
+        ArrayList<Double> measures = new ArrayList<>();
+        for (QualityMeasureEnum value : QualityMeasureEnum.values()) {
+            measures.add(QualityMeasureEnum.getValue(value, summary));
 
-        for (QualityMeasureEnum chosenMeasure : chosenMeasures) {
-            rowValues.add(new SimpleStringProperty(Double.toString(QualityMeasureEnum.getValue(chosenMeasure, summary))));
         }
 
-//        ObservableList<ObservableList<StringProperty>> items = summaryTableView.getItems();
-        ObservableList<StringProperty> row = FXCollections.observableArrayList(rowValues);
-//        items.add(row);
-        summaryTableView.refresh();
-        summaryTableView.getItems().add(row);
+        summaryLabel.setText(summary.getSummary());
 
+        String measuresString = "";
 
-        System.out.println(summaryTableView.getItems().size());
-//        summaryTableView.setItems(items);
-
-        summaryTableView.refresh();
-
+        for (int i = 0; i < measures.size(); i++) {
+            measuresString += "T" + Integer.toString(i+1) + "= (" + Double.toString(Utils.round(measures.get(i),2)) + ");  ";
+        }
+        measuresLabel.setText(measuresString);
 
     }
 }
