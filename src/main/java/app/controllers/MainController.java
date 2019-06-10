@@ -7,6 +7,7 @@ import app.loading.TennisCsvLoader;
 import app.summarization.LinguisticVariable;
 import app.summarization.quality_measures.QualityMeasureEnum;
 import app.summarization.summary.*;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,8 +25,7 @@ import java.util.stream.Collectors;
 public class MainController implements Initializable {
     private static final String ROOT_NODE = "root";
     private static final String SEPARATOR = ":";
-    private final int RECORDS_COUNT = 1500 ;
-
+    private final int RECORDS_COUNT = 1500;
 
 
     List<CheckBox> checkBoxes;
@@ -78,9 +78,6 @@ public class MainController implements Initializable {
     RadioButton qualifierOrOperation;
 
 
-
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -116,7 +113,6 @@ public class MainController implements Initializable {
         checkBoxes.add(t11CheckBox);
 
 
-
         List<TennisMatch> tennisMatches = TennisCsvLoader.load(RECORDS_COUNT);
         linguisticVariableMap = TennisMatchLinguisticVariables.getVariables(tennisMatches);
 
@@ -131,12 +127,10 @@ public class MainController implements Initializable {
         }
 
 
-
         summarizerTreeView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         summarizerTreeView.setRoot(new TreeItem<>(ROOT_NODE));
         summarizerTreeView.setShowRoot(false);
         summarizerTreeView.getRoot().getChildren().addAll(linguisticVariableTreeItems);
-
 
 
         List<TreeItem<String>> linguisticVariableTreeItems2 = new ArrayList<>();
@@ -156,10 +150,12 @@ public class MainController implements Initializable {
         qualifierTreeView.getRoot().getChildren().addAll(linguisticVariableTreeItems2);
 
 
-
         quantifierMap = QuantifierLabel.getMap();
         quanfierListView.setItems(FXCollections.observableArrayList(new ArrayList<>(quantifierMap.keySet())));
         quanfierListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+
+        summaryTableView.setEditable(true);
     }
 
 
@@ -168,7 +164,7 @@ public class MainController implements Initializable {
         //QUALITY MEASURES
         List<QualityMeasureEnum> chosenMeasures = new ArrayList<>();
         for (CheckBox checkBox : checkBoxes) {
-            if(checkBox.isSelected()){
+            if (checkBox.isSelected()) {
                 chosenMeasures.add(QualityMeasureEnum.valueOf(checkBox.getText().split(SEPARATOR)[0]));
             }
         }
@@ -179,25 +175,25 @@ public class MainController implements Initializable {
 
         //SUMMARIZER OPERATION
         OperationType summarizerOperation = null;
-        if(summarizerAndOperation.isSelected()){
+        if (summarizerAndOperation.isSelected()) {
             summarizerOperation = OperationType.INTERSECTION;
-        }else if(summarizerOrOperation.isSelected()){
+        } else if (summarizerOrOperation.isSelected()) {
             summarizerOperation = OperationType.UNION;
         }
 
-        if(summarizerOperation != null){
+        if (summarizerOperation != null) {
             System.out.println(summarizerOperation.getOperationName());
         }
 
         //QUALIFIER OPERATION
         OperationType qualifierOperation = null;
-        if(qualifierAndOperation.isSelected()){
+        if (qualifierAndOperation.isSelected()) {
             qualifierOperation = OperationType.INTERSECTION;
-        }else if(qualifierOrOperation.isSelected()){
+        } else if (qualifierOrOperation.isSelected()) {
             qualifierOperation = OperationType.UNION;
         }
 
-        if(qualifierOperation != null){
+        if (qualifierOperation != null) {
             System.out.println(qualifierOperation.getOperationName());
         }
 
@@ -209,7 +205,7 @@ public class MainController implements Initializable {
         for (String selectedVariable : selectedVariables) {
             System.out.println(selectedVariable);
             String[] splittedString = selectedVariable.split(SEPARATOR);
-            if(splittedString[0] != ROOT_NODE){
+            if (splittedString[0] != ROOT_NODE) {
                 summarizerVariables.add(linguisticVariableMap.get(splittedString[0]));
                 summarizerTags.add(splittedString[1]);
             }
@@ -224,7 +220,7 @@ public class MainController implements Initializable {
         for (String selectedVariable : selectedVariables) {
             System.out.println(selectedVariable);
             String[] splittedString = selectedVariable.split(SEPARATOR);
-            if(splittedString[0] != ROOT_NODE){
+            if (splittedString[0] != ROOT_NODE) {
                 qualifierVariables.add(linguisticVariableMap.get(splittedString[0]));
                 qualifierTags.add(splittedString[1]);
             }
@@ -237,34 +233,53 @@ public class MainController implements Initializable {
         System.out.println(selectedItem);
 
 
-
-
         //GENERATING SUMMARIES
         summaryTableView.getColumns().clear();
+        summaryTableView.getItems().clear();
         summaryTableView.getColumns().add(new TableColumn<>("Summary"));
+        summaryTableView.getColumns().add(new TableColumn<>("Goodness"));
         for (QualityMeasureEnum chosenMeasure : chosenMeasures) {
             summaryTableView.getColumns().add(new TableColumn<>(chosenMeasure.getName().split(SEPARATOR)[0]));
         }
 
 
         Summary summary = null;
-        if(qualifierVariables.size() == 0){
+        if (qualifierVariables.size() == 0) {
             //Type 1 Summary
-            summary = new TypeOneSummary("Tennis match player", summarizerVariables,summarizerTags, quantifier, summarizerOperation);
+            summary = new TypeOneSummary("Tennis match player", summarizerVariables, summarizerTags, quantifier, summarizerOperation);
 
-        }else{
+        } else {
             //Type 2 Summary
             summary = new TypeTwoSummary("Tennis match player", summarizerVariables, summarizerTags, qualifierVariables, qualifierTags, quantifier, qualifierOperation, summarizerOperation);
         }
 
 
+        GoodnessOfSummary summaryMeasures = new GoodnessOfSummary(summary);
+        for (QualityMeasureEnum chosenMeasure : chosenMeasures) {
+            summaryMeasures.addQualityMeasure(chosenMeasure);
+        }
+
+        double summaryGoodness = summaryMeasures.count();
+
+        ArrayList<StringProperty> rowValues = new ArrayList<>();
+        rowValues.add(new SimpleStringProperty(summary.getSummary()));
+        rowValues.add(new SimpleStringProperty(Double.toString(summaryGoodness)));
+
+        for (QualityMeasureEnum chosenMeasure : chosenMeasures) {
+            rowValues.add(new SimpleStringProperty(Double.toString(QualityMeasureEnum.getValue(chosenMeasure, summary))));
+        }
+
+//        ObservableList<ObservableList<StringProperty>> items = summaryTableView.getItems();
+        ObservableList<StringProperty> row = FXCollections.observableArrayList(rowValues);
+//        items.add(row);
+        summaryTableView.refresh();
+        summaryTableView.getItems().add(row);
 
 
-
-
+        System.out.println(summaryTableView.getItems().size());
+//        summaryTableView.setItems(items);
 
         summaryTableView.refresh();
-
 
 
     }
