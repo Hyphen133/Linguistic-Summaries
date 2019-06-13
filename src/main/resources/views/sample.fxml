@@ -87,6 +87,7 @@
          </children>
       </VBox>
       <Button mnemonicParsing="false" onAction="#saveToFile" text="Save" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+      <Button mnemonicParsing="false" onAction="#moveToFuzzySetsWindow" text="Move to show fuzzy sets" GridPane.columnIndex="2" GridPane.rowIndex="3" />
    </children>
    <padding>
       <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />

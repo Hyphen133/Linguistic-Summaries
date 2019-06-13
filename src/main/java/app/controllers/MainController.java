@@ -15,22 +15,26 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.springframework.stereotype.Controller;
 
 import java.io.*;
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
+import app.Config;
 
 @Controller
 public class MainController implements Initializable {
     private static final String ROOT_NODE = "root";
     private static final String SEPARATOR = ":";
-    private final int RECORDS_COUNT = 1500;
 
     @FXML
     Label summaryLabel;
@@ -123,7 +127,7 @@ public class MainController implements Initializable {
         checkBoxes.add(t11CheckBox);
 
 
-        List<TennisMatch> tennisMatches = TennisCsvLoader.load(RECORDS_COUNT);
+        List<TennisMatch> tennisMatches = TennisCsvLoader.load(Config.RECORDS_COUNT);
         linguisticVariableMap = TennisMatchLinguisticVariables.getVariables(tennisMatches);
 
         List<TreeItem<String>> linguisticVariableTreeItems = new ArrayList<>();
@@ -345,7 +349,7 @@ public class MainController implements Initializable {
 
     }
 
-    public void saveToFile(){
+    public void saveToFile(ActionEvent event){
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
         File selectedFile = fileChooser.showSaveDialog(null);
@@ -361,5 +365,19 @@ public class MainController implements Initializable {
             e.printStackTrace();
         }
 
+    }
+
+    public void moveToFuzzySetsWindow(ActionEvent event){
+        Stage stage = new Stage();
+        //Fill stage with content
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/fuzzy_sets.fxml"));
+        Parent parent = null;
+        try {
+            parent = (Parent) fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        stage.setScene(new Scene(parent));
+        stage.show();
     }
 }
