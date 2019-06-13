@@ -1,5 +1,6 @@
 package app.controllers;
 
+import app.GuiApp;
 import app.Utils;
 import app.data.TennisMatch;
 import app.data.TennisMatchLinguisticVariables;
@@ -17,8 +18,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import org.springframework.stereotype.Controller;
 
+import java.io.*;
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -36,7 +39,7 @@ public class MainController implements Initializable {
     Label measuresLabel;
 
     @FXML
-    TableView tableView;
+    TableView<SummaryDto> tableView;
 
 
     List<CheckBox> checkBoxes;
@@ -300,7 +303,7 @@ public class MainController implements Initializable {
             summaryMeasures.addQualityMeasure(chosenMeasure);
         }
 
-        double summaryGoodness = summaryMeasures.count();
+        double summaryGoodness = Utils.round(summaryMeasures.count(),2);
 
         ArrayList<Double> measures = new ArrayList<>();
         for (QualityMeasureEnum value : QualityMeasureEnum.values()) {
@@ -339,6 +342,25 @@ public class MainController implements Initializable {
         measuresLabel.setText(measuresString);
 
 
+
+    }
+
+    public void saveToFile(){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
+        File selectedFile = fileChooser.showSaveDialog(null);
+
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter(selectedFile))){
+            for (SummaryDto item : tableView.getItems()) {
+                writer.write(item.toString());
+                writer.write('\n');
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 }
