@@ -348,7 +348,6 @@ public class MainController implements Initializable {
     public void saveToFile(){
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
         File selectedFile = fileChooser.showSaveDialog(null);
 
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(selectedFile))){
