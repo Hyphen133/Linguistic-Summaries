@@ -1,6 +1,12 @@
 package app.fuzzy_sets.characterictic_functions;
 
+import javafx.scene.chart.XYChart;
 import lombok.AllArgsConstructor;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static app.Config.SMALL_POSITIVE;
 
 @AllArgsConstructor
 public class RectangularFunction implements CharacteristicFunction {
@@ -23,4 +29,14 @@ public class RectangularFunction implements CharacteristicFunction {
         return a*b;
     }
 
+
+    @Override
+    public List<XYChart.Data<Double,Double>> getCharacteristicPoints() {
+        return Arrays.asList(
+                new XYChart.Data<>(a,calculate(a)),
+                new XYChart.Data<>(a+SMALL_POSITIVE, calculate(a+SMALL_POSITIVE)),
+                new XYChart.Data<>(b-SMALL_POSITIVE, calculate(b-SMALL_POSITIVE)),
+                new XYChart.Data<>(b, calculate(b))
+        );
+    }
 }

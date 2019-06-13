@@ -1,6 +1,10 @@
 package app.fuzzy_sets.characterictic_functions;
 
+import javafx.scene.chart.XYChart;
 import lombok.AllArgsConstructor;
+
+import java.util.Arrays;
+import java.util.List;
 
 @AllArgsConstructor
 public class TriangularFunction implements CharacteristicFunction {
@@ -23,5 +27,15 @@ public class TriangularFunction implements CharacteristicFunction {
 
     public double getArea() {
         return 0.5*getBase();
+    }
+
+
+    @Override
+    public List<XYChart.Data<Double,Double>> getCharacteristicPoints() {
+        return Arrays.asList(
+                new XYChart.Data<>(a,calculate(a)),
+                new XYChart.Data<>(b,calculate(b)),
+                new XYChart.Data<>(c,calculate(c))
+        );
     }
 }

@@ -1,6 +1,10 @@
 package app.fuzzy_sets.characterictic_functions;
 
+import javafx.scene.chart.XYChart;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 public class ClassicFunction implements CharacteristicFunction {
@@ -13,5 +17,11 @@ public class ClassicFunction implements CharacteristicFunction {
     }
     public double getArea() {
         return 0.0;
+    }
+
+
+    @Override
+    public List<XYChart.Data<Double,Double>> getCharacteristicPoints() {
+        return new ArrayList<>();
     }
 }

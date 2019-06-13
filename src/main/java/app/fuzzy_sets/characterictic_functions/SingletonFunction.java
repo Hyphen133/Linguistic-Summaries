@@ -1,6 +1,12 @@
 package app.fuzzy_sets.characterictic_functions;
 
+import javafx.scene.chart.XYChart;
 import lombok.AllArgsConstructor;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static app.Config.SMALL_POSITIVE;
 
 @AllArgsConstructor
 public class SingletonFunction implements CharacteristicFunction {
@@ -16,5 +22,15 @@ public class SingletonFunction implements CharacteristicFunction {
 
     public double getArea() {
         return 0.0;
+    }
+
+
+    @Override
+    public List<XYChart.Data<Double,Double>> getCharacteristicPoints() {
+        return Arrays.asList(
+                new XYChart.Data<>(nonZeroElement - SMALL_POSITIVE, calculate(nonZeroElement - SMALL_POSITIVE)),
+                new XYChart.Data<>(nonZeroElement, calculate(nonZeroElement)),
+                new XYChart.Data<>(nonZeroElement + SMALL_POSITIVE, calculate(nonZeroElement + SMALL_POSITIVE))
+        );
     }
 }
