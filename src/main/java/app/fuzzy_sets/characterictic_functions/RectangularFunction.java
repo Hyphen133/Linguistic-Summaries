@@ -31,7 +31,7 @@ public class RectangularFunction implements CharacteristicFunction {
 
 
     @Override
-    public List<XYChart.Data<Double,Double>> getCharacteristicPoints() {
+    public List<XYChart.Data<Number, Number>> getCharacteristicPoints() {
         return Arrays.asList(
                 new XYChart.Data<>(a,calculate(a)),
                 new XYChart.Data<>(a+SMALL_POSITIVE, calculate(a+SMALL_POSITIVE)),

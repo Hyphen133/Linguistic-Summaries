@@ -4,6 +4,7 @@ import javafx.scene.chart.XYChart;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @NoArgsConstructor
@@ -21,7 +22,9 @@ public class ClassicFunction implements CharacteristicFunction {
 
 
     @Override
-    public List<XYChart.Data<Double,Double>> getCharacteristicPoints() {
-        return new ArrayList<>();
+    public List<XYChart.Data<Number, Number>> getCharacteristicPoints() {
+        return Arrays.asList(
+                new XYChart.Data<>(0,calculate(0))
+        );
     }
 }

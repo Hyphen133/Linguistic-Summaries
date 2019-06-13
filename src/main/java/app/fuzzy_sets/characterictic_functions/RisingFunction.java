@@ -30,7 +30,7 @@ public class RisingFunction implements CharacteristicFunction {
     }
 
     @Override
-    public List<XYChart.Data<Double,Double>> getCharacteristicPoints() {
+    public List<XYChart.Data<Number, Number>> getCharacteristicPoints() {
         return Arrays.asList(
                 new XYChart.Data<>(a, calculate(a)),
                 new XYChart.Data<>(b+SMALL_POSITIVE, calculate(b+SMALL_POSITIVE))

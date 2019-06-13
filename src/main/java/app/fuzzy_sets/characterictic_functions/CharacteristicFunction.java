@@ -13,5 +13,5 @@ public interface CharacteristicFunction {
 
 
     //Returns points where function changes (linear)
-    List<XYChart.Data<Double,Double>> getCharacteristicPoints();
+    List<XYChart.Data<Number, Number>> getCharacteristicPoints();
 }

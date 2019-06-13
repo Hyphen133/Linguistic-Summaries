@@ -26,7 +26,7 @@
       <Label text="Quantifiers" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
       <LineChart fx:id="variableChart" GridPane.rowIndex="2">
         <xAxis>
-          <CategoryAxis side="BOTTOM" />
+          <NumberAxis side="BOTTOM" />
         </xAxis>
         <yAxis>
           <NumberAxis side="LEFT" />
@@ -34,7 +34,7 @@
       </LineChart>
       <LineChart fx:id="quantifierChart" GridPane.columnIndex="1" GridPane.rowIndex="2">
         <xAxis>
-          <CategoryAxis side="BOTTOM" />
+          <NumberAxis side="BOTTOM" />
         </xAxis>
         <yAxis>
           <NumberAxis side="LEFT" />

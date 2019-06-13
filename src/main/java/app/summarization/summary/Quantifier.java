@@ -38,4 +38,8 @@ public class Quantifier {
         }
         return quantifierLabel.getCharacteristicFunction().getArea() / 10000;
     }
+
+    public QuantifierLabel getQuantifierLabel() {
+        return quantifierLabel;
+    }
 }

@@ -26,7 +26,7 @@ public class SingletonFunction implements CharacteristicFunction {
 
 
     @Override
-    public List<XYChart.Data<Double,Double>> getCharacteristicPoints() {
+    public List<XYChart.Data<Number, Number>> getCharacteristicPoints() {
         return Arrays.asList(
                 new XYChart.Data<>(nonZeroElement - SMALL_POSITIVE, calculate(nonZeroElement - SMALL_POSITIVE)),
                 new XYChart.Data<>(nonZeroElement, calculate(nonZeroElement)),
