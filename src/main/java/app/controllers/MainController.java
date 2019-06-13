@@ -16,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import org.springframework.stereotype.Controller;
 
 import java.net.URL;
@@ -33,6 +34,9 @@ public class MainController implements Initializable {
 
     @FXML
     Label measuresLabel;
+
+    @FXML
+    TableView tableView;
 
 
     List<CheckBox> checkBoxes;
@@ -158,6 +162,50 @@ public class MainController implements Initializable {
         quanfierListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
 
+        //TABLE VIEW
+        tableView.getColumns().clear();
+        TableColumn summaryColumn = new TableColumn("Summary");
+        summaryColumn.setCellValueFactory(new PropertyValueFactory<>("summary"));
+
+        TableColumn goodnessColumn = new TableColumn("Goodness");
+        goodnessColumn.setCellValueFactory(new PropertyValueFactory<>("goodness"));
+
+        TableColumn t1Column = new TableColumn("T1");
+        t1Column.setCellValueFactory(new PropertyValueFactory<>("t1"));
+
+        TableColumn t2Column = new TableColumn("T2");
+        t2Column.setCellValueFactory(new PropertyValueFactory<>("t2"));
+
+        TableColumn t3Column = new TableColumn("T3");
+        t3Column.setCellValueFactory(new PropertyValueFactory<>("t3"));
+
+        TableColumn t4Column = new TableColumn("T4");
+        t4Column.setCellValueFactory(new PropertyValueFactory<>("t4"));
+
+        TableColumn t5Column = new TableColumn("T5");
+        t5Column.setCellValueFactory(new PropertyValueFactory<>("t5"));
+
+        TableColumn t6Column = new TableColumn("T6");
+        t6Column.setCellValueFactory(new PropertyValueFactory<>("t6"));
+
+        TableColumn t7Column = new TableColumn("T7");
+        t7Column.setCellValueFactory(new PropertyValueFactory<>("t7"));
+
+        TableColumn t8Column = new TableColumn("T8");
+        t8Column.setCellValueFactory(new PropertyValueFactory<>("t8"));
+
+        TableColumn t9Column = new TableColumn("T9");
+        t9Column.setCellValueFactory(new PropertyValueFactory<>("t9"));
+
+        TableColumn t10Column = new TableColumn("T10");
+        t10Column.setCellValueFactory(new PropertyValueFactory<>("t10"));
+
+        TableColumn t11Column = new TableColumn("T11");
+        t11Column.setCellValueFactory(new PropertyValueFactory<>("t11"));
+
+        tableView.getColumns().addAll(summaryColumn,goodnessColumn,t1Column,t2Column,t3Column,t4Column,t5Column,t6Column,t7Column,t8Column,t9Column,t10Column,t11Column);
+
+
     }
 
 
@@ -236,8 +284,6 @@ public class MainController implements Initializable {
 
 
         //GENERATING SUMMARIES
-
-
         Summary summary = null;
         if (qualifierVariables.size() == 0) {
             //Type 1 Summary
@@ -258,10 +304,31 @@ public class MainController implements Initializable {
 
         ArrayList<Double> measures = new ArrayList<>();
         for (QualityMeasureEnum value : QualityMeasureEnum.values()) {
-            measures.add(QualityMeasureEnum.getValue(value, summary));
+            measures.add(Utils.round(QualityMeasureEnum.getValue(value, summary),2));
 
         }
 
+
+        //TABLEVIEW
+        SummaryDto summaryDto = SummaryDto.builder().summary(summary.getSummary()).goodness(summaryGoodness)
+                .t1(measures.get(0))
+                .t2(measures.get(1))
+                .t3(measures.get(2))
+                .t4(measures.get(3))
+                .t5(measures.get(4))
+                .t6(measures.get(5))
+                .t7(measures.get(6))
+                .t8(measures.get(7))
+                .t9(measures.get(8))
+                .t10(measures.get(9))
+                .t11(measures.get(10))
+                .build();
+
+        tableView.getItems().add(summaryDto);
+        tableView.refresh();
+
+
+        //LABEL
         summaryLabel.setText(summary.getSummary());
 
         String measuresString = "";
@@ -270,6 +337,8 @@ public class MainController implements Initializable {
             measuresString += "T" + Integer.toString(i+1) + "= (" + Double.toString(Utils.round(measures.get(i),2)) + ");  ";
         }
         measuresLabel.setText(measuresString);
+
+
 
     }
 }
