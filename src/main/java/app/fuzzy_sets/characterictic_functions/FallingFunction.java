@@ -31,8 +31,10 @@ public class FallingFunction implements CharacteristicFunction {
 
     @Override
     public List<XYChart.Data<Number, Number>> getCharacteristicPoints() {
-        return Arrays.asList(
-                new XYChart.Data<>(a,calculate(a),
-                new XYChart.Data<>(b+SMALL_POSITIVE,calculate(b+SMALL_POSITIVE))));
+        List<XYChart.Data<Number, Number>> data = Arrays.asList(
+                new XYChart.Data<>(a, calculate(a)),
+                        new XYChart.Data<>(b + SMALL_POSITIVE, calculate(b + SMALL_POSITIVE)));
+
+        return data;
     }
 }
