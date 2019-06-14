@@ -287,61 +287,23 @@ public class MainController implements Initializable {
             tableView.getItems().add(summaryDto);
 
         }
+
+
+        List<String> chosenColumns = chosenMeasures.stream().map(x->x.getName().split(SEPARATOR)[0]).collect(Collectors.toList());
+        for (TableColumn<SummaryDto, ?> column : tableView.getColumns()) {
+            //Not summary and goodness
+            if(column.getText().charAt(0) == 'T'){
+                if(chosenColumns.contains(column.getText())){
+                    column.setVisible(true);
+                }else{
+                    column.setVisible(false);
+                }
+            }
+
+        }
+
         tableView.refresh();
     }
-
-//        if (qualifierVariables.size() == 0) {
-//            //Type 1 Summary
-//            summary = new TypeOneSummary("Tennis match player", summarizerVariables, summarizerTags, quantifier, summarizerOperation);
-//
-//        } else {
-//            //Type 2 Summary
-//            summary = new TypeTwoSummary("Tennis match player", summarizerVariables, summarizerTags, qualifierVariables, qualifierTags, quantifier, qualifierOperation, summarizerOperation);
-//        }
-//
-//
-//        GoodnessOfSummary summaryMeasures = new GoodnessOfSummary(summary);
-//        for (QualityMeasureEnum chosenMeasure : chosenMeasures) {
-//            summaryMeasures.addQualityMeasure(chosenMeasure);
-//        }
-//
-//        double summaryGoodness = Utils.round(summaryMeasures.count(),2);
-//
-//        ArrayList<Double> measures = new ArrayList<>();
-//        for (QualityMeasureEnum value : QualityMeasureEnum.values()) {
-//            measures.add(Utils.round(QualityMeasureEnum.getValue(value, summary),2));
-//
-//        }
-//
-//
-//        //TABLEVIEW
-//        SummaryDto summaryDto = SummaryDto.builder().summary(summary.getSummary()).goodness(summaryGoodness)
-//                .t1(measures.get(0))
-//                .t2(measures.get(1))
-//                .t3(measures.get(2))
-//                .t4(measures.get(3))
-//                .t5(measures.get(4))
-//                .t6(measures.get(5))
-//                .t7(measures.get(6))
-//                .t8(measures.get(7))
-//                .t9(measures.get(8))
-//                .t10(measures.get(9))
-//                .t11(measures.get(10))
-//                .build();
-//
-//        tableView.getItems().add(summaryDto);
-//        tableView.refresh();
-//
-//
-//        //LABEL
-//        summaryLabel.setText(summary.getSummary());
-//
-//        String measuresString = "";
-//
-//        for (int i = 0; i < measures.size(); i++) {
-//            measuresString += "T" + Integer.toString(i+1) + "= (" + Double.toString(Utils.round(measures.get(i),2)) + ");  ";
-//        }
-//        measuresLabel.setText(measuresString);
 
 
     public void saveToFile(ActionEvent event) {
