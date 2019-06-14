@@ -9,7 +9,6 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -32,7 +31,6 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <TreeView fx:id="summarizerTreeView" prefHeight="268.0" prefWidth="300.0" GridPane.rowIndex="1" GridPane.rowSpan="2" />
       <Button mnemonicParsing="false" onAction="#generateSummaries" text="Generate Summaries" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
       <Label text="Summarizers" GridPane.halignment="CENTER" />
       <Label text="Quantifiers" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
@@ -73,7 +71,6 @@
             <RadioButton fx:id="qualifierOrOperation" mnemonicParsing="false" text="OR" toggleGroup="$qualifierOperation" />
          </children>
       </VBox>
-      <TreeView fx:id="qualifierTreeView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="2" />
       <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnSpan="4" GridPane.rowIndex="4" GridPane.rowSpan="2">
          <children>
             <Label fx:id="summaryLabel" text="__" />
@@ -88,6 +85,8 @@
       </VBox>
       <Button mnemonicParsing="false" onAction="#saveToFile" text="Save" GridPane.columnIndex="3" GridPane.rowIndex="6" />
       <Button mnemonicParsing="false" onAction="#moveToFuzzySetsWindow" text="Move to show fuzzy sets" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+      <ListView fx:id="summarizerListView" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" GridPane.rowSpan="2" />
+      <ListView fx:id="qualifierListView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="2" />
    </children>
    <padding>
       <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
