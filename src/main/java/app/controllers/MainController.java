@@ -220,29 +220,51 @@ public class MainController implements Initializable {
         List<SummaryData> dataList = new ArrayList<>();
 
 
-        //Type1
-        for (String selectedSumm : selectedSummarizers) {
-            for (String summarizerTag : linguisticVariableMap.get(selectedSumm).getAllTags()) {
-                for (Quantifier quantifier : quantifiers) {
-                    dataList.add(SummaryData.builder().summarizerVariables(Arrays.asList(selectedSumm)).summarizerTags(Arrays.asList(summarizerTag)).quantifier(quantifier).build());
-                }
-            }
-        }
+//        //Type1
+//        for (String selectedSumm : selectedSummarizers) {
+//            for (String summarizerTag : linguisticVariableMap.get(selectedSumm).getAllTags()) {
+//                for (Quantifier quantifier : quantifiers) {
+//                    dataList.add(SummaryData.builder().summarizerVariables(Arrays.asList(selectedSumm)).summarizerTags(Arrays.asList(summarizerTag)).quantifier(quantifier).build());
+//                }
+//            }
+//        }
+//
+//        //Type2
+//        if (selectedQualifiers.size() > 0) {
+//            for (String selectedSumm : selectedSummarizers) {
+//                for (String summarizerTag : linguisticVariableMap.get(selectedSumm).getAllTags()) {
+//                    for (String selectedQuali : selectedQualifiers) {
+//                        for (String qualifierTag : linguisticVariableMap.get(selectedQuali).getAllTags()) {
+//                            for (Quantifier quantifier : quantifiers) {
+//                                dataList.add(SummaryData.builder().summarizerVariables(Arrays.asList(selectedSumm)).summarizerTags(Arrays.asList(summarizerTag)).qualifierVariables(Arrays.asList(selectedQuali)).qualifierTags(Arrays.asList(qualifierTag)).quantifier(quantifier).build());
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
 
+        //Type2 2summ+1quali
         //Type2
-        if (selectedQualifiers.size() > 0) {
-            for (String selectedSumm : selectedSummarizers) {
-                for (String summarizerTag : linguisticVariableMap.get(selectedSumm).getAllTags()) {
-                    for (String selectedQuali : selectedQualifiers) {
-                        for (String qualifierTag : linguisticVariableMap.get(selectedQuali).getAllTags()) {
-                            for (Quantifier quantifier : quantifiers) {
-                                dataList.add(SummaryData.builder().summarizerVariables(Arrays.asList(selectedSumm)).summarizerTags(Arrays.asList(summarizerTag)).qualifierVariables(Arrays.asList(selectedQuali)).qualifierTags(Arrays.asList(qualifierTag)).quantifier(quantifier).build());
+        if (selectedQualifiers.size() > 0 && selectedSummarizers.size()>0) {
+            for (String selectedSumm1 : selectedSummarizers) {
+                for (String summarizerTag1 : linguisticVariableMap.get(selectedSumm1).getAllTags()) {
+                    for (String selectedSumm2 : selectedSummarizers) {
+                        for (String summarizerTag2 : linguisticVariableMap.get(selectedSumm2).getAllTags()) {
+                            for (String selectedQuali : selectedQualifiers) {
+                                for (String qualifierTag : linguisticVariableMap.get(selectedQuali).getAllTags()) {
+                                    for (Quantifier quantifier : quantifiers) {
+                                        dataList.add(SummaryData.builder().summarizerVariables(Arrays.asList(selectedSumm1,selectedSumm2)).summarizerTags(Arrays.asList(summarizerTag1,summarizerTag2)).qualifierVariables(Arrays.asList(selectedQuali)).qualifierTags(Arrays.asList(qualifierTag)).quantifier(quantifier).build());
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
         }
+
+
 
         for (SummaryData summaryData : dataList) {
             Summary summary = null;
