@@ -20,6 +20,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.apache.commons.collections4.ListUtils;
 import org.springframework.stereotype.Controller;
 
 import java.io.*;
@@ -101,9 +102,10 @@ public class MainController implements Initializable {
 
         summarizerOrOperation.setText(OperationType.UNION.getOperationName());
         summarizerAndOperation.setText(OperationType.INTERSECTION.getOperationName());
+        summarizerAndOperation.setSelected(true);
         qualifierOrOperation.setText(OperationType.UNION.getOperationName());
         qualifierAndOperation.setText(OperationType.INTERSECTION.getOperationName());
-
+        qualifierAndOperation.setSelected(true);
 
         List<TennisMatch> tennisMatches = TennisCsvLoader.load(Config.RECORDS_COUNT);
         linguisticVariableMap = TennisMatchLinguisticVariables.getVariables(tennisMatches);
@@ -220,33 +222,41 @@ public class MainController implements Initializable {
         List<SummaryData> dataList = new ArrayList<>();
 
 
-//        //Type1
-//        for (String selectedSumm : selectedSummarizers) {
-//            for (String summarizerTag : linguisticVariableMap.get(selectedSumm).getAllTags()) {
-//                for (Quantifier quantifier : quantifiers) {
-//                    dataList.add(SummaryData.builder().summarizerVariables(Arrays.asList(selectedSumm)).summarizerTags(Arrays.asList(summarizerTag)).quantifier(quantifier).build());
-//                }
-//            }
-//        }
-//
-//        //Type2
-//        if (selectedQualifiers.size() > 0) {
-//            for (String selectedSumm : selectedSummarizers) {
-//                for (String summarizerTag : linguisticVariableMap.get(selectedSumm).getAllTags()) {
-//                    for (String selectedQuali : selectedQualifiers) {
-//                        for (String qualifierTag : linguisticVariableMap.get(selectedQuali).getAllTags()) {
-//                            for (Quantifier quantifier : quantifiers) {
-//                                dataList.add(SummaryData.builder().summarizerVariables(Arrays.asList(selectedSumm)).summarizerTags(Arrays.asList(summarizerTag)).qualifierVariables(Arrays.asList(selectedQuali)).qualifierTags(Arrays.asList(qualifierTag)).quantifier(quantifier).build());
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
+        //Type1
+        for (String selectedSumm : selectedSummarizers) {
+            for (String summarizerTag : linguisticVariableMap.get(selectedSumm).getAllTags()) {
+                for (Quantifier quantifier : quantifiers) {
+                    dataList.add(SummaryData.builder().summarizerVariables(Arrays.asList(selectedSumm)).summarizerTags(Arrays.asList(summarizerTag)).quantifier(quantifier).build());
+                }
+            }
+        }
+
+        //Type2
+        if (selectedQualifiers.size() > 0) {
+            for (String selectedSumm1 : selectedSummarizers) {
+                for (String summarizerTag1 : linguisticVariableMap.get(selectedSumm1).getAllTags()) {
+                    for (String selectedQuali : selectedQualifiers) {
+                        for (String qualifierTag : linguisticVariableMap.get(selectedQuali).getAllTags()) {
+                            for (Quantifier quantifier : quantifiers) {
+
+                                List<String> summarizerStrings = Arrays.asList(selectedSumm1);
+                                List<String> summarizerTagStrings = Arrays.asList(summarizerTag1);
+                                List<String> qualifierStrings = Arrays.asList(selectedQuali);
+                                List<String> qualifierTagStrings = Arrays.asList(qualifierTag);
+
+                                if (!Utils.hasDuplicates(ListUtils.union(summarizerStrings, qualifierStrings))) {
+                                    dataList.add(SummaryData.builder().summarizerVariables(summarizerStrings).summarizerTags(summarizerTagStrings).qualifierVariables(qualifierStrings).qualifierTags(qualifierTagStrings).quantifier(quantifier).build());
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         //Type2 2summ+1quali
         //Type2
-        if (selectedQualifiers.size() > 0 && selectedSummarizers.size()>0) {
+        if (selectedQualifiers.size() > 0 && selectedSummarizers.size() > 0) {
             for (String selectedSumm1 : selectedSummarizers) {
                 for (String summarizerTag1 : linguisticVariableMap.get(selectedSumm1).getAllTags()) {
                     for (String selectedSumm2 : selectedSummarizers) {
@@ -254,7 +264,15 @@ public class MainController implements Initializable {
                             for (String selectedQuali : selectedQualifiers) {
                                 for (String qualifierTag : linguisticVariableMap.get(selectedQuali).getAllTags()) {
                                     for (Quantifier quantifier : quantifiers) {
-                                        dataList.add(SummaryData.builder().summarizerVariables(Arrays.asList(selectedSumm1,selectedSumm2)).summarizerTags(Arrays.asList(summarizerTag1,summarizerTag2)).qualifierVariables(Arrays.asList(selectedQuali)).qualifierTags(Arrays.asList(qualifierTag)).quantifier(quantifier).build());
+
+                                        List<String> summarizerStrings = Arrays.asList(selectedSumm1, selectedSumm2);
+                                        List<String> summarizerTagStrings = Arrays.asList(summarizerTag1, summarizerTag2);
+                                        List<String> qualifierStrings = Arrays.asList(selectedQuali);
+                                        List<String> qualifierTagStrings = Arrays.asList(qualifierTag);
+
+                                        if (!Utils.hasDuplicates(ListUtils.union(summarizerStrings, qualifierStrings))) {
+                                            dataList.add(SummaryData.builder().summarizerVariables(summarizerStrings).summarizerTags(summarizerTagStrings).qualifierVariables(qualifierStrings).qualifierTags(qualifierTagStrings).quantifier(quantifier).build());
+                                        }
                                     }
                                 }
                             }
@@ -265,13 +283,45 @@ public class MainController implements Initializable {
         }
 
 
+        //Type2 2summ+2quali
+        //Type2
+//        if (selectedQualifiers.size() > 0 && selectedSummarizers.size()>0) {
+//            for (String selectedSumm1 : selectedSummarizers) {
+//                for (String summarizerTag1 : linguisticVariableMap.get(selectedSumm1).getAllTags()) {
+//                    for (String selectedSumm2 : selectedSummarizers) {
+//                        for (String summarizerTag2 : linguisticVariableMap.get(selectedSumm2).getAllTags()) {
+//                            for (String selectedQuali1 : selectedQualifiers) {
+//                                for (String qualifierTag1 : linguisticVariableMap.get(selectedQuali1).getAllTags()) {
+//                                    for (String selectedQuali2 : selectedQualifiers) {
+//                                        for (String qualifierTag2 : linguisticVariableMap.get(selectedQuali1).getAllTags()) {
+//                                            for (Quantifier quantifier : quantifiers) {
+//
+//                                                List<String> summarizerStrings = Arrays.asList(selectedSumm1, selectedSumm2);
+//                                                List<String> summarizerTagStrings = Arrays.asList(summarizerTag1,summarizerTag2);
+//                                                List<String> qualifierStrings = Arrays.asList(selectedQuali1,selectedQuali2);
+//                                                List<String> qualifierTagStrings = Arrays.asList(qualifierTag1,qualifierTag2);
+//
+//                                                if(!Utils.hasDuplicates(ListUtils.union(summarizerStrings, qualifierStrings))){
+//                                                    dataList.add(SummaryData.builder().summarizerVariables(summarizerStrings).summarizerTags(summarizerTagStrings).qualifierVariables(qualifierStrings).qualifierTags(qualifierTagStrings).quantifier(quantifier).build());
+//                                                }
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+
 
         for (SummaryData summaryData : dataList) {
             Summary summary = null;
             if (summaryData.getQualifierTags() == null) {
-                summary = new TypeOneSummary("Tennis match player", summaryData.getSummarizerVariables().stream().map(x->linguisticVariableMap.get(x)).collect(Collectors.toList()), summaryData.getSummarizerTags(), summaryData.getQuantifier(), summarizerOperation);
+                summary = new TypeOneSummary("Tennis match player", summaryData.getSummarizerVariables().stream().map(x -> linguisticVariableMap.get(x)).collect(Collectors.toList()), summaryData.getSummarizerTags(), summaryData.getQuantifier(), summarizerOperation);
             } else {
-                summary = new TypeTwoSummary("Tennis match player", summaryData.getSummarizerVariables().stream().map(x->linguisticVariableMap.get(x)).collect(Collectors.toList()) , summaryData.getSummarizerTags(), summaryData.getQualifierVariables().stream().map(x->linguisticVariableMap.get(x)).collect(Collectors.toList()), summaryData.getQualifierTags(), summaryData.getQuantifier(), qualifierOperation, summarizerOperation);
+                summary = new TypeTwoSummary("Tennis match player", summaryData.getSummarizerVariables().stream().map(x -> linguisticVariableMap.get(x)).collect(Collectors.toList()), summaryData.getSummarizerTags(), summaryData.getQualifierVariables().stream().map(x -> linguisticVariableMap.get(x)).collect(Collectors.toList()), summaryData.getQualifierTags(), summaryData.getQuantifier(), qualifierOperation, summarizerOperation);
 
             }
 
@@ -306,13 +356,13 @@ public class MainController implements Initializable {
         }
 
 
-        List<String> chosenColumns = chosenMeasures.stream().map(x->x.getName().split(SEPARATOR)[0]).collect(Collectors.toList());
+        List<String> chosenColumns = chosenMeasures.stream().map(x -> x.getName().split(SEPARATOR)[0]).collect(Collectors.toList());
         for (TableColumn<SummaryDto, ?> column : tableView.getColumns()) {
             //Not summary and goodness
-            if(column.getText().charAt(0) == 'T'){
-                if(chosenColumns.contains(column.getText())){
+            if (column.getText().charAt(0) == 'T') {
+                if (chosenColumns.contains(column.getText())) {
                     column.setVisible(true);
-                }else{
+                } else {
                     column.setVisible(false);
                 }
             }

@@ -1,6 +1,8 @@
 package app;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Utils {
     public static double round(double value, int places) {
@@ -23,5 +25,24 @@ public class Utils {
             }
         }
         return true;
+    }
+
+    public static Set<String> findDuplicates(List<String> listContainingDuplicates)
+    {
+        final Set<String> setToReturn = new HashSet<>();
+        final Set<String> set1 = new HashSet<>();
+
+        for (String s : listContainingDuplicates)
+        {
+            if (!set1.add(s))
+            {
+                setToReturn.add(s);
+            }
+        }
+        return setToReturn;
+    }
+
+    public static boolean hasDuplicates(List<String> list){
+        return findDuplicates(list).size()>0;
     }
 }
