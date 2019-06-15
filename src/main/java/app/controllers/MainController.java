@@ -1,20 +1,15 @@
 package app.controllers;
 
-import app.GuiApp;
 import app.Utils;
 import app.data.TennisMatch;
 import app.data.TennisMatchLinguisticVariables;
 import app.fuzzy_sets.OperationType;
-import app.generating.SummaryData;
+import app.controllers.generating.SummaryData;
 import app.loading.TennisCsvLoader;
 import app.summarization.LinguisticVariable;
-import app.summarization.quality_measures.QualityMeasure;
 import app.summarization.quality_measures.QualityMeasureEnum;
 import app.summarization.summary.*;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -229,7 +224,7 @@ public class MainController implements Initializable {
         for (String selectedSumm : selectedSummarizers) {
             for (String summarizerTag : linguisticVariableMap.get(selectedSumm).getAllTags()) {
                 for (Quantifier quantifier : quantifiers) {
-                    dataList.add(SummaryData.builder().summarizerVariable(selectedSumm).summarizerTag(summarizerTag).quantifier(quantifier).build());
+                    dataList.add(SummaryData.builder().summarizerVariables(Arrays.asList(selectedSumm)).summarizerTags(Arrays.asList(summarizerTag)).quantifier(quantifier).build());
                 }
             }
         }
@@ -241,7 +236,7 @@ public class MainController implements Initializable {
                     for (String selectedQuali : selectedQualifiers) {
                         for (String qualifierTag : linguisticVariableMap.get(selectedQuali).getAllTags()) {
                             for (Quantifier quantifier : quantifiers) {
-                                dataList.add(SummaryData.builder().summarizerVariable(selectedSumm).summarizerTag(summarizerTag).qualifierVariable(selectedQuali).qualifierTag(qualifierTag).quantifier(quantifier).build());
+                                dataList.add(SummaryData.builder().summarizerVariables(Arrays.asList(selectedSumm)).summarizerTags(Arrays.asList(summarizerTag)).qualifierVariables(Arrays.asList(selectedQuali)).qualifierTags(Arrays.asList(qualifierTag)).quantifier(quantifier).build());
                             }
                         }
                     }
@@ -251,10 +246,10 @@ public class MainController implements Initializable {
 
         for (SummaryData summaryData : dataList) {
             Summary summary = null;
-            if (summaryData.getQualifierTag() == null) {
-                summary = new TypeOneSummary("Tennis match player", Arrays.asList(linguisticVariableMap.get(summaryData.getSummarizerVariable())), Arrays.asList(summaryData.getSummarizerTag()), summaryData.getQuantifier(), summarizerOperation);
+            if (summaryData.getQualifierTags() == null) {
+                summary = new TypeOneSummary("Tennis match player", summaryData.getSummarizerVariables().stream().map(x->linguisticVariableMap.get(x)).collect(Collectors.toList()), summaryData.getSummarizerTags(), summaryData.getQuantifier(), summarizerOperation);
             } else {
-                summary = new TypeTwoSummary("Tennis match player", Arrays.asList(linguisticVariableMap.get(summaryData.getSummarizerVariable())), Arrays.asList(summaryData.getSummarizerTag()), Arrays.asList(linguisticVariableMap.get(summaryData.getQualifierVariable())), Arrays.asList(summaryData.getQualifierTag()), summaryData.getQuantifier(), qualifierOperation, summarizerOperation);
+                summary = new TypeTwoSummary("Tennis match player", summaryData.getSummarizerVariables().stream().map(x->linguisticVariableMap.get(x)).collect(Collectors.toList()) , summaryData.getSummarizerTags(), summaryData.getQualifierVariables().stream().map(x->linguisticVariableMap.get(x)).collect(Collectors.toList()), summaryData.getQualifierTags(), summaryData.getQuantifier(), qualifierOperation, summarizerOperation);
 
             }
 
