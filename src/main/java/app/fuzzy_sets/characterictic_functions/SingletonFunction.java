@@ -20,6 +20,11 @@ public class SingletonFunction implements CharacteristicFunction {
         return 0;
     }
 
+    @Override
+    public double getBaseAbsolute() {
+        return 0.0;
+    }
+
     public double getArea() {
         return 0.0;
     }

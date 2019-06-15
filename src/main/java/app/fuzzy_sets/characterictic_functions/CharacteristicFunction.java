@@ -9,6 +9,8 @@ public interface CharacteristicFunction {
 
     double getBase();
 
+    double getBaseAbsolute();
+
     double getArea();
 
 

@@ -29,7 +29,7 @@ public class Quantifier {
         if (quantifierLabel.getQuantifierType().equals(QuantifierType.RELATIVE)) {
             return quantifierLabel.getCharacteristicFunction().getBase();
         }
-        return quantifierLabel.getCharacteristicFunction().getBase() / 10000;
+        return quantifierLabel.getCharacteristicFunction().getBaseAbsolute() / 10000;
     }
 
     public double getCardinalityRatio() {

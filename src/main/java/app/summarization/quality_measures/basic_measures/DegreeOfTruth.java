@@ -14,7 +14,8 @@ import java.util.List;
 public class DegreeOfTruth implements QualityMeasure {
     public static double getValue(Summary summary) {
         double operationResult = getR(summary);
-        if (QuantifierType.ABSOLUTE.equals(summary.getQuantifierType())) {
+        if (QuantifierType.RELATIVE.equals(summary.getQuantifierType())
+        ) {
             operationResult /= summary.getSubjectAmount();
         }
         return summary.getQuantifier().getValue((operationResult));

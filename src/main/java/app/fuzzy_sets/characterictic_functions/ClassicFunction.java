@@ -16,6 +16,12 @@ public class ClassicFunction implements CharacteristicFunction {
     public double getBase() {
         return 0.0;
     }
+
+    @Override
+    public double getBaseAbsolute() {
+        return 0.0;
+    }
+
     public double getArea() {
         return 0.0;
     }
@@ -24,7 +30,7 @@ public class ClassicFunction implements CharacteristicFunction {
     @Override
     public List<XYChart.Data<Number, Number>> getCharacteristicPoints() {
         return Arrays.asList(
-                new XYChart.Data<>(0,calculate(0))
+                new XYChart.Data<>(0, calculate(0))
         );
     }
 }

@@ -25,15 +25,20 @@ public class FallingFunction implements CharacteristicFunction {
         return b;
     }
 
+    @Override
+    public double getBaseAbsolute() {
+        return getBase();
+    }
+
     public double getArea() {
-        return 0.5*(a+b);
+        return 0.5 * (a + b);
     }
 
     @Override
     public List<XYChart.Data<Number, Number>> getCharacteristicPoints() {
         List<XYChart.Data<Number, Number>> data = Arrays.asList(
                 new XYChart.Data<>(a, calculate(a)),
-                        new XYChart.Data<>(b + SMALL_POSITIVE, calculate(b + SMALL_POSITIVE)));
+                new XYChart.Data<>(b + SMALL_POSITIVE, calculate(b + SMALL_POSITIVE)));
 
         return data;
     }

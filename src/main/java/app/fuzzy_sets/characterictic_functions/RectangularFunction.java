@@ -25,6 +25,11 @@ public class RectangularFunction implements CharacteristicFunction {
         return b - a;
     }
 
+    @Override
+    public double getBaseAbsolute() {
+        return getBase();
+    }
+
     public double getArea() {
         return a*b;
     }

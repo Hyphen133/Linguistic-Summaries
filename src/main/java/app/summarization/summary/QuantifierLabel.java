@@ -20,7 +20,7 @@ public enum QuantifierLabel {
     SEVERAL("SEVERAL", QuantifierType.RELATIVE, new TriangularFunction(0.3, 0.4, 0.49)),
     ABOUT_HALF("ABOUT HALF", QuantifierType.RELATIVE, new TriangularFunction(0.44, 0.5, 0.56)),
     MORE_THEN_HALF("MORE THEN HALF", QuantifierType.RELATIVE, new TriangularFunction(0.50, 0.6, 0.7)),
-    ABOUT_75("ABOUT 75%", QuantifierType.RELATIVE, new TriangularFunction(0.65, 0.75, 0.87)),
+    ABOUT_75_PERCENT("ABOUT 75 PERCENT", QuantifierType.RELATIVE, new TriangularFunction(0.65, 0.75, 0.87)),
     MANY("MANY", QuantifierType.RELATIVE, new TriangularFunction(0.80,0.9,0.95)),
     ALMOST_ALL("ALMOST ALL", QuantifierType.RELATIVE, new RisingFunction(0.9, 0.98)),
 

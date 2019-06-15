@@ -25,15 +25,20 @@ public class RisingFunction implements CharacteristicFunction {
         return 1 - a;
     }
 
+    @Override
+    public double getBaseAbsolute() {
+        return 10000 - a;
+    }
+
     public double getArea() {
-        return 0.5*(a+b);
+        return 0.5 * (a + b);
     }
 
     @Override
     public List<XYChart.Data<Number, Number>> getCharacteristicPoints() {
         return Arrays.asList(
                 new XYChart.Data<>(a, calculate(a)),
-                new XYChart.Data<>(b+SMALL_POSITIVE, calculate(b+SMALL_POSITIVE))
+                new XYChart.Data<>(b + SMALL_POSITIVE, calculate(b + SMALL_POSITIVE))
         );
     }
 }
