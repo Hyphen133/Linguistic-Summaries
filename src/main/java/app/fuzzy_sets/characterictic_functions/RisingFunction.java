@@ -31,7 +31,11 @@ public class RisingFunction implements CharacteristicFunction {
     }
 
     public double getArea() {
-        return 0.5 * (a + b);
+        return 0.5 * (b - a) + (b == 1 ? 0 : (1 - b));
+    }
+
+    public double getAbsoluteArea() {
+        return 0.5 * (b - a) + (b == 1 ? 0 : (10000 - b));
     }
 
     @Override

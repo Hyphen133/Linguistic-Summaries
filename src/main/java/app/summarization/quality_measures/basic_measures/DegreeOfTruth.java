@@ -15,6 +15,7 @@ public class DegreeOfTruth implements QualityMeasure {
     public static double getValue(Summary summary) {
         double operationResult = getR(summary);
         if (QuantifierType.RELATIVE.equals(summary.getQuantifierType())
+                && !(summary instanceof TypeTwoSummary)
         ) {
             operationResult /= summary.getSubjectAmount();
         }

@@ -36,7 +36,7 @@ public class Quantifier {
         if (quantifierLabel.getQuantifierType().equals(QuantifierType.RELATIVE)) {
             return quantifierLabel.getCharacteristicFunction().getArea();
         }
-        return quantifierLabel.getCharacteristicFunction().getArea() / 10000;
+        return quantifierLabel.getCharacteristicFunction().getAbsoluteArea() / 10000;
     }
 
     public QuantifierLabel getQuantifierLabel() {

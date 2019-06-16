@@ -36,6 +36,10 @@ public class TrapezoidalFunction implements CharacteristicFunction {
         return 0.5 * (b - a) + (c - b) + 0.5 * (d - c);
     }
 
+    @Override
+    public double getAbsoluteArea() {
+        return getArea();
+    }
 
     @Override
     public List<XYChart.Data<Number, Number>> getCharacteristicPoints() {
