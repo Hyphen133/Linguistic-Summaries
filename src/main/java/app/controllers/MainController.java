@@ -34,6 +34,8 @@ import app.Config;
 public class MainController implements Initializable {
     private static final String ROOT_NODE = "root";
     private static final String SEPARATOR = ":";
+    public CheckBox type1Checkbox;
+    public CheckBox type2Checkbox;
 
     @FXML
     Label summaryLabel;
@@ -93,6 +95,9 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        type1Checkbox.setSelected(true);
+        type2Checkbox.setSelected(false);
+
         checkBoxes = new ArrayList<>();
         checkBoxes.addAll(Arrays.asList(t1CheckBox, t2CheckBox, t3CheckBox, t4CheckBox, t5CheckBox, t6CheckBox, t7CheckBox, t8CheckBox, t9CheckBox, t10CheckBox, t11CheckBox));
 
@@ -222,56 +227,81 @@ public class MainController implements Initializable {
         List<SummaryData> dataList = new ArrayList<>();
 
 
-        //Type1
-        for (String selectedSumm : selectedSummarizers) {
-            for (String summarizerTag : linguisticVariableMap.get(selectedSumm).getAllTags()) {
-                for (Quantifier quantifier : quantifiers) {
-                    dataList.add(SummaryData.builder().summarizerVariables(Arrays.asList(selectedSumm)).summarizerTags(Arrays.asList(summarizerTag)).quantifier(quantifier).build());
+        if(type1Checkbox.isSelected()){
+            //Type1
+            for (String selectedSumm : selectedSummarizers) {
+                for (String summarizerTag : linguisticVariableMap.get(selectedSumm).getAllTags()) {
+                    for (Quantifier quantifier : quantifiers) {
+                        dataList.add(SummaryData.builder().summarizerVariables(Arrays.asList(selectedSumm)).summarizerTags(Arrays.asList(summarizerTag)).quantifier(quantifier).build());
+                    }
+                }
+            }
+
+
+            //Type1 2summ
+            for (String selectedSumm1 : selectedSummarizers) {
+                for (String summarizerTag1 : linguisticVariableMap.get(selectedSumm1).getAllTags()) {
+                    for (String selectedSumm2 : selectedSummarizers) {
+                        for (String summarizerTag2 : linguisticVariableMap.get(selectedSumm2).getAllTags()) {
+                            for (Quantifier quantifier : quantifiers) {
+
+                                List<String> summarizerStrings = Arrays.asList(selectedSumm1, selectedSumm2);
+                                List<String> summarizerTagStrings = Arrays.asList(summarizerTag1, summarizerTag2);
+
+                                if (!Utils.hasDuplicates(summarizerStrings)) {
+                                    dataList.add(SummaryData.builder().summarizerVariables(summarizerStrings).summarizerTags(summarizerTagStrings).quantifier(quantifier).build());
+                                }
+                            }
+                        }
+
+                    }
                 }
             }
         }
 
-        //Type2
-        if (selectedQualifiers.size() > 0) {
-            for (String selectedSumm1 : selectedSummarizers) {
-                for (String summarizerTag1 : linguisticVariableMap.get(selectedSumm1).getAllTags()) {
-                    for (String selectedQuali : selectedQualifiers) {
-                        for (String qualifierTag : linguisticVariableMap.get(selectedQuali).getAllTags()) {
-                            for (Quantifier quantifier : quantifiers) {
+        if(type2Checkbox.isSelected()){
+            //Type2
+            if (selectedQualifiers.size() > 0) {
+                for (String selectedSumm1 : selectedSummarizers) {
+                    for (String summarizerTag1 : linguisticVariableMap.get(selectedSumm1).getAllTags()) {
+                        for (String selectedQuali : selectedQualifiers) {
+                            for (String qualifierTag : linguisticVariableMap.get(selectedQuali).getAllTags()) {
+                                for (Quantifier quantifier : quantifiers) {
 
-                                List<String> summarizerStrings = Arrays.asList(selectedSumm1);
-                                List<String> summarizerTagStrings = Arrays.asList(summarizerTag1);
-                                List<String> qualifierStrings = Arrays.asList(selectedQuali);
-                                List<String> qualifierTagStrings = Arrays.asList(qualifierTag);
+                                    List<String> summarizerStrings = Arrays.asList(selectedSumm1);
+                                    List<String> summarizerTagStrings = Arrays.asList(summarizerTag1);
+                                    List<String> qualifierStrings = Arrays.asList(selectedQuali);
+                                    List<String> qualifierTagStrings = Arrays.asList(qualifierTag);
 
-                                if (!Utils.hasDuplicates(ListUtils.union(summarizerStrings, qualifierStrings))) {
-                                    dataList.add(SummaryData.builder().summarizerVariables(summarizerStrings).summarizerTags(summarizerTagStrings).qualifierVariables(qualifierStrings).qualifierTags(qualifierTagStrings).quantifier(quantifier).build());
+                                    if (!Utils.hasDuplicates(ListUtils.union(summarizerStrings, qualifierStrings))) {
+                                        dataList.add(SummaryData.builder().summarizerVariables(summarizerStrings).summarizerTags(summarizerTagStrings).qualifierVariables(qualifierStrings).qualifierTags(qualifierTagStrings).quantifier(quantifier).build());
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
-        }
 
-        //Type2 2summ+1quali
-        //Type2
-        if (selectedQualifiers.size() > 0 && selectedSummarizers.size() > 0) {
-            for (String selectedSumm1 : selectedSummarizers) {
-                for (String summarizerTag1 : linguisticVariableMap.get(selectedSumm1).getAllTags()) {
-                    for (String selectedSumm2 : selectedSummarizers) {
-                        for (String summarizerTag2 : linguisticVariableMap.get(selectedSumm2).getAllTags()) {
-                            for (String selectedQuali : selectedQualifiers) {
-                                for (String qualifierTag : linguisticVariableMap.get(selectedQuali).getAllTags()) {
-                                    for (Quantifier quantifier : quantifiers) {
+            //Type2 2summ+1quali
+            //Type2
+            if (selectedQualifiers.size() > 0 && selectedSummarizers.size() > 0) {
+                for (String selectedSumm1 : selectedSummarizers) {
+                    for (String summarizerTag1 : linguisticVariableMap.get(selectedSumm1).getAllTags()) {
+                        for (String selectedSumm2 : selectedSummarizers) {
+                            for (String summarizerTag2 : linguisticVariableMap.get(selectedSumm2).getAllTags()) {
+                                for (String selectedQuali : selectedQualifiers) {
+                                    for (String qualifierTag : linguisticVariableMap.get(selectedQuali).getAllTags()) {
+                                        for (Quantifier quantifier : quantifiers) {
 
-                                        List<String> summarizerStrings = Arrays.asList(selectedSumm1, selectedSumm2);
-                                        List<String> summarizerTagStrings = Arrays.asList(summarizerTag1, summarizerTag2);
-                                        List<String> qualifierStrings = Arrays.asList(selectedQuali);
-                                        List<String> qualifierTagStrings = Arrays.asList(qualifierTag);
+                                            List<String> summarizerStrings = Arrays.asList(selectedSumm1, selectedSumm2);
+                                            List<String> summarizerTagStrings = Arrays.asList(summarizerTag1, summarizerTag2);
+                                            List<String> qualifierStrings = Arrays.asList(selectedQuali);
+                                            List<String> qualifierTagStrings = Arrays.asList(qualifierTag);
 
-                                        if (!Utils.hasDuplicates(ListUtils.union(summarizerStrings, qualifierStrings))) {
-                                            dataList.add(SummaryData.builder().summarizerVariables(summarizerStrings).summarizerTags(summarizerTagStrings).qualifierVariables(qualifierStrings).qualifierTags(qualifierTagStrings).quantifier(quantifier).build());
+                                            if (!Utils.hasDuplicates(ListUtils.union(summarizerStrings, qualifierStrings))) {
+                                                dataList.add(SummaryData.builder().summarizerVariables(summarizerStrings).summarizerTags(summarizerTagStrings).qualifierVariables(qualifierStrings).qualifierTags(qualifierTagStrings).quantifier(quantifier).build());
+                                            }
                                         }
                                     }
                                 }
@@ -280,11 +310,10 @@ public class MainController implements Initializable {
                     }
                 }
             }
-        }
 
 
-        //Type2 2summ+2quali
-        //Type2
+            //Type2 2summ+2quali
+            //Type2
 //        if (selectedQualifiers.size() > 0 && selectedSummarizers.size()>0) {
 //            for (String selectedSumm1 : selectedSummarizers) {
 //                for (String summarizerTag1 : linguisticVariableMap.get(selectedSumm1).getAllTags()) {
@@ -314,6 +343,8 @@ public class MainController implements Initializable {
 //                }
 //            }
 //        }
+
+        }
 
 
         for (SummaryData summaryData : dataList) {
@@ -372,7 +403,7 @@ public class MainController implements Initializable {
         tableView.refresh();
     }
 
-    public void defineQuantifier(ActionEvent e){
+    public void defineQuantifier(ActionEvent e) {
         Stage stage = new Stage();
         //Fill stage with content
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/define_function.fxml"));

@@ -30,6 +30,8 @@ public class DefineFunctionController implements Initializable {
     public TextField dTextField;
 
     private String characteristicFunctionPackage;
+    private CharacteristicFunction characteristicFunction;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -51,10 +53,6 @@ public class DefineFunctionController implements Initializable {
         //Type LISTVIEW
         typeListView.getItems().addAll(QuantifierType.ABSOLUTE.name(), QuantifierType.RELATIVE.name());
         typeListView.getSelectionModel().selectFirst();
-
-
-
-
     }
 
 
@@ -64,6 +62,12 @@ public class DefineFunctionController implements Initializable {
     }
 
     public void saveQuantifier(ActionEvent event) {
+
+        //QUANTIFIER TYPE
+
+
+
+        //CHARACTERISTIC FUNCTINO
         //Get all potential arguments of constructor
         List<Double> potentialArgs = new ArrayList<>();
 
@@ -77,21 +81,20 @@ public class DefineFunctionController implements Initializable {
         }
 
         //Get constructor
-        Class<?> characteristicFunction = null;
+        Class<?> cf = null;
         try {
-            characteristicFunction = Class.forName(characteristicFunctionPackage + "." + functionListView.getSelectionModel().getSelectedItem());
+            cf = Class.forName(characteristicFunctionPackage + "." + functionListView.getSelectionModel().getSelectedItem());
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 
-        Constructor<?> allArgsConstructor = Arrays.stream(characteristicFunction.getConstructors()).max(Comparator.comparingInt(Constructor::getParameterCount)).get();
+        Constructor<?> allArgsConstructor = Arrays.stream(cf.getConstructors()).max(Comparator.comparingInt(Constructor::getParameterCount)).get();
         System.out.println(allArgsConstructor.getParameterCount());
         int argsCount = allArgsConstructor.getParameterCount();
 
         //Init function
-        CharacteristicFunction function = null;
         try {
-            function = (CharacteristicFunction)allArgsConstructor.newInstance(potentialArgs.subList(0, argsCount).toArray(new Double[0]));
+            characteristicFunction = (CharacteristicFunction)allArgsConstructor.newInstance(potentialArgs.subList(0, argsCount).toArray(new Double[0]));
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -99,6 +102,7 @@ public class DefineFunctionController implements Initializable {
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
+
 
 
     }
