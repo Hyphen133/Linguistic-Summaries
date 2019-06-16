@@ -50,6 +50,8 @@ public class DefineFunctionController implements Initializable {
             e.printStackTrace();
         }
         functionListView.getItems().addAll(characteristicFunctions.stream().map(x->x.getSimpleName()).collect(Collectors.toList()));
+        //remove base type
+        functionListView.getItems().removeIf(x->x.equals(CharacteristicFunction.class.getSimpleName()));
         functionListView.getSelectionModel().selectFirst();
 
 
