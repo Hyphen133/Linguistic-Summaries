@@ -13,6 +13,8 @@ public interface CharacteristicFunction {
 
     double getArea();
 
+    double getAbsoluteArea();
+
 
     //Returns points where function changes (linear)
     List<XYChart.Data<Number, Number>> getCharacteristicPoints();

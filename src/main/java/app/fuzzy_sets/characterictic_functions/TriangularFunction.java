@@ -31,16 +31,20 @@ public class TriangularFunction implements CharacteristicFunction {
     }
 
     public double getArea() {
-        return 0.5*getBase();
+        return 0.5 * getBase();
     }
 
+    @Override
+    public double getAbsoluteArea() {
+        return getArea();
+    }
 
     @Override
     public List<XYChart.Data<Number, Number>> getCharacteristicPoints() {
         return Arrays.asList(
-                new XYChart.Data<>(a,calculate(a)),
-                new XYChart.Data<>(b,calculate(b)),
-                new XYChart.Data<>(c,calculate(c))
+                new XYChart.Data<>(a, calculate(a)),
+                new XYChart.Data<>(b, calculate(b)),
+                new XYChart.Data<>(c, calculate(c))
         );
     }
 }
