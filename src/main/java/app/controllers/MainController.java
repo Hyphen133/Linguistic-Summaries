@@ -372,6 +372,19 @@ public class MainController implements Initializable {
         tableView.refresh();
     }
 
+    public void defineQuantifier(ActionEvent e){
+        Stage stage = new Stage();
+        //Fill stage with content
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/define_function.fxml"));
+        Parent parent = null;
+        try {
+            parent = (Parent) fxmlLoader.load();
+        } catch (IOException exc) {
+            exc.printStackTrace();
+        }
+        stage.setScene(new Scene(parent));
+        stage.show();
+    }
 
     public void saveToFile(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();

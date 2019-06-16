@@ -6,6 +6,7 @@ import app.fuzzy_sets.characterictic_functions.RisingFunction;
 import app.fuzzy_sets.characterictic_functions.TriangularFunction;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -28,7 +29,8 @@ public enum QuantifierLabel {
     ABOUT_2500("ABOUT 2500", QuantifierType.ABSOLUTE, new TriangularFunction(700, 2500, 4000)),
     ABOUT_5000("ABOUT 5000", QuantifierType.ABSOLUTE, new TriangularFunction(3400, 5000, 6800)),
     ABOUT_7500("ABOUT 7500", QuantifierType.ABSOLUTE, new TriangularFunction(6300, 7500, 8900)),
-    ABOUT_10000("ABOUT 10000", QuantifierType.ABSOLUTE, new RisingFunction(8400,9000));
+    ABOUT_10000("ABOUT 10000", QuantifierType.ABSOLUTE, new RisingFunction(8400,9000)),
+    OWN("OWN1", QuantifierType.RELATIVE, null);
 
 
     String name;
