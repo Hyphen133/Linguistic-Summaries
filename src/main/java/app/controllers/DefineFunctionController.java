@@ -1,7 +1,7 @@
 package app.controllers;
 
+import app.fuzzy_sets.ClassicSet;
 import app.fuzzy_sets.characterictic_functions.CharacteristicFunction;
-import app.summarization.summary.Quantifier;
 import app.summarization.summary.QuantifierLabel;
 import app.summarization.summary.QuantifierType;
 import com.google.common.collect.ImmutableSet;
@@ -9,6 +9,7 @@ import com.google.common.reflect.ClassPath;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
@@ -18,6 +19,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static app.Config.RECORDS_COUNT;
 
 public class DefineFunctionController implements Initializable {
 
@@ -31,7 +34,7 @@ public class DefineFunctionController implements Initializable {
 
     private String characteristicFunctionPackage;
     private CharacteristicFunction characteristicFunction;
-
+    private QuantifierType quantifierType;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -47,6 +50,8 @@ public class DefineFunctionController implements Initializable {
             e.printStackTrace();
         }
         functionListView.getItems().addAll(characteristicFunctions.stream().map(x->x.getSimpleName()).collect(Collectors.toList()));
+        //remove base type
+        functionListView.getItems().removeIf(x->x.equals(CharacteristicFunction.class.getSimpleName()));
         functionListView.getSelectionModel().selectFirst();
 
 
@@ -57,17 +62,32 @@ public class DefineFunctionController implements Initializable {
 
 
     public void showFunction(ActionEvent event) {
+        functionPreview.getData().clear();
+        XYChart.Series<Number, Number> series = new XYChart.Series<>();
 
+        List<XYChart.Data<Number, Number>> characteristicPoints = characteristicFunction.getCharacteristicPoints();
+
+
+        XYChart.Data<Number,Number> firstPoint = new XYChart.Data<Number, Number>(0.0, characteristicFunction.calculate(0.0));
+        double maxValue = quantifierType.equals(QuantifierType.RELATIVE) ? 1.0 : RECORDS_COUNT;
+        XYChart.Data<Number,Number> lastPoint = new XYChart.Data<Number, Number>(maxValue, characteristicFunction.calculate(maxValue));
+
+
+        series.getData().add(firstPoint);
+        series.getData().addAll(characteristicPoints);
+        series.getData().add(lastPoint);
+
+        functionPreview.getData().add(series);
 
     }
 
     public void saveQuantifier(ActionEvent event) {
 
         //QUANTIFIER TYPE
+        quantifierType = QuantifierType.valueOf(typeListView.getSelectionModel().getSelectedItem());
 
 
-
-        //CHARACTERISTIC FUNCTINO
+        //CHARACTERISTIC FUNCTION
         //Get all potential arguments of constructor
         List<Double> potentialArgs = new ArrayList<>();
 

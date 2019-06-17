@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
@@ -14,8 +13,8 @@
 
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="448.0" prefWidth="601.0" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.DefineFunctionController">
     <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="343.0" minWidth="10.0" prefWidth="150.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="450.0" minWidth="10.0" prefWidth="450.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="343.0" minWidth="10.0" prefWidth="177.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="450.0" minWidth="10.0" prefWidth="404.0" />
     </columnConstraints>
     <rowConstraints>
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -37,7 +36,7 @@
         <Button mnemonicParsing="false" onAction="#showFunction" text="Show" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
         <LineChart fx:id="functionPreview" prefHeight="138.0" prefWidth="595.0" GridPane.columnSpan="2" GridPane.rowIndex="7" GridPane.rowSpan="2">
             <xAxis>
-                <CategoryAxis side="BOTTOM" />
+                <NumberAxis side="BOTTOM" />
             </xAxis>
             <yAxis>
                 <NumberAxis side="LEFT" />
@@ -46,7 +45,7 @@
         <TextField fx:id="aTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
         <TextField fx:id="bTextField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
         <TextField fx:id="cTextField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-        <Label text="Add own Quantifier" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+        <Label text="Define own Quantifier" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
         <Label text="Type : " GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
         <ListView fx:id="typeListView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
         <Label text="Function : " GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
