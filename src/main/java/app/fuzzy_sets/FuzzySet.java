@@ -135,7 +135,8 @@ public class FuzzySet {
     }
 
     public boolean isConvex() {
-        Collections.sort(this.elements);
+        List<FuzzySetElement> copy = new ArrayList<>(this.elements);
+        Collections.sort(copy);
         boolean falling = false;
         for (int i = 0; i < elements.size() - 2; i++) {
             if (!falling) {
