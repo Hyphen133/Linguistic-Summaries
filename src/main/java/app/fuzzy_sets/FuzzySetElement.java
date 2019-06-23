@@ -5,7 +5,13 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class FuzzySetElement {
+public class FuzzySetElement implements Comparable<FuzzySetElement> {
     private double value;
     private double membershipDegree;
+
+
+    @Override
+    public int compareTo(FuzzySetElement o) {
+        return Double.compare(this.value, o.value);
+    }
 }

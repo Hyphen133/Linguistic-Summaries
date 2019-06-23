@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -105,10 +106,7 @@ public class FuzzySet {
     public boolean isEmpty() {
         if (this.elements.isEmpty())
             return true;
-        else if (getCardinality() == 0)
-            return true;
-        else
-            return false;
+        else return getCardinality() == 0;
     }
 
     public double getCentroid() {
@@ -134,6 +132,29 @@ public class FuzzySet {
 
     public double getCardinalityRatio() {
         return getCardinality() / universeOfDiscourse.getSize();
+    }
+
+    public boolean isConvex() {
+        List<FuzzySetElement> copy = new ArrayList<>(this.elements);
+        Collections.sort(copy);
+        boolean falling = false;
+        for (int i = 0; i < elements.size() - 2; i++) {
+            if (!falling) {
+                if (elements.get(i).getMembershipDegree() > elements.get(i + 1).getMembershipDegree()) {
+                    falling = true;
+                }
+            } else {
+                if (elements.get(i).getMembershipDegree() < elements.get(i + 1).getMembershipDegree()) {
+                    return false;
+                }
+            }
+
+        }
+        return true;
+    }
+
+    public boolean isConcave() {
+        return !isConvex();
     }
 
     @Override
