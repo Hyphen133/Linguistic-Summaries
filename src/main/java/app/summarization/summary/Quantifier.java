@@ -33,5 +33,4 @@ public class Quantifier extends FuzzySet {
     public QuantifierLabel getQuantifierLabel() {
         return quantifierLabel;
     }
-
 }

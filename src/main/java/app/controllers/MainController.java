@@ -294,40 +294,38 @@ public class MainController implements Initializable {
             }
 
 
-            //Type2 2summ+2quali
+            //Type2 1summ+2quali
             //Type2
-//        if (selectedQualifiers.size() > 0 && selectedSummarizers.size()>0) {
-//            for (String selectedSumm1 : selectedSummarizers) {
-//                for (String summarizerTag1 : linguisticVariableMap.get(selectedSumm1).getAllTags()) {
-//                    for (String selectedSumm2 : selectedSummarizers) {
-//                        for (String summarizerTag2 : linguisticVariableMap.get(selectedSumm2).getAllTags()) {
-//                            for (String selectedQuali1 : selectedQualifiers) {
-//                                for (String qualifierTag1 : linguisticVariableMap.get(selectedQuali1).getAllTags()) {
-//                                    for (String selectedQuali2 : selectedQualifiers) {
-//                                        for (String qualifierTag2 : linguisticVariableMap.get(selectedQuali1).getAllTags()) {
-//                                            for (Quantifier quantifier : quantifiers) {
-//
-//                                                List<String> summarizerStrings = Arrays.asList(selectedSumm1, selectedSumm2);
-//                                                List<String> summarizerTagStrings = Arrays.asList(summarizerTag1,summarizerTag2);
-//                                                List<String> qualifierStrings = Arrays.asList(selectedQuali1,selectedQuali2);
-//                                                List<String> qualifierTagStrings = Arrays.asList(qualifierTag1,qualifierTag2);
-//
-//                                                if(!Utils.hasDuplicates(ListUtils.union(summarizerStrings, qualifierStrings))){
-//                                                    dataList.add(SummaryData.builder().summarizerVariables(summarizerStrings).summarizerTags(summarizerTagStrings).qualifierVariables(qualifierStrings).qualifierTags(qualifierTagStrings).quantifier(quantifier).build());
-//                                                }
-//                                            }
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
+            if (selectedQualifiers.size() > 0 && selectedSummarizers.size() > 0) {
+                for (String selectedSumm1 : selectedSummarizers) {
+                    for (String summarizerTag1 : linguisticVariableMap.get(selectedSumm1).getAllTags()) {
+                        for (String selectedQuali1 : selectedQualifiers) {
+                            for (String qualifierTag1 : linguisticVariableMap.get(selectedQuali1).getAllTags()) {
+                                for (String selectedQuali2 : selectedQualifiers) {
+                                    for (String qualifierTag2 : linguisticVariableMap.get(selectedQuali2).getAllTags()) {
+                                        for (Quantifier quantifier : quantifiers) {
+                                            List<String> summarizerStrings = Arrays.asList(selectedSumm1);
+                                            List<String> summarizerTagStrings = Arrays.asList(summarizerTag1);
+                                            List<String> qualifierStrings = Arrays.asList(selectedQuali1, selectedQuali2);
+                                            List<String> qualifierTagStrings = Arrays.asList(qualifierTag1, qualifierTag2);
 
+                                            if (!Utils.hasDuplicates(ListUtils.union(summarizerStrings, qualifierStrings))) {
+                                                dataList.add(SummaryData.builder()
+                                                        .summarizerVariables(summarizerStrings)
+                                                        .summarizerTags(summarizerTagStrings)
+                                                        .qualifierVariables(qualifierStrings)
+                                                        .qualifierTags(qualifierTagStrings)
+                                                        .quantifier(quantifier).build());
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
-
         for (SummaryData summaryData : dataList) {
             Summary summary = null;
             if (summaryData.getQualifierTags() == null) {
