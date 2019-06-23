@@ -11,6 +11,7 @@ import static app.Config.SMALL_POSITIVE;
 @AllArgsConstructor
 public class RisingFunction implements CharacteristicFunction {
     double a, b;
+    double c; //end
 
     public double calculate(double x) {
         if (x <= a)
@@ -22,21 +23,13 @@ public class RisingFunction implements CharacteristicFunction {
     }
 
     public double getBase() {
-        return 1 - a;
-    }
-
-    @Override
-    public double getBaseAbsolute() {
-        return 10000 - a;
+        return c - a;
     }
 
     public double getArea() {
-        return 0.5 * (b - a) + (b == 1 ? 0 : (1 - b));
+        return 0.5 * (b - a) + (b == 1 ? 0 : (c - b));
     }
 
-    public double getAbsoluteArea() {
-        return 0.5 * (b - a) + (b == 1 ? 0 : (10000 - b));
-    }
 
     @Override
     public List<XYChart.Data<Number, Number>> getCharacteristicPoints() {

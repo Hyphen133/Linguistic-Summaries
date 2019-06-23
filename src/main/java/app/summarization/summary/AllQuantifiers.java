@@ -26,14 +26,14 @@ public class AllQuantifiers {
         quantifiers.put("MORE_THEN_HALF", new QuantifierLabel("MORE THEN HALF", QuantifierType.RELATIVE, new TriangularFunction(0.50, 0.6, 0.7)));
         quantifiers.put("ABOUT_75_PERCENT", new QuantifierLabel("ABOUT 75 PERCENT", QuantifierType.RELATIVE, new TriangularFunction(0.65, 0.75, 0.87)));
         quantifiers.put("MANY", new QuantifierLabel("MANY", QuantifierType.RELATIVE, new TriangularFunction(0.80, 0.9, 0.95)));
-        quantifiers.put("ALMOST_ALL", new QuantifierLabel("ALMOST ALL", QuantifierType.RELATIVE, new RisingFunction(0.9, 0.98)));
+        quantifiers.put("ALMOST_ALL", new QuantifierLabel("ALMOST ALL", QuantifierType.RELATIVE, new RisingFunction(0.9, 0.98,1.0)));
 
 
         quantifiers.put("ABOUT_0", new QuantifierLabel("ABOUT 0", QuantifierType.ABSOLUTE, new FallingFunction(500, 1500)));
         quantifiers.put("ABOUT_2500", new QuantifierLabel("ABOUT 2500", QuantifierType.ABSOLUTE, new TriangularFunction(700, 2500, 4000)));
         quantifiers.put("ABOUT_5000", new QuantifierLabel("ABOUT 5000", QuantifierType.ABSOLUTE, new TriangularFunction(3400, 5000, 6800)));
         quantifiers.put("ABOUT_7500", new QuantifierLabel("ABOUT 7500", QuantifierType.ABSOLUTE, new TriangularFunction(6300, 7500, 8900)));
-        quantifiers.put("ABOUT_10000", new QuantifierLabel("ABOUT 10000", QuantifierType.ABSOLUTE, new RisingFunction(8400, 9000)));
+        quantifiers.put("ABOUT_10000", new QuantifierLabel("ABOUT 10000", QuantifierType.ABSOLUTE, new RisingFunction(8400, 9000,10000)));
 
     }
 

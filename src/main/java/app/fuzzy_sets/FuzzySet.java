@@ -14,20 +14,26 @@ import java.util.stream.Collectors;
 public class FuzzySet {
 
     protected List<FuzzySetElement> elements; //A
-    protected ClassicSet universeOfDiscourse; //X
+    protected ClassicSet classicSet; //X
+    protected CharacteristicFunction characteristicFunction;
 
-    public FuzzySet(CharacteristicFunction characteristicFunction, ClassicSet universeOfDiscourse) {
-        this.universeOfDiscourse = universeOfDiscourse;
+    protected double universeOfDiscourse;
+
+    public FuzzySet(CharacteristicFunction characteristicFunction, ClassicSet classicSet) {
+        this.classicSet = classicSet;
+        this.characteristicFunction = characteristicFunction;
         setUpElements(characteristicFunction);
+
+        this.universeOfDiscourse = getMaxValue();
     }
 
-    public FuzzySet(List<FuzzySetElement> elements, ClassicSet universeOfDiscourse) {
+    public FuzzySet(List<FuzzySetElement> elements, ClassicSet classicSet) {
         this.elements = elements;
-        this.universeOfDiscourse = universeOfDiscourse;
+        this.classicSet = classicSet;
     }
 
     protected void setUpElements(CharacteristicFunction characteristicFunction) {
-        elements = universeOfDiscourse.getElements().stream()
+        elements = classicSet.getElements().stream()
                 .map(u -> new FuzzySetElement(u.getValue(), characteristicFunction.calculate(u.getValue())))
                 .collect(Collectors.toList());
     }
@@ -57,7 +63,7 @@ public class FuzzySet {
                 .map(e -> new FuzzySetElement(e.getValue(), 1 - e.getMembershipDegree()))
                 .collect(Collectors.toList());
 
-        return new FuzzySet(complementElements, this.universeOfDiscourse);
+        return new FuzzySet(complementElements, this.classicSet);
     }
 
     public ClassicSet getAlphaCut(double alpha) {
@@ -85,28 +91,40 @@ public class FuzzySet {
         return new ClassicSet(alphaCutElements);
     }
 
-    public ClassicSet getSupport() {
+    public ClassicSet getSupportForElements() {
         return getStrongAlphaCut(0);
+    }
+
+    public double getSupport() {
+        return this.characteristicFunction.getBase();
     }
 
     public ClassicSet getCore() {
         return getAlphaCut(1);
     }
 
-    public double getCardinality() {
+    public double getCardinalityForElements() {
         return elements.stream().
                 mapToDouble(e -> e.getMembershipDegree())
                 .sum();
     }
 
+    public double getCardinality() {
+        return characteristicFunction.getArea();
+    }
+
+    public double getDegreeOfFuzzinessForElements() {
+        return (double) this.getSupportForElements().getSize() / (double) this.classicSet.getSize();
+    }
+
     public double getDegreeOfFuzziness() {
-        return (double) this.getSupport().getSize() / (double) this.universeOfDiscourse.getSize();
+        return this.characteristicFunction.getBase() / this.universeOfDiscourse;
     }
 
     public boolean isEmpty() {
         if (this.elements.isEmpty())
             return true;
-        else return getCardinality() == 0;
+        else return getCardinalityForElements() == 0;
     }
 
     public double getCentroid() {
@@ -130,8 +148,12 @@ public class FuzzySet {
         return getHeight() == 1;
     }
 
+    public double getCardinalityRatioForElements() {
+        return getCardinalityForElements() / classicSet.getSize();
+    }
+
     public double getCardinalityRatio() {
-        return getCardinality() / universeOfDiscourse.getSize();
+        return getCardinality() / this.universeOfDiscourse;
     }
 
     public boolean isConvex() {
@@ -166,4 +188,15 @@ public class FuzzySet {
         builder.append(" }");
         return builder.toString();
     }
+
+    private double getMaxValue() {
+        List<FuzzySetElement> copy = new ArrayList<>(this.elements);
+        Collections.sort(copy);
+        return copy.get(classicSet.getSize() - 1).getValue();
+    }
+
+    public double getUniverseOfDiscourse() {
+        return universeOfDiscourse;
+    }
+
 }

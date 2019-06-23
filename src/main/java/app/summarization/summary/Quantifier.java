@@ -5,11 +5,17 @@ import app.fuzzy_sets.FuzzySet;
 // Defines set of quantifiers accessed by label
 // size in case of quantifier
 //about 100 -> function
-public class Quantifier {
+public class Quantifier extends FuzzySet {
     QuantifierLabel quantifierLabel;
 
     public Quantifier(QuantifierLabel quantifierLabel) {
         this.quantifierLabel = quantifierLabel;
+        this.characteristicFunction = quantifierLabel.getCharacteristicFunction();
+
+        if (quantifierLabel.getQuantifierType().equals(QuantifierType.RELATIVE))
+            this.universeOfDiscourse = 1.0;
+        else
+            this.universeOfDiscourse = 10000;
     }
 
     public double getValue(double x) {
@@ -20,26 +26,12 @@ public class Quantifier {
         return quantifierLabel.getName();
     }
 
-
     public QuantifierType getQuantifierType() {
         return quantifierLabel.getQuantifierType();
-    }
-
-    public double getDegreeOfFuzziness() {
-        if (quantifierLabel.getQuantifierType().equals(QuantifierType.RELATIVE)) {
-            return quantifierLabel.getCharacteristicFunction().getBase();
-        }
-        return quantifierLabel.getCharacteristicFunction().getBaseAbsolute() / 10000;
-    }
-
-    public double getCardinalityRatio() {
-        if (quantifierLabel.getQuantifierType().equals(QuantifierType.RELATIVE)) {
-            return quantifierLabel.getCharacteristicFunction().getArea();
-        }
-        return quantifierLabel.getCharacteristicFunction().getAbsoluteArea() / 10000;
     }
 
     public QuantifierLabel getQuantifierLabel() {
         return quantifierLabel;
     }
+
 }

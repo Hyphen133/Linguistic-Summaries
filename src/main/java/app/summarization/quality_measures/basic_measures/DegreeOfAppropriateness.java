@@ -24,6 +24,6 @@ public class DegreeOfAppropriateness implements QualityMeasure {
     }
 
     private static double getG(FuzzySet summarizer) {
-        return summarizer.getSupport().getSize();
+        return summarizer.getSupportForElements().getSize();
     }
 }

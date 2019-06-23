@@ -25,18 +25,8 @@ public class TriangularFunction implements CharacteristicFunction {
         return c - a;
     }
 
-    @Override
-    public double getBaseAbsolute() {
-        return getBase();
-    }
-
     public double getArea() {
         return 0.5 * getBase();
-    }
-
-    @Override
-    public double getAbsoluteArea() {
-        return getArea();
     }
 
     @Override

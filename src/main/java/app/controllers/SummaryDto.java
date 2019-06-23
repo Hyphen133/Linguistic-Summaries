@@ -1,7 +1,9 @@
 package app.controllers;
 
 import lombok.Builder;
+import lombok.Getter;
 
+@Getter
 @Builder
 public class SummaryDto {
     private String summary;
@@ -17,58 +19,6 @@ public class SummaryDto {
     private double t9;
     private double t10;
     private double t11;
-
-    public String getSummary() {
-        return summary;
-    }
-
-    public double getGoodness() {
-        return goodness;
-    }
-
-    public double getT1() {
-        return t1;
-    }
-
-    public double getT2() {
-        return t2;
-    }
-
-    public double getT3() {
-        return t3;
-    }
-
-    public double getT4() {
-        return t4;
-    }
-
-    public double getT5() {
-        return t5;
-    }
-
-    public double getT6() {
-        return t6;
-    }
-
-    public double getT7() {
-        return t7;
-    }
-
-    public double getT8() {
-        return t8;
-    }
-
-    public double getT9() {
-        return t9;
-    }
-
-    public double getT10() {
-        return t10;
-    }
-
-    public double getT11() {
-        return t11;
-    }
 
     @Override
     public String toString() {

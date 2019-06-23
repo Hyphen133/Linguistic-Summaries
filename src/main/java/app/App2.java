@@ -28,7 +28,7 @@
 //        FuzzySet complement = A.getComplement();
 //        System.out.println(complement.toString());
 //
-//        ClassicSet support = A.getSupport();
+//        ClassicSet support = A.getSupportForElements();
 //        //System.out.println(support.toString());
 //
 //        ClassicSet a50 = A.getStrongAlphaCut(0.5);

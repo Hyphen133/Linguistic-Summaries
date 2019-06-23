@@ -21,7 +21,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.commons.collections4.ListUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.io.*;
@@ -37,7 +36,6 @@ public class MainController implements Initializable {
     private static final String SEPARATOR = ":";
     public CheckBox type1Checkbox;
     public CheckBox type2Checkbox;
-    public Button refreshButton;
 
     @FXML
     Label summaryLabel;
@@ -237,9 +235,9 @@ public class MainController implements Initializable {
         List<String> selectedItems = quanfierListView.getSelectionModel().getSelectedItems();
         List<Quantifier> quantifiers = selectedItems.stream().map(x -> new Quantifier(AllQuantifiers.valueOf(x.replace(" ", "_")))).collect(Collectors.toList());
 
-
         //GENERATING SUMMARIES
         List<SummaryData> dataList = new ArrayList<>();
+
 
 
         if (type1Checkbox.isSelected()) {
@@ -251,7 +249,6 @@ public class MainController implements Initializable {
                     }
                 }
             }
-
 
             //Type1 2summ
             for (String selectedSumm1 : selectedSummarizers) {
@@ -287,7 +284,6 @@ public class MainController implements Initializable {
                                     List<String> summarizerTagStrings = Arrays.asList(summarizerTag1);
                                     List<String> qualifierStrings = Arrays.asList(selectedQuali);
                                     List<String> qualifierTagStrings = Arrays.asList(qualifierTag);
-
                                     if (!Utils.hasDuplicates(ListUtils.union(summarizerStrings, qualifierStrings))) {
                                         dataList.add(SummaryData.builder().summarizerVariables(summarizerStrings).summarizerTags(summarizerTagStrings).qualifierVariables(qualifierStrings).qualifierTags(qualifierTagStrings).quantifier(quantifier).build());
                                     }
@@ -338,7 +334,7 @@ public class MainController implements Initializable {
 //                                for (String qualifierTag1 : linguisticVariableMap.get(selectedQuali1).getAllTags()) {
 //                                    for (String selectedQuali2 : selectedQualifiers) {
 //                                        for (String qualifierTag2 : linguisticVariableMap.get(selectedQuali1).getAllTags()) {
-//                                            for (Quantifier quantifier : allQuantifiers) {
+//                                            for (Quantifier quantifier : quantifiers) {
 //
 //                                                List<String> summarizerStrings = Arrays.asList(selectedSumm1, selectedSumm2);
 //                                                List<String> summarizerTagStrings = Arrays.asList(summarizerTag1,summarizerTag2);
@@ -361,17 +357,23 @@ public class MainController implements Initializable {
 
         }
 
-
         for (SummaryData summaryData : dataList) {
             Summary summary = null;
             if (summaryData.getQualifierTags() == null) {
-                summary = new TypeOneSummary("Tennis match player", summaryData.getSummarizerVariables().stream().map(x -> linguisticVariableMap.get(x)).collect(Collectors.toList()), summaryData.getSummarizerTags(), summaryData.getQuantifier(), summarizerOperation);
+                summary = new TypeOneSummary("Tennis match player",
+                        summaryData.getSummarizerVariables().stream()
+                                .map(x -> linguisticVariableMap.get(x))
+                                .collect(Collectors.toList()), summaryData.getSummarizerTags(), summaryData.getQuantifier(), summarizerOperation);
             } else {
-                summary = new TypeTwoSummary("Tennis match player", summaryData.getSummarizerVariables().stream().map(x -> linguisticVariableMap.get(x)).collect(Collectors.toList()), summaryData.getSummarizerTags(), summaryData.getQualifierVariables().stream().map(x -> linguisticVariableMap.get(x)).collect(Collectors.toList()), summaryData.getQualifierTags(), summaryData.getQuantifier(), qualifierOperation, summarizerOperation);
-
+                summary = new TypeTwoSummary("Tennis match player",
+                        summaryData.getSummarizerVariables()
+                                .stream()
+                                .map(x -> linguisticVariableMap.get(x))
+                                .collect(Collectors.toList()), summaryData.getSummarizerTags(), summaryData.getQualifierVariables().stream().map(x -> linguisticVariableMap.get(x)).collect(Collectors.toList()), summaryData.getQualifierTags(), summaryData.getQuantifier(), qualifierOperation, summarizerOperation);
             }
 
             GoodnessOfSummary summaryMeasures = new GoodnessOfSummary(summary);
+
             for (QualityMeasureEnum chosenMeasure : chosenMeasures) {
                 summaryMeasures.addQualityMeasure(chosenMeasure);
             }
@@ -424,7 +426,7 @@ public class MainController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/define_function.fxml"));
         Parent parent = null;
         try {
-            parent = (Parent) fxmlLoader.load();
+            parent = fxmlLoader.load();
         } catch (IOException exc) {
             exc.printStackTrace();
         }
@@ -447,7 +449,6 @@ public class MainController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public void moveToFuzzySetsWindow(ActionEvent event) {
