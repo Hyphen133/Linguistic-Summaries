@@ -91,6 +91,6 @@ public class TypeOneSummary implements Summary {
         summarizerStringBuilder.append(summarizers.get(lastIndex).print(summarizerLabels.get(lastIndex)));
 
 
-        return quantifierString + " " + subject + " HAVE/ARE " + summarizerStringBuilder.toString();
+        return quantifierString + " " + subject + " have " + summarizerStringBuilder.toString();
     }
 }

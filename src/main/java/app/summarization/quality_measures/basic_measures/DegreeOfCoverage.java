@@ -4,7 +4,6 @@ import app.fuzzy_sets.FuzzySet;
 import app.fuzzy_sets.FuzzySetOperations;
 import app.summarization.quality_measures.QualityMeasure;
 import app.summarization.summary.Summary;
-import app.summarization.summary.TypeOneSummary;
 import app.summarization.summary.TypeTwoSummary;
 
 /*
@@ -24,13 +23,13 @@ public class DegreeOfCoverage implements QualityMeasure {
     }
 
     private static double getTTypeOne(Summary summary) {
-        return summary.getSummarizer().getSupport().getSize();
+        return summary.getSummarizer().getSupportForElements().getSize();
     }
 
     private static double getTTypeTwo(Summary summary) {
         FuzzySet summarizer = summary.getSummarizer();
         FuzzySet qualifier = ((TypeTwoSummary) summary).getQualifier();
-        return FuzzySetOperations.getIntersection(summarizer, qualifier).getSupport().getSize();
+        return FuzzySetOperations.getIntersection(summarizer, qualifier).getSupportForElements().getSize();
     }
 
     private static double getH(Summary summary) {
@@ -46,6 +45,6 @@ public class DegreeOfCoverage implements QualityMeasure {
     }
 
     private static double getHTypeTwo(Summary summary) {
-        return ((TypeTwoSummary) summary).getQualifier().getSupport().getSize();
+        return ((TypeTwoSummary) summary).getQualifier().getSupportForElements().getSize();
     }
 }

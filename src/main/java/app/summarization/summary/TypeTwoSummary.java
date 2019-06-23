@@ -64,7 +64,7 @@ public class TypeTwoSummary extends TypeOneSummary {
         StringBuilder typeTwoBuilder = new StringBuilder(typeOneSummary);
 
         StringBuilder whichClause = new StringBuilder();
-        whichClause.append(" HAVING/BEING ");
+        whichClause.append(" having ");
         whichClause.append(qualifiers.get(0).print(qualifierLabels.get(0)));
 
         for (int i = 1; i < qualifiers.size(); i++) {

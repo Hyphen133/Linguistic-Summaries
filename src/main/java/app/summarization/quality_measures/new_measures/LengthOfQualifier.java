@@ -2,7 +2,6 @@ package app.summarization.quality_measures.new_measures;
 
 import app.summarization.quality_measures.QualityMeasure;
 import app.summarization.summary.Summary;
-import app.summarization.summary.TypeOneSummary;
 import app.summarization.summary.TypeTwoSummary;
 
 /*

@@ -16,7 +16,6 @@ public class TennisMatchDatabaseLoader {
     @Autowired
     EntityManager entityManager;
 
-
     public List<Object> getObjectColumn(String tableName, String columnName){
         Query query = entityManager.createNativeQuery("SELECT " + columnName + " FROM " + tableName);
         return query.getResultList();

@@ -5,8 +5,6 @@ import java.util.List;
 
 public class FuzzySetOperations {
 
-
-
     public static FuzzySet getNegation(FuzzySet fuzzySetA) {
         return fuzzySetA.getComplement();
     }
@@ -37,8 +35,6 @@ public class FuzzySetOperations {
 
             operationElements.add(new FuzzySetElement(fuzzySetAElements.get(i).getValue(), membershipDegree));
         }
-        return new FuzzySet(operationElements, fuzzySetA.universeOfDiscourse);
+        return new FuzzySet(operationElements, fuzzySetA.classicSet);
     }
-
-    //TODO  dopełnienie zbiorów rozmytych wg różnych norm trójkątnych
 }
