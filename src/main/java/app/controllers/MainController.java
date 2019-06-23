@@ -21,6 +21,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.commons.collections4.ListUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.io.*;
@@ -36,6 +37,7 @@ public class MainController implements Initializable {
     private static final String SEPARATOR = ":";
     public CheckBox type1Checkbox;
     public CheckBox type2Checkbox;
+    public Button refreshButton;
 
     @FXML
     Label summaryLabel;
@@ -95,15 +97,7 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        type1Checkbox.setSelected(true);
-        type2Checkbox.setSelected(false);
-
-        checkBoxes = new ArrayList<>();
-        checkBoxes.addAll(Arrays.asList(t1CheckBox, t2CheckBox, t3CheckBox, t4CheckBox, t5CheckBox, t6CheckBox, t7CheckBox, t8CheckBox, t9CheckBox, t10CheckBox, t11CheckBox));
-
-        for (int i = 0; i < QualityMeasureEnum.values().length; i++) {
-            checkBoxes.get(i).setText(QualityMeasureEnum.values()[i].getName());
-        }
+        loadCheckBoxes();
 
         summarizerOrOperation.setText(OperationType.UNION.getOperationName());
         summarizerAndOperation.setText(OperationType.INTERSECTION.getOperationName());
@@ -115,23 +109,45 @@ public class MainController implements Initializable {
         List<TennisMatch> tennisMatches = TennisCsvLoader.load(Config.RECORDS_COUNT);
         linguisticVariableMap = TennisMatchLinguisticVariables.getVariables(tennisMatches);
 
+        loadSummarizers();
+        loadQualifiers();
+        loadQuantifiers();
+        loadTableView();
 
-        //SUMMARIZERS
+    }
+
+    private void loadCheckBoxes(){
+        type1Checkbox.setSelected(true);
+        type2Checkbox.setSelected(false);
+
+        checkBoxes = new ArrayList<>();
+        checkBoxes.addAll(Arrays.asList(t1CheckBox, t2CheckBox, t3CheckBox, t4CheckBox, t5CheckBox, t6CheckBox, t7CheckBox, t8CheckBox, t9CheckBox, t10CheckBox, t11CheckBox));
+
+        for (int i = 0; i < QualityMeasureEnum.values().length; i++) {
+            checkBoxes.get(i).setText(QualityMeasureEnum.values()[i].getName());
+        }
+    }
+
+    private void loadSummarizers(){
         summarizerListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         summarizerListView.setItems(FXCollections.observableArrayList(linguisticVariableMap.keySet()));
 
+    }
 
-        //QUALIFIERS
+    private void loadQualifiers() {
         qualifierListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         qualifierListView.setItems(FXCollections.observableArrayList(linguisticVariableMap.keySet()));
 
-        //QUANTIFIERS
-        quantifierMap = QuantifierLabel.getMap();
+    }
+
+    private void loadQuantifiers() {
+        quantifierMap = AllQuantifiers.getQuantifiers();
         quanfierListView.setItems(FXCollections.observableArrayList(new ArrayList<>(quantifierMap.keySet())));
         quanfierListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
+    }
 
-        //TABLEVIEW
+    private void loadTableView() {
         tableView.getColumns().clear();
         TableColumn summaryColumn = new TableColumn("Summary");
         summaryColumn.setCellValueFactory(new PropertyValueFactory<>("summary"));
@@ -173,7 +189,6 @@ public class MainController implements Initializable {
         t11Column.setCellValueFactory(new PropertyValueFactory<>("t11"));
 
         tableView.getColumns().addAll(summaryColumn, goodnessColumn, t1Column, t2Column, t3Column, t4Column, t5Column, t6Column, t7Column, t8Column, t9Column, t10Column, t11Column);
-
 
     }
 
@@ -220,14 +235,14 @@ public class MainController implements Initializable {
 
         //QUANTIFIERS
         List<String> selectedItems = quanfierListView.getSelectionModel().getSelectedItems();
-        List<Quantifier> quantifiers = selectedItems.stream().map(x -> new Quantifier(QuantifierLabel.valueOf(x.replace(" ", "_")))).collect(Collectors.toList());
+        List<Quantifier> quantifiers = selectedItems.stream().map(x -> new Quantifier(AllQuantifiers.valueOf(x.replace(" ", "_")))).collect(Collectors.toList());
 
 
         //GENERATING SUMMARIES
         List<SummaryData> dataList = new ArrayList<>();
 
 
-        if(type1Checkbox.isSelected()){
+        if (type1Checkbox.isSelected()) {
             //Type1
             for (String selectedSumm : selectedSummarizers) {
                 for (String summarizerTag : linguisticVariableMap.get(selectedSumm).getAllTags()) {
@@ -259,7 +274,7 @@ public class MainController implements Initializable {
             }
         }
 
-        if(type2Checkbox.isSelected()){
+        if (type2Checkbox.isSelected()) {
             //Type2
             if (selectedQualifiers.size() > 0) {
                 for (String selectedSumm1 : selectedSummarizers) {
@@ -323,7 +338,7 @@ public class MainController implements Initializable {
 //                                for (String qualifierTag1 : linguisticVariableMap.get(selectedQuali1).getAllTags()) {
 //                                    for (String selectedQuali2 : selectedQualifiers) {
 //                                        for (String qualifierTag2 : linguisticVariableMap.get(selectedQuali1).getAllTags()) {
-//                                            for (Quantifier quantifier : quantifiers) {
+//                                            for (Quantifier quantifier : allQuantifiers) {
 //
 //                                                List<String> summarizerStrings = Arrays.asList(selectedSumm1, selectedSumm2);
 //                                                List<String> summarizerTagStrings = Arrays.asList(summarizerTag1,summarizerTag2);
@@ -447,5 +462,11 @@ public class MainController implements Initializable {
         }
         stage.setScene(new Scene(parent));
         stage.show();
+    }
+
+
+    public void refresh(ActionEvent event) {
+        loadQuantifiers();
+        quanfierListView.refresh();
     }
 }

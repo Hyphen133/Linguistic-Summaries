@@ -5,6 +5,7 @@ import app.data.TennisMatchLinguisticVariables;
 import app.fuzzy_sets.ClassicSet;
 import app.loading.TennisCsvLoader;
 import app.summarization.LinguisticVariable;
+import app.summarization.summary.AllQuantifiers;
 import app.summarization.summary.Quantifier;
 import app.summarization.summary.QuantifierLabel;
 import app.summarization.summary.QuantifierType;
@@ -17,6 +18,8 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ListView;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 
 import java.net.URL;
@@ -24,6 +27,7 @@ import java.util.*;
 
 import static app.Config.RECORDS_COUNT;
 
+@Controller
 public class FuzzySetsController implements Initializable {
 
     private HashMap<String, Quantifier> quantifierMap;
@@ -41,13 +45,12 @@ public class FuzzySetsController implements Initializable {
     @FXML
     ListView<String> quantifierListView;;
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         List<TennisMatch> tennisMatches = TennisCsvLoader.load(RECORDS_COUNT);
         linguisticVariableMap = TennisMatchLinguisticVariables.getVariables(tennisMatches);
-        quantifierMap = QuantifierLabel.getMap();
+        quantifierMap = AllQuantifiers.getQuantifiers();
 
         //LINE CHARTS
         variableChart.setTitle("VariableChart");

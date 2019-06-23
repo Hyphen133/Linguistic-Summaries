@@ -1,6 +1,8 @@
 package app.controllers;
 
 import app.fuzzy_sets.characterictic_functions.CharacteristicFunction;
+import app.summarization.summary.AllQuantifiers;
+import app.summarization.summary.QuantifierLabel;
 import app.summarization.summary.QuantifierType;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.reflect.ClassPath;
@@ -10,6 +12,8 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -20,6 +24,7 @@ import java.util.stream.Collectors;
 
 import static app.Config.RECORDS_COUNT;
 
+@Controller
 public class DefineFunctionController implements Initializable {
 
     public LineChart functionPreview;
@@ -29,10 +34,12 @@ public class DefineFunctionController implements Initializable {
     public ListView<String> typeListView;
     public ListView<String> functionListView;
     public TextField dTextField;
+    public TextField nameTextField;
 
     private String characteristicFunctionPackage;
     private CharacteristicFunction characteristicFunction;
     private QuantifierType quantifierType;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -83,9 +90,11 @@ public class DefineFunctionController implements Initializable {
 
     public void saveQuantifier(ActionEvent event) {
         loadForFields();
-        //Loading data
-
-
+        String name = nameTextField.getText().toUpperCase().replace(" ", "_");
+        System.out.println(AllQuantifiers.getQuantifiers().keySet().size());
+        AllQuantifiers.addQuantifierLabel(name, new QuantifierLabel(name, quantifierType, characteristicFunction));
+        System.out.println(AllQuantifiers.getQuantifiers().keySet().size());
+        System.out.println("Quantifier added");
     }
 
     private void loadForFields() {

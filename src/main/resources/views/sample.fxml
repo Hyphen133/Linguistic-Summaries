@@ -82,7 +82,7 @@
          </children>
       </VBox>
       <Button mnemonicParsing="false" onAction="#saveToFile" text="Save" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-      <Button mnemonicParsing="false" onAction="#moveToFuzzySetsWindow" text="Move to show fuzzy sets" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+      <Button mnemonicParsing="false" onAction="#moveToFuzzySetsWindow" text="Move to show fuzzy sets" GridPane.columnIndex="1" GridPane.rowIndex="4" />
       <ListView fx:id="summarizerListView" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" GridPane.rowSpan="2" />
       <ListView fx:id="qualifierListView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="2" />
       <Button mnemonicParsing="false" onAction="#defineQuantifier" text="Define Quantifier" GridPane.columnIndex="2" GridPane.rowIndex="3" />
@@ -92,6 +92,7 @@
             <CheckBox fx:id="type2Checkbox" mnemonicParsing="false" text="Type 2" />
          </children>
       </VBox>
+      <Button fx:id="refreshButton" onAction="#refresh" mnemonicParsing="false" text="Refresh Quantifiers" GridPane.columnIndex="2" GridPane.rowIndex="4" />
    </children>
    <padding>
       <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
