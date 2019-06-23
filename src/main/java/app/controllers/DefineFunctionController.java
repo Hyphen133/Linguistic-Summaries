@@ -1,8 +1,6 @@
 package app.controllers;
 
-import app.fuzzy_sets.ClassicSet;
 import app.fuzzy_sets.characterictic_functions.CharacteristicFunction;
-import app.summarization.summary.QuantifierLabel;
 import app.summarization.summary.QuantifierType;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.reflect.ClassPath;
@@ -61,6 +59,9 @@ public class DefineFunctionController implements Initializable {
 
 
     public void showFunction(ActionEvent event) {
+
+        loadForFields();
+
         functionPreview.getData().clear();
         XYChart.Series<Number, Number> series = new XYChart.Series<>();
 
@@ -81,21 +82,24 @@ public class DefineFunctionController implements Initializable {
     }
 
     public void saveQuantifier(ActionEvent event) {
+        loadForFields();
+        //Loading data
 
-        //QUANTIFIER TYPE
+
+    }
+
+    private void loadForFields() {
         quantifierType = QuantifierType.valueOf(typeListView.getSelectionModel().getSelectedItem());
 
-
-        //CHARACTERISTIC FUNCTION
         //Get all potential arguments of constructor
         List<Double> potentialArgs = new ArrayList<>();
 
-        try{
+        try {
             potentialArgs.add(Double.parseDouble(aTextField.getText()));
             potentialArgs.add(Double.parseDouble(bTextField.getText()));
             potentialArgs.add(Double.parseDouble(cTextField.getText()));
             potentialArgs.add(Double.parseDouble(dTextField.getText()));
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println("Field got badly parsed, not essentially bad!!!");
         }
 
@@ -113,7 +117,7 @@ public class DefineFunctionController implements Initializable {
 
         //Init function
         try {
-            characteristicFunction = (CharacteristicFunction)allArgsConstructor.newInstance(potentialArgs.subList(0, argsCount).toArray(new Double[0]));
+            this.characteristicFunction = (CharacteristicFunction) allArgsConstructor.newInstance(potentialArgs.subList(0, argsCount).toArray(new Double[0]));
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -123,5 +127,6 @@ public class DefineFunctionController implements Initializable {
         }
 
     }
+
 
 }
