@@ -57,6 +57,9 @@ public class DefineFunctionController implements Initializable {
     }
 
     public void showFunction(ActionEvent event) {
+
+        loadForFields();
+
         functionPreview.getData().clear();
         XYChart.Series<Number, Number> series = new XYChart.Series<>();
 
@@ -74,19 +77,23 @@ public class DefineFunctionController implements Initializable {
     }
 
     public void saveQuantifier(ActionEvent event) {
-        //QUANTIFIER TYPE
+        loadForFields();
+        //Loading data
+
+    }
+
+    private void loadForFields() {
         quantifierType = QuantifierType.valueOf(typeListView.getSelectionModel().getSelectedItem());
 
-        //CHARACTERISTIC FUNCTION
         //Get all potential arguments of constructor
         List<Double> potentialArgs = new ArrayList<>();
 
-        try {
+        try{
             potentialArgs.add(Double.parseDouble(aTextField.getText()));
             potentialArgs.add(Double.parseDouble(bTextField.getText()));
             potentialArgs.add(Double.parseDouble(cTextField.getText()));
             potentialArgs.add(Double.parseDouble(dTextField.getText()));
-        } catch (NumberFormatException e) {
+        }catch (NumberFormatException e){
             System.out.println("Field got badly parsed, not essentially bad!!!");
         }
 
@@ -104,7 +111,7 @@ public class DefineFunctionController implements Initializable {
 
         //Init function
         try {
-            characteristicFunction = (CharacteristicFunction) allArgsConstructor.newInstance(potentialArgs.subList(0, argsCount).toArray(new Double[0]));
+            this.characteristicFunction = (CharacteristicFunction) allArgsConstructor.newInstance(potentialArgs.subList(0, argsCount).toArray(new Double[0]));
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
