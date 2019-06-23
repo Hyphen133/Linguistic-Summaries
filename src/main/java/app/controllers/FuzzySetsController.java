@@ -67,6 +67,7 @@ public class FuzzySetsController implements Initializable {
         }
 
         quantifierListView.setItems(FXCollections.observableArrayList(quantifierTypes));
+        System.out.println("13214");
     }
 
 
@@ -89,8 +90,6 @@ public class FuzzySetsController implements Initializable {
                 XYChart.Series<Number, Number> series = new XYChart.Series<>();
                 series.setName(tag);
 
-
-                ClassicSet universe = linguisticVariable.getUniverseOfDiscourse();
                 List<XYChart.Data<Number, Number>> characteristicPoints = linguisticVariable.getCharacteristicFunctionForTag(tag).getCharacteristicPoints();
 
 

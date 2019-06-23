@@ -39,7 +39,6 @@ public class DefineFunctionController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-
         //Function LISTVIEW
         characteristicFunctionPackage =CharacteristicFunction.class.getPackage().getName();
 
@@ -122,8 +121,6 @@ public class DefineFunctionController implements Initializable {
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
-
-
 
     }
 
