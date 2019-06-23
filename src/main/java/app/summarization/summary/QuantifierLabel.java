@@ -23,14 +23,13 @@ public enum QuantifierLabel {
     MORE_THEN_HALF("MORE THEN HALF", QuantifierType.RELATIVE, new TriangularFunction(0.50, 0.6, 0.7)),
     ABOUT_75_PERCENT("ABOUT 75 PERCENT", QuantifierType.RELATIVE, new TriangularFunction(0.65, 0.75, 0.87)),
     MANY("MANY", QuantifierType.RELATIVE, new TriangularFunction(0.80,0.9,0.95)),
-    ALMOST_ALL("ALMOST ALL", QuantifierType.RELATIVE, new RisingFunction(0.9, 0.98)),
+    ALMOST_ALL("ALMOST ALL", QuantifierType.RELATIVE, new RisingFunction(0.9, 0.98, 1.0)),
 
     ABOUT_0("ABOUT 0", QuantifierType.ABSOLUTE, new FallingFunction(500, 1500)),
     ABOUT_2500("ABOUT 2500", QuantifierType.ABSOLUTE, new TriangularFunction(700, 2500, 4000)),
     ABOUT_5000("ABOUT 5000", QuantifierType.ABSOLUTE, new TriangularFunction(3400, 5000, 6800)),
     ABOUT_7500("ABOUT 7500", QuantifierType.ABSOLUTE, new TriangularFunction(6300, 7500, 8900)),
-    ABOUT_10000("ABOUT 10000", QuantifierType.ABSOLUTE, new RisingFunction(8400,9000));
-
+    ABOUT_10000("ABOUT 10000", QuantifierType.ABSOLUTE, new RisingFunction(8400, 9000, 10000));
 
     String name;
     QuantifierType quantifierType;

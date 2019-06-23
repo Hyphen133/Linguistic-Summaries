@@ -25,16 +25,6 @@ public class FallingFunction implements CharacteristicFunction {
         return b;
     }
 
-    @Override
-    public double getBaseAbsolute() {
-        return getBase();
-    }
-
-    @Override
-    public double getAbsoluteArea() {
-        return getArea();
-    }
-
     public double getArea() {
         return 0.5 * (b - a) + Math.max(0, a);
     }

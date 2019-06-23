@@ -1,7 +1,6 @@
 package app.summarization.summary;
 
 import app.fuzzy_sets.FuzzySet;
-import app.fuzzy_sets.OperationType;
 
 import java.util.List;
 

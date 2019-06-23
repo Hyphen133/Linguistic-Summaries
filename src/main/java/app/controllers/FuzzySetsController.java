@@ -9,15 +9,12 @@ import app.summarization.summary.Quantifier;
 import app.summarization.summary.QuantifierLabel;
 import app.summarization.summary.QuantifierType;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ListView;
-
 
 import java.net.URL;
 import java.util.*;
@@ -31,16 +28,12 @@ public class FuzzySetsController implements Initializable {
 
     @FXML
     LineChart<Number, Number> quantifierChart;
-
     @FXML
     LineChart<Number, Number> variableChart;
-
     @FXML
     ListView<String> variablesListView;
-
     @FXML
-    ListView<String> quantifierListView;;
-
+    ListView<String> quantifierListView;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -53,8 +46,6 @@ public class FuzzySetsController implements Initializable {
         variableChart.setTitle("VariableChart");
         quantifierChart.setTitle("QuantifierChart");
 
-
-
         variableChart.setLegendVisible(true);
 
         //LINGUISTIC VARIABLES
@@ -65,66 +56,58 @@ public class FuzzySetsController implements Initializable {
         for (QuantifierType value : QuantifierType.values()) {
             quantifierTypes.add(value.name());
         }
-
         quantifierListView.setItems(FXCollections.observableArrayList(quantifierTypes));
     }
 
-
-    public void drawCharts(ActionEvent event){
+    public void drawCharts(ActionEvent event) {
 
         //Getting selections
         String selectedLingusiticVariable = variablesListView.getSelectionModel().getSelectedItem();
         String selectedQuantifier = quantifierListView.getSelectionModel().getSelectedItem();
 
-
-        if(selectedLingusiticVariable != null){
+        if (selectedLingusiticVariable != null) {
             variableChart.getData().clear();
 
             variableChart.setTitle(selectedLingusiticVariable);
             LinguisticVariable linguisticVariable = linguisticVariableMap.get(selectedLingusiticVariable);
 
-            double maxValue = linguisticVariable.getUniverseOfDiscourse().getElements().stream().map(x-> x.getValue()).max(Double::compareTo).get();
+            double maxValue = linguisticVariable.getUniverseOfDiscourse().getElements().stream().map(x -> x.getValue()).max(Double::compareTo).get();
 
             for (String tag : linguisticVariable.getAllTags()) {
                 XYChart.Series<Number, Number> series = new XYChart.Series<>();
                 series.setName(tag);
 
-
                 ClassicSet universe = linguisticVariable.getUniverseOfDiscourse();
                 List<XYChart.Data<Number, Number>> characteristicPoints = linguisticVariable.getCharacteristicFunctionForTag(tag).getCharacteristicPoints();
 
-
-                XYChart.Data<Number,Number> firstPoint = new XYChart.Data<Number, Number>(0.0, linguisticVariable.getCharacteristicFunctionForTag(tag).calculate(0.0));
-                XYChart.Data<Number,Number> lastPoint = new XYChart.Data<Number, Number>(maxValue, linguisticVariable.getCharacteristicFunctionForTag(tag).calculate(maxValue));
-
+                XYChart.Data<Number, Number> firstPoint = new XYChart.Data<Number, Number>(0.0, linguisticVariable.getCharacteristicFunctionForTag(tag).calculate(0.0));
+                XYChart.Data<Number, Number> lastPoint = new XYChart.Data<Number, Number>(maxValue, linguisticVariable.getCharacteristicFunctionForTag(tag).calculate(maxValue));
 
                 series.getData().add(firstPoint);
                 series.getData().addAll(characteristicPoints);
                 series.getData().add(lastPoint);
 
                 variableChart.getData().add(series);
-
             }
         }
 
-
-        if(selectedQuantifier != null){
+        if (selectedQuantifier != null) {
             quantifierChart.getData().clear();
             quantifierChart.setTitle(selectedQuantifier);
 
             for (String s : quantifierMap.keySet()) {
                 Quantifier quantifier = quantifierMap.get(s);
-                if(quantifier.getQuantifierType().name() == selectedQuantifier){
-                    XYChart.Series<Number,Number> series = new XYChart.Series<>();
+                if (quantifier.getQuantifierType().name() == selectedQuantifier) {
+                    XYChart.Series<Number, Number> series = new XYChart.Series<>();
                     series.setName(quantifier.getName());
 
                     List<XYChart.Data<Number, Number>> characteristicPoints = quantifier.getQuantifierLabel().getCharacteristicFunction().getCharacteristicPoints();
-                    XYChart.Data<Number,Number> firstPoint = new XYChart.Data<Number, Number>(0.0, quantifier.getQuantifierLabel().getCharacteristicFunction().calculate(0.0));
-                    XYChart.Data<Number,Number> lastPoint = null;
-                    if(quantifier.getQuantifierType() == QuantifierType.RELATIVE){
+                    XYChart.Data<Number, Number> firstPoint = new XYChart.Data<Number, Number>(0.0, quantifier.getQuantifierLabel().getCharacteristicFunction().calculate(0.0));
+                    XYChart.Data<Number, Number> lastPoint = null;
+                    if (quantifier.getQuantifierType() == QuantifierType.RELATIVE) {
                         lastPoint = new XYChart.Data<Number, Number>(1, quantifier.getQuantifierLabel().getCharacteristicFunction().calculate(1));
 
-                    }else{
+                    } else {
                         lastPoint = new XYChart.Data<Number, Number>(RECORDS_COUNT, quantifier.getQuantifierLabel().getCharacteristicFunction().calculate(RECORDS_COUNT));
                     }
 

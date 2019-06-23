@@ -2,11 +2,10 @@ package app.summarization.quality_measures.basic_measures;
 
 import app.fuzzy_sets.FuzzySet;
 import app.fuzzy_sets.FuzzySetOperations;
-import app.fuzzy_sets.OperationType;
 import app.summarization.quality_measures.QualityMeasure;
-import app.summarization.summary.*;
-
-import java.util.List;
+import app.summarization.summary.QuantifierType;
+import app.summarization.summary.Summary;
+import app.summarization.summary.TypeTwoSummary;
 
 /*
  * T1
@@ -31,13 +30,14 @@ public class DegreeOfTruth implements QualityMeasure {
     }
 
     private static double getRTypeOne(Summary summary) {
-        return summary.getSummarizer().getCardinality();
+        return summary.getSummarizer().getCardinalityForElements();
     }
 
     private static double getRTypeTwo(Summary summary) {
         FuzzySet summarizer = summary.getSummarizer();
         FuzzySet qualifier = ((TypeTwoSummary) summary).getQualifier();
-        return FuzzySetOperations.getIntersection(summarizer, qualifier).getCardinality() / qualifier.getCardinality();
+        return FuzzySetOperations.getIntersection(summarizer, qualifier).getCardinalityForElements()
+                / qualifier.getCardinalityForElements();
     }
 
 }

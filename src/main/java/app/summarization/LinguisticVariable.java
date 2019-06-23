@@ -42,11 +42,11 @@ public class LinguisticVariable {
         return universeOfDiscourse;
     }
 
-    public CharacteristicFunction getCharacteristicFunctionForTag(String tag){
+    public CharacteristicFunction getCharacteristicFunctionForTag(String tag) {
         return labelCharacteristicFunctionMap.get(tag);
     }
 
-    public List<String> getLabels(){
+    public List<String> getLabels() {
         return new ArrayList<>(labelCharacteristicFunctionMap.keySet());
     }
 

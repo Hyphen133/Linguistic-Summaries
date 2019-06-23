@@ -27,18 +27,8 @@ public class TrapezoidalFunction implements CharacteristicFunction {
         return d - a;
     }
 
-    @Override
-    public double getBaseAbsolute() {
-        return getBase();
-    }
-
     public double getArea() {
         return 0.5 * (b - a) + (c - b) + 0.5 * (d - c);
-    }
-
-    @Override
-    public double getAbsoluteArea() {
-        return getArea();
     }
 
     @Override

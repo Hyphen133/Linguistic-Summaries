@@ -3,7 +3,6 @@ package app.data;
 import app.fuzzy_sets.ClassicSet;
 import app.fuzzy_sets.FuzzySetElement;
 import app.summarization.LinguisticVariable;
-import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;

@@ -1,8 +1,6 @@
 package app.controllers;
 
-import app.fuzzy_sets.ClassicSet;
 import app.fuzzy_sets.characterictic_functions.CharacteristicFunction;
-import app.summarization.summary.QuantifierLabel;
 import app.summarization.summary.QuantifierType;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.reflect.ClassPath;
@@ -39,9 +37,8 @@ public class DefineFunctionController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-
         //Function LISTVIEW
-        characteristicFunctionPackage =CharacteristicFunction.class.getPackage().getName();
+        characteristicFunctionPackage = CharacteristicFunction.class.getPackage().getName();
 
         ImmutableSet<ClassPath.ClassInfo> characteristicFunctions = null;
         try {
@@ -49,17 +46,15 @@ public class DefineFunctionController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        functionListView.getItems().addAll(characteristicFunctions.stream().map(x->x.getSimpleName()).collect(Collectors.toList()));
+        functionListView.getItems().addAll(characteristicFunctions.stream().map(x -> x.getSimpleName()).collect(Collectors.toList()));
         //remove base type
-        functionListView.getItems().removeIf(x->x.equals(CharacteristicFunction.class.getSimpleName()));
+        functionListView.getItems().removeIf(x -> x.equals(CharacteristicFunction.class.getSimpleName()));
         functionListView.getSelectionModel().selectFirst();
-
 
         //Type LISTVIEW
         typeListView.getItems().addAll(QuantifierType.ABSOLUTE.name(), QuantifierType.RELATIVE.name());
         typeListView.getSelectionModel().selectFirst();
     }
-
 
     public void showFunction(ActionEvent event) {
         functionPreview.getData().clear();
@@ -67,36 +62,31 @@ public class DefineFunctionController implements Initializable {
 
         List<XYChart.Data<Number, Number>> characteristicPoints = characteristicFunction.getCharacteristicPoints();
 
-
-        XYChart.Data<Number,Number> firstPoint = new XYChart.Data<Number, Number>(0.0, characteristicFunction.calculate(0.0));
+        XYChart.Data<Number, Number> firstPoint = new XYChart.Data<Number, Number>(0.0, characteristicFunction.calculate(0.0));
         double maxValue = quantifierType.equals(QuantifierType.RELATIVE) ? 1.0 : RECORDS_COUNT;
-        XYChart.Data<Number,Number> lastPoint = new XYChart.Data<Number, Number>(maxValue, characteristicFunction.calculate(maxValue));
-
+        XYChart.Data<Number, Number> lastPoint = new XYChart.Data<Number, Number>(maxValue, characteristicFunction.calculate(maxValue));
 
         series.getData().add(firstPoint);
         series.getData().addAll(characteristicPoints);
         series.getData().add(lastPoint);
 
         functionPreview.getData().add(series);
-
     }
 
     public void saveQuantifier(ActionEvent event) {
-
         //QUANTIFIER TYPE
         quantifierType = QuantifierType.valueOf(typeListView.getSelectionModel().getSelectedItem());
-
 
         //CHARACTERISTIC FUNCTION
         //Get all potential arguments of constructor
         List<Double> potentialArgs = new ArrayList<>();
 
-        try{
+        try {
             potentialArgs.add(Double.parseDouble(aTextField.getText()));
             potentialArgs.add(Double.parseDouble(bTextField.getText()));
             potentialArgs.add(Double.parseDouble(cTextField.getText()));
             potentialArgs.add(Double.parseDouble(dTextField.getText()));
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println("Field got badly parsed, not essentially bad!!!");
         }
 
@@ -114,7 +104,7 @@ public class DefineFunctionController implements Initializable {
 
         //Init function
         try {
-            characteristicFunction = (CharacteristicFunction)allArgsConstructor.newInstance(potentialArgs.subList(0, argsCount).toArray(new Double[0]));
+            characteristicFunction = (CharacteristicFunction) allArgsConstructor.newInstance(potentialArgs.subList(0, argsCount).toArray(new Double[0]));
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -123,8 +113,5 @@ public class DefineFunctionController implements Initializable {
             e.printStackTrace();
         }
 
-
-
     }
-
 }
